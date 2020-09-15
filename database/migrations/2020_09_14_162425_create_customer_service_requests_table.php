@@ -25,6 +25,7 @@ class CreateCustomerServiceRequestsTable extends Migration
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('sale_id')->references('id')->on('sales');
             $table->foreign('service_men_id')->references('id')->on('service_men');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ class CreateServiceMenTable extends Migration
             $table->dateTime('joining_date');
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ class CreateSalesTable extends Migration
             $table->dateTime('last_date_of_warranty')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

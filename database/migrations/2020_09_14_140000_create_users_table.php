@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->foreign('district_id')->references('id')->on('districts');
             $table->foreign('upazila_id')->references('id')->on('upazilas');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
