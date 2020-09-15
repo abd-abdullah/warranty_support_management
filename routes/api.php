@@ -41,3 +41,7 @@ Route::post('/login', function(Request $request){
 
     return $user->createToken('Test-Token')->plainTextToken;
 });
+
+Route::post('/logout', function(){
+    Auth::logout();
+});

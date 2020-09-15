@@ -28,8 +28,13 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import App from './components/app';
+import AppLogin from './components/layouts/auth/app';
+import AppMain from './components/layouts/main/app';
 import router from './router/router.js'
+var App = AppLogin;
+if(localStorage.getItem("auth")){
+    App = AppMain;
+}
 new Vue({
     el: '#app',
     router,
