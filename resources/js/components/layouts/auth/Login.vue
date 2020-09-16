@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
         <form class="form" method action>
-          <div class="card card-login card-hidden">
+          <div class="card card-login">
             <div class="card-header card-header-rose text-center">
               <h4 class="card-title">Login</h4>
               <div class="social-line">

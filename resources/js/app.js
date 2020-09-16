@@ -30,13 +30,14 @@ window.Vue = require('vue');
 
 import AppLogin from './components/layouts/auth/app';
 import AppMain from './components/layouts/main/app';
+import Layout from './components/layouts/main';
 import router from './router/router.js'
-var App = AppLogin;
-if(localStorage.getItem("auth")){
-    App = AppMain;
-}
+
+Vue.component("loginlayout", AppLogin);
+Vue.component("defaultlayout", AppMain);
+
 new Vue({
     el: '#app',
     router,
-    render:h => h(App)
+    render:h => h(Layout)
 });

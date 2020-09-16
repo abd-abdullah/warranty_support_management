@@ -56,7 +56,7 @@
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" @click.prevent="logout" >Log out</a>
+                  <button class="dropdown-item" @click.prevent="logout">Log out</button>
                 </div>
               </li>
             </ul>
@@ -64,3 +64,25 @@
         </div>
       </nav>
 </template>
+<script>
+
+import User from "../../../apis/User";
+export default {
+    methods: {
+
+    logout() {
+      User.logout(this.form)
+        .then(() => {
+          this.$root.$emit("login", false);
+          localStorage.removeItem("auth");
+          this.$router.push({ name: "Login" });
+        })
+        .catch(error => {
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors;
+          }
+        });
+    }
+  }
+}
+</script>

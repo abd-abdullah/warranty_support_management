@@ -22,5 +22,14 @@ export default {
 
   auth() {
     return Api.get("/user");
+  },
+  
+  loadApp(){
+    if (!localStorage.getItem("auth")) {
+        return import('../components/layouts/auth/app'); 
+    }
+    else{
+        return import('../components/layouts/main/app'); 
+    }
   }
 };

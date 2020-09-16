@@ -5,26 +5,27 @@ Vue.use(VueRouter)
 
 import dashboard from '../components/Dashboard'
 import login from '../components/layouts/auth/login'
+import product from '../components/products/create'
 
 const routes = [
     {
         path: "/",
         name: "Login",
         component: login,
-        meta: { guestOnly: true }
+        meta: { guestOnly: true, layout: "loginlayout" }
     },
     {
         path: "/login",
         name: "Login",
         component: login,
-        meta: { guestOnly: true }
+        meta: { guestOnly: true, layout: "loginlayout" }
     },
-    // {
-    //     path: "/register",
-    //     name: "Register",
-    //     component: Register,
-    //     meta: { guestOnly: true }
-    // },
+    {
+        path: "/products/create",
+        name: "Product",
+        component: product,
+        meta: { authOnly: true }
+    },
     {
         path: "/dashboard",
         name: "Dashboard",

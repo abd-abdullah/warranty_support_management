@@ -13,12 +13,8 @@
                 <div class="card-body ">
                   <form method="#" action="#">
                     <div class="form-group bmd-form-group">
-                      <label for="exampleEmail" class="bmd-label-floating">Email Address</label>
-                      <input type="email" class="form-control" id="exampleEmail">
-                    </div>
-                    <div class="form-group bmd-form-group">
-                      <label for="examplePass" class="bmd-label-floating">Password</label>
-                      <input type="password" class="form-control" id="examplePass">
+                      <label for="exampleText" class="bmd-label-floating">Name</label>
+                      <input type="text" v-model="form.name" class="form-control" name="name" id="exampleText">
                     </div>
                     <div class="form-check">
                       <label class="form-check-label">
@@ -31,7 +27,7 @@
                   </form>
                 </div>
                 <div class="card-footer ">
-                  <button type="submit" class="btn btn-fill btn-rose">Submit</button>
+                  <button @click.prevent="submit"  class="btn btn-fill btn-rose">Submit</button>
                 </div>
               </div>
         </div>
@@ -39,3 +35,23 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        name: ""
+      },
+      errors: []
+    };
+  },
+
+  methods: {
+    submit() {
+      axios.post('api/v1/products').then(data => {
+        debugger;
+      });
+    }
+  }
+};
+</script>
