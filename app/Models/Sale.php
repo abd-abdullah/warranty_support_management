@@ -19,6 +19,7 @@ class Sale extends Model
         'id',
         'customer_id',
         'product_id',
+        'product_capacity',
         'date_of_purchase',
         'price',
         'purchase_from',

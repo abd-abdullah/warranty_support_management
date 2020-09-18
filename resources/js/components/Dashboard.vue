@@ -508,7 +508,6 @@
 </template>
 <script>
 
-import User from "../apis/User";
 export default {
   name:'Dashboard',
   data(){
@@ -518,7 +517,7 @@ export default {
     }
   },
   mounted(){
-    User.auth()
+    this.$user.auth()
     .then((response) => {
         console.log(response);
       })

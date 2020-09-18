@@ -54,7 +54,6 @@
   </div>
 </template>
 <script>
-import User from "../../../apis/User";
 
 export default {
   data() {
@@ -69,7 +68,7 @@ export default {
 
   methods: {
     login() {
-      User.login(this.form)
+      this.$user.login(this.form)
         .then(() => {
           this.$root.$emit("login", true);
           localStorage.setItem("auth", "true");

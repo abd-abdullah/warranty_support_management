@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
@@ -13,9 +14,23 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json("Yes");
+        $limit = (($request->per_page != NULL)?$request->per_page:10);
+        $limit = (($limit == -1)?9999999:$limit);
+        $products = Product::query();
+        if($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != ""){
+            $products->orderBy($request->input('sort_by'), $request->input('sort_order'));
+        }
+        else{
+            $products->orderBy('id', 'DESC');
+        }
+
+        if($request->input('query') && $request->input('query') != ""){
+			$products->where('name', 'like', "%{$request->input('query')}%");
+        }
+
+        return new ProductCollection($products->paginate($limit));
     }
 
     /**

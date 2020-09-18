@@ -1,40 +1,47 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
-require('./bootstrap');
-import '../assets/scss/material-dashboard.scss';
+require('./main');
 
-window.Vue = require('vue');
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+import Vue from 'vue';
+import VueProgressBar from 'vue-progressbar';
+const VueProgressBaroptions = {
+    color: '#047831',
+    failedColor: '#874b4b',
+    thickness: '5px',
+    transition: {
+      speed: '0.2s',
+      opacity: '0.6s',
+      termination: 300
+    },
+    autoRevert: true,
+    location: 'top',
+    inverse: false
+}
+  
+Vue.use(VueProgressBar, VueProgressBaroptions)
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-//Vue.component('welcome', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-import AppLogin from './components/layouts/auth/app';
-import AppMain from './components/layouts/main/app';
+import appLogin from './components/layouts/auth/app';
+import appMain from './components/layouts/main/app';
 import Layout from './components/layouts/main';
 import router from './router/router.js'
+import pagination from './components/partial/pagination';
+import search from './components/partial/search';
+import jsHelper from "./apis/Helper";
+import User from "./apis/User";
 
-Vue.component("loginlayout", AppLogin);
-Vue.component("defaultlayout", AppMain);
+Vue.use({
+  install() {
+      Vue.jsHelper = jsHelper;
+      Vue.prototype.$jsHelper = jsHelper;
+      Vue.user = User;
+      Vue.prototype.$user = User;
+  }
+});
+Vue.component("loginlayout", appLogin);
+Vue.component("defaultlayout", appMain);
+Vue.component("pagination", pagination);
+Vue.component("search", search);
 
 new Vue({
     el: '#app',

@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('user_type');
             $table->string('email')->unique();
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->string('other_contact_numbers')->nullable();
             $table->string('photo')->nullable();
             $table->unsignedBigInteger('division_id')->nullable();

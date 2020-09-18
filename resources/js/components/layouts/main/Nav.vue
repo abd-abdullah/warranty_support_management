@@ -55,12 +55,11 @@
 </template>
 <script>
 
-import User from "../../../apis/User";
 export default {
     methods: {
 
     logout() {
-      User.logout(this.form)
+      this.$user.logout(this.form)
         .then(() => {
           this.$root.$emit("login", false);
           localStorage.removeItem("auth");

@@ -23,4 +23,10 @@ export default {
   auth() {
     return Api.get("api/user");
   },
+
+  async get(url) {
+    await Csrf.getCookie();
+
+    return Api.get(url);
+  },
 };

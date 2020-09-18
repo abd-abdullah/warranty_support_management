@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('product_id');
+            $table->string('capacity');
             $table->dateTime('date_of_purchase');
             $table->decimal('price',8,2)->nullable();
             $table->string('purchase_from');

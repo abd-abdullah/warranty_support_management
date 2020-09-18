@@ -19,7 +19,6 @@ class Product extends Model
         'id',
     	'name',
         'code',
-        'capacity',
         'created_by',
         'created_at',
         'updated_at'
