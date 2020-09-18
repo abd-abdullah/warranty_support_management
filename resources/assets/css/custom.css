@@ -1,3 +1,8 @@
+/* them custom css
+@author Md. Abdullah
+@email: abdullah001rti@gmail.com
+*/
+
 .main-panel>.content {
     margin-top: 35px !important;
 }
@@ -61,4 +66,13 @@
     top: 11px;
     right: 1em;
     content: "\2191";
+}
+
+/*Datatable css done*/
+
+/*sidebar active css*/
+
+.sidebar[data-color=azure] li>a.router-link-active {
+    background-color: #00bcd4;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4);
 }

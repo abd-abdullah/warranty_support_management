@@ -1,4 +1,4 @@
-/*table column sorting with bootstrap
+/*them custom js
 @@Author Md. Abdullah
 Email: abdullah001rti@gmail.com
 */

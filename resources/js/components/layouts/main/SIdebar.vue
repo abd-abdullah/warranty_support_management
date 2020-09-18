@@ -15,7 +15,7 @@ Tip 2: you can also add an image using data-image tag
     </div>
     <div class="sidebar-wrapper">
       <ul class="nav">
-        <li class="nav-item active">
+        <li class="nav-item">
           <router-link to="/dashboard" class="nav-link"><i class="material-icons">dashboard</i><p>Dashboard</p></router-link>
         </li>
         <li class="nav-item">
