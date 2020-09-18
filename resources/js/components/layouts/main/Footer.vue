@@ -4,30 +4,25 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
+                <a href="https://www.citywaterpurifier.com/">
+                  City Water Purifier
                 </a>
               </li>
               <li>
-                <a href="https://creative-tim.com/presentation">
+                <a href="https://www.citywaterpurifier.com/water-purifier-about-us/">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="http://blog.creative-tim.com">
+                <a href="https://www.citywaterpurifier.com/blog/">
                   Blog
-                </a>
-              </li>
-              <li>
-                <a href="https://www.creative-tim.com/license">
-                  Licenses
                 </a>
               </li>
             </ul>
           </nav>
           <div class="copyright float-right">
             &copy; 2020 , made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+            <a href="https://www.facebook.com/abd1rti" target="_blank">Md. Abdullah</a>
           </div>
         </div>
       </footer>

@@ -506,3 +506,32 @@
     </div>
   </div>
 </template>
+<script>
+
+import User from "../apis/User";
+export default {
+  name:'Dashboard',
+  data(){
+    return {
+      name: '',
+      section_title: 'Dashboard',
+    }
+  },
+  mounted(){
+    User.auth()
+    .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(response);
+        if (error.response.status === 422) {
+          this.errors = error.response.data.errors;
+        }
+      });
+  }
+}
+</script>
+
+<style>
+
+</style>

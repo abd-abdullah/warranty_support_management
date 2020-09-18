@@ -21,7 +21,7 @@
         window.jsUtlt = [];
         jsUtlt['siteUrl']  = function(addr){
             addr = typeof addr != "undefined" ? addr : "";
-            return "<?php echo url('');?>/api/"+addr;
+            return "<?php echo url('');?>/"+addr;
         };
   </script>
   <script src="{{asset('js/app.js')}}"></script>

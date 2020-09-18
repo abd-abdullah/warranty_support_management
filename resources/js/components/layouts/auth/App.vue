@@ -4,48 +4,7 @@
   <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
     <div class="container">
       <div class="navbar-wrapper">
-        <a class="navbar-brand" href="javascript:;">Login Page</a>
-      </div>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        aria-controls="navigation-index"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="sr-only">Toggle navigation</span>
-        <span class="navbar-toggler-icon icon-bar"></span>
-        <span class="navbar-toggler-icon icon-bar"></span>
-        <span class="navbar-toggler-icon icon-bar"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="../dashboard.html" class="nav-link">
-              <i class="material-icons">dashboard</i>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="../pages/register.html" class="nav-link">
-              <i class="material-icons">person_add</i>
-              Register
-            </a>
-          </li>
-          <li class="nav-item active">
-            <a href="../pages/login.html" class="nav-link">
-              <i class="material-icons">fingerprint</i>
-              Login
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="../pages/lock.html" class="nav-link">
-              <i class="material-icons">lock_open</i>
-              Lock
-            </a>
-          </li>
-        </ul>
+        <a class="navbar-brand" href="javascript:;">Login</a>
       </div>
     </div>
   </nav>
@@ -55,7 +14,7 @@
     <div
       class="page-header login-page header-filter"
       filter-color="black"
-      style="background-image: url('../../assets/img/login.jpg'); background-size: cover; background-position: top center;"
+      style="background-size: cover; background-position: top center;"
     >
       <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
   <router-view></router-view>
@@ -64,23 +23,20 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="https://www.creative-tim.com/">Creative Tim</a>
+                <a target="_blank" href="https://www.citywaterpurifier.com/">City Water Purifier</a>
               </li>
               <li>
-                <a href="https://www.creative-tim.com/presentation">About Us</a>
+                <a target="_blank" href="https://www.citywaterpurifier.com/water-purifier-about-us/">About Us</a>
               </li>
               <li>
-                <a href="https://www.creative-tim.com/blog">Blog</a>
-              </li>
-              <li>
-                <a href="https://www.creative-tim.com/license">Licenses</a>
+                <a target="_blank" href="https://www.citywaterpurifier.com/blog/">Blog</a>
               </li>
             </ul>
           </nav>
           <div class="copyright float-right">
-            &copy;200, made with
+            &copy;2020, made with
             <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a> for a better web.
+            <a href="https://www.facebook.com/abd1rti/" target="_blank">Md. Abdullah</a>
           </div>
         </div>
       </footer>

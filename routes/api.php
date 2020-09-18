@@ -16,32 +16,10 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
-Route::middleware('auth:sanctum')->get('user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function(){
     Route::ApiResource('products', 'ProductController');
-});
-
-Route::post('/login', function(Request $request){
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        return response([
-            'email' => ['The provided credentials are incorrect.'],
-        ], 404);
-    }
-
-    return $user->createToken('Test-Token')->plainTextToken;
-});
-
-Route::post('/logout', function(){
-    Auth::logout();
 });
