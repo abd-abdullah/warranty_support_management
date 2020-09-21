@@ -16,18 +16,17 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = (($request->per_page != NULL)?$request->per_page:10);
-        $limit = (($limit == -1)?9999999:$limit);
+        $limit = (($request->per_page != NULL) ? $request->per_page : 10);
+        $limit = (($limit == -1) ? 9999999 : $limit);
         $products = Product::query();
-        if($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != ""){
+        if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $products->orderBy($request->input('sort_by'), $request->input('sort_order'));
-        }
-        else{
+        } else {
             $products->orderBy('id', 'DESC');
         }
 
-        if($request->input('query') && $request->input('query') != ""){
-			$products->where('name', 'like', "%{$request->input('query')}%");
+        if ($request->input('query') && $request->input('query') != "") {
+            $products->where('name', 'like', "%{$request->input('query')}%");
         }
 
         return new ProductCollection($products->paginate($limit));
@@ -41,7 +40,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3',
+            'code' => 'required|unique:products',
+        ]);
+        $data = $request->all();
+        $data['created_by'] = auth()->id();
+        Product::create($data);
     }
 
     /**

@@ -4,13 +4,20 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div
-                            class="card-header card-header-rose card-header-icon"
-                        >
+                        <div class="card-header card-header-rose card-header-icon">
                             <div class="card-icon">
                                 <i class="material-icons">assignment</i>
                             </div>
-                            <h4 class="card-title">Product List</h4>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <h4 class="card-title">Product List</h4>
+                                </div>
+                                <div class="col-sm-12 col-md-6 text-right pr-md-0">
+                                    <router-link to="/products/form" class="btn btn-sm btn-rose">Add
+                                        <div class="ripple-container"></div>
+                                    </router-link>
+                                </div> 
+                            </div>
                         </div>
                         <div class="card-body">
                             <param
@@ -40,18 +47,8 @@
                                         <td>{{ product.code }}</td>
                                         <td>{{ product.created_at }}</td>
                                         <td class="td-actions text-right">
-                                            <button
-                                                type="button"
-                                                rel="tooltip"
-                                                class="btn btn-info btn-round"
-                                                data-original-title
-                                                title
-                                            >
-                                                <i class="material-icons"
-                                                    >person</i
-                                                >
-                                            </button>
-                                            <button
+                                            <router-link
+                                                to="/prducts"
                                                 type="button"
                                                 rel="tooltip"
                                                 class="btn btn-success btn-round"
@@ -61,7 +58,7 @@
                                                 <i class="material-icons"
                                                     >edit</i
                                                 >
-                                            </button>
+                                            </router-link>
                                             <button
                                                 type="button"
                                                 rel="tooltip"
