@@ -4,20 +4,28 @@ require('./main');
 
 import Vue from 'vue';
 import VueProgressBar from 'vue-progressbar';
+import Swal from 'vue-sweetalert2';
+
+Vue.use(Swal);
+
+import Toaster from 'v-toaster'
+import 'v-toaster/dist/v-toaster.css'
+Vue.use(Toaster, { timeout: 2000 })
+
 const VueProgressBaroptions = {
-    color: '#047831',
-    failedColor: '#874b4b',
-    thickness: '5px',
-    transition: {
-      speed: '0.2s',
-      opacity: '0.6s',
-      termination: 300
-    },
-    autoRevert: true,
-    location: 'top',
-    inverse: false
+  color: '#047831',
+  failedColor: '#874b4b',
+  thickness: '5px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  location: 'top',
+  inverse: false
 }
-  
+
 Vue.use(VueProgressBar, VueProgressBaroptions)
 
 
@@ -32,10 +40,10 @@ import User from "./apis/User";
 
 Vue.use({
   install() {
-      Vue.jsHelper = jsHelper;
-      Vue.prototype.$jsHelper = jsHelper;
-      Vue.user = User;
-      Vue.prototype.$user = User;
+    Vue.jsHelper = jsHelper;
+    Vue.prototype.$jsHelper = jsHelper;
+    Vue.user = User;
+    Vue.prototype.$user = User;
   }
 });
 Vue.component("loginlayout", appLogin);
@@ -44,7 +52,7 @@ Vue.component("pagination", pagination);
 Vue.component("search", search);
 
 new Vue({
-    el: '#app',
-    router,
-    render:h => h(Layout)
+  el: '#app',
+  router,
+  render: h => h(Layout)
 });

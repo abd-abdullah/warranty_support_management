@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import axios from "axios";
+
 
 Vue.use(VueRouter)
 
@@ -28,10 +30,10 @@ const routes = [
         meta: { authOnly: true, title: 'Product' }
     },
     {
-        path: "/products/form",
-        name: "add_product",
+        path: "/products/form/:id?",
+        name: "product_form",
         component: product_form,
-        meta: { authOnly: true, title: 'Product' }
+        meta: { authOnly: true, title: 'Product', props: true }
     },
     {
         path: "/dashboard",
@@ -84,6 +86,5 @@ router.beforeEach((to, from, next) => {
         next(); // make sure to always call next()!
     }
 });
-
 
 export default router

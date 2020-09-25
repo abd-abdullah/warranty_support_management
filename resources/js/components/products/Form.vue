@@ -2,7 +2,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
+                <div class="offset-md-3 col-md-6">
                     <div class="card ">
                         <div
                             class="card-header card-header-rose card-header-icon"
@@ -33,7 +33,7 @@
                         <div class="card-body ">
                             <form action="">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6">
+                                    <div class="col-12">
                                         <div class="form-group bmd-form-group">
                                             <label
                                                 for="name"
@@ -53,7 +53,7 @@
                                             >
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6">
+                                    <div class="col-12">
                                         <div class="form-group bmd-form-group">
                                             <label
                                                 for="code"
@@ -104,13 +104,34 @@
 export default {
     data() {
         return {
-            isEdit: false,
+            isEdit:
+                typeof this.$route.params.id != "undefined" &&
+                this.$route.params.id != null
+                    ? true
+                    : false,
+            id: this.$route.params.id,
             form: {
                 name: "",
                 code: ""
             },
             errors: []
         };
+    },
+
+    mounted() {
+        if (this.isEdit) {
+            this.$Progress.start();
+            axios
+                .get("api/v1/products/" + this.id)
+                .then(data => {
+                    this.$Progress.finish();
+                    this.form.name = 1;
+                    this.form.code = 1;
+                })
+                .catch(error => {
+                    this.$Progress.fail();
+                });
+        }
     },
 
     methods: {

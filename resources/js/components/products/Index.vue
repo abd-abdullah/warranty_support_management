@@ -48,7 +48,7 @@
                                         <td>{{ product.created_at }}</td>
                                         <td class="td-actions text-right">
                                             <router-link
-                                                to="/prducts"
+                                                :to="{ name: 'product_form', params:{'id':product.id}}"
                                                 type="button"
                                                 rel="tooltip"
                                                 class="btn btn-success btn-round"
