@@ -20,11 +20,11 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <param
+                            <search
                                 :pagination="pagination"
                                 :param="param"
                                 @limit="getData()"
-                            ></param>
+                            ></search>
                             <table class="table table-sortable">
                                 <thead>
                                     <tr>
@@ -60,6 +60,7 @@
                                                 >
                                             </router-link>
                                             <button
+                                                @click.prevent="remove(product)"
                                                 type="button"
                                                 rel="tooltip"
                                                 class="btn btn-danger btn-round"
@@ -125,13 +126,12 @@ export default {
                 )
                 .then(response => {
                     this.$Progress.finish();
-                    console.log(response);
                     this.products = response.data.data;
                     this.pagination = response.data.meta;
                 })
                 .catch(e => {
                     this.$Progress.fail();
-                    console.log(e);
+                    this.$toaster.error("Something went wrong");
                 });
         },
         sort(event){
@@ -145,6 +145,20 @@ export default {
                 this.getData();
             }
 
+        },
+        remove(product){
+            this.$swal("Are you sure to delete this product?").then((result) => {
+                if(result.isConfirmed === true){
+                    this.$jsHelper.delete('api/v1/products/'+product.id).then(response =>{
+                        this.$Progress.finish();
+                        this.$toaster.warning("Deleted successfully");
+                        this.getData();
+                    }).catch(e => {
+                        this.$Progress.fail();
+                        this.$toaster.error("Something went wrong");
+                    });
+                }
+            })
         }
     }
 };

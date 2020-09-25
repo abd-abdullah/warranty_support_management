@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="offset-md-3 col-md-6">
-                    <div class="card ">
+                    <div class="card">
                         <div
                             class="card-header card-header-rose card-header-icon"
                         >
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body ">
+                        <div class="card-body">
                             <form action="">
                                 <div class="row">
                                     <div class="col-12">
@@ -121,15 +121,16 @@ export default {
     mounted() {
         if (this.isEdit) {
             this.$Progress.start();
-            axios
+            this.$jsHelper
                 .get("api/v1/products/" + this.id)
-                .then(data => {
+                .then(response => {
                     this.$Progress.finish();
-                    this.form.name = 1;
-                    this.form.code = 1;
+                    this.form.name = response.data.data.name;
+                    this.form.code = response.data.data.code;
                 })
                 .catch(error => {
                     this.$Progress.fail();
+                    this.$toaster.error("Something went wrong");
                 });
         }
     },
@@ -137,11 +138,12 @@ export default {
     methods: {
         add() {
             this.$Progress.start();
-            axios
+            this.$jsHelper
                 .post("api/v1/products", this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$router.push({ name: "product" });
+                    this.$toaster.success("Successfully Added");
+                    setTimeout( () => this.$router.push({ name: "product"}), 1000);
                 })
                 .catch(error => {
                     this.$Progress.fail();
@@ -153,11 +155,12 @@ export default {
 
         update() {
             this.$Progress.start();
-            axios
-                .post("api/v1/products", this.form)
+            this.$jsHelper
+                .put("api/v1/products/"+this.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$router.push({ name: "product" });
+                    this.$toaster.info("Successfully Updated");
+                    setTimeout( () => this.$router.push({ name: "product"}), 1000);
                 })
                 .catch(error => {
                     this.$Progress.fail();

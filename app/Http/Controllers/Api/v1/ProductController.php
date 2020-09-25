@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductCollection;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -57,7 +57,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return ProductCollection($product);
+        return new ProductResource($product);
     }
 
     /**
@@ -69,7 +69,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3',
+            'code' => 'required|unique:products,code,'.$product->id,
+        ]);
+        $data = $request->all();
+        $product->update($data);
     }
 
     /**
@@ -80,6 +85,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
     }
 }

@@ -34,7 +34,7 @@
             </ul>
           </nav>
           <div class="copyright float-right">
-            &copy;2020, made with
+            &copy;2020, Design & Developed 
             <i class="material-icons">favorite</i> by
             <a href="https://www.facebook.com/abd1rti/" target="_blank">Md. Abdullah</a>
           </div>

@@ -20,10 +20,9 @@
         <label>
             <span class="bmd-form-group bmd-form-group-sm">
             <input v-model="query"
-                type="param"
+                type="text"
                 class="form-control form-control-sm"
-                placeholder="param data"
-                aria-controls="datatables"
+                placeholder="Search"
             />
             </span>
         </label>
