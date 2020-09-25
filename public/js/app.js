@@ -62071,7 +62071,11 @@ Api.interceptors.response.use(undefined, function (error) {
 
     case 503:
       //Down for Maintenance
-      window.location.reload();
+      localStorage.removeItem("auth");
+      Api.post("/logout").then(function () {
+        location.reload();
+      });
+      break;
 
     case 500:
       if (error.config && !error.config.__isRetryRequest) {

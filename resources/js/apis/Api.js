@@ -9,7 +9,11 @@ Api.interceptors.response.use(undefined, function (error) {
     case 401: //Not Logged in 
     case 419: //Session Expired 
     case 503: //Down for Maintenance
-      window.location.reload();
+      localStorage.removeItem("auth");
+      Api.post("/logout").then(() => {
+        location.reload();
+      });
+      break;
     case 500:
       if (error.config && !error.config.__isRetryRequest) {
         error.config.__isRetryRequest = true;
