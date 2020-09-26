@@ -1,14 +1,14 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import axios from "axios";
-
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 Vue.use(VueRouter)
 
-import dashboard from '../components/Dashboard'
-import login from '../components/layouts/auth/login'
-import product from '../components/products/index'
-import product_form from '../components/products/form'
+import dashboard from '../components/Dashboard';
+import login from '../components/layouts/auth/login';
+import product from '../components/products/index';
+import product_form from '../components/products/form';
+import admin_user from '../components/admin_users/index';
+import admin_user_form from '../components/admin_users/form';
 
 const routes = [
     {
@@ -24,6 +24,12 @@ const routes = [
         meta: { guestOnly: true, layout: "loginlayout" }
     },
     {
+        path: "/dashboard",
+        name: "dashboard",
+        component: dashboard,
+        meta: { authOnly: true, title: 'Dashboard' }
+    },
+    {
         path: "/products",
         name: "product",
         component: product,
@@ -36,11 +42,17 @@ const routes = [
         meta: { authOnly: true, title: 'Product', props: true }
     },
     {
-        path: "/dashboard",
-        name: "dashboard",
-        component: dashboard,
-        meta: { authOnly: true, title: 'Dashboard' }
-    }
+        path: "/admin-users",
+        name: "admin_user",
+        component: admin_user,
+        meta: { authOnly: true, title: 'Admin User' }
+    },
+    {
+        path: "/admin-users/form/:id?",
+        name: "admin_user_form",
+        component: admin_user_form,
+        meta: { authOnly: true, title: 'Admin User', props: true }
+    },
 ];
 
 const router = new VueRouter({

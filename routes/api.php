@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
+Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::ApiResource('products', 'ProductController');
+    Route::ApiResource('admin-users', 'AdminUserController');
+    Route::ApiResource('techinicians', 'ServiceMenController');
 });

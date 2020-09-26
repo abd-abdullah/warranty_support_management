@@ -20,7 +20,6 @@ class ServiceMan extends Model
     	'user_id',
         'salary',
         'joining_date',
-        'created_by',
         'created_at',
         'updated_at'
     ];

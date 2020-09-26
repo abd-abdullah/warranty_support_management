@@ -63,7 +63,7 @@ export default {
         .then(() => {
           this.$root.$emit("login", false);
           localStorage.removeItem("auth");
-          this.$router.push({ name: "Login" });
+          this.$router.push({ name: "login" });
         })
         .catch(error => {
           if (error.response.status === 422) {

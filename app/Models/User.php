@@ -31,6 +31,7 @@ class User extends Authenticatable
         'upazila_id',
         'address',
         'password',
+        'created_by',
         'status'
     ];
 
@@ -62,5 +63,9 @@ class User extends Authenticatable
 
     public function upazila(){
     	return $this->belongsTo(Division::class);
+    }
+    
+    public function createdBy(){
+    	return $this->belongsTo(User::class, 'created_by');
     }
 }

@@ -19,7 +19,6 @@ class Customer extends Model
         'id',
     	'user_id',
         'customer_id',
-        'created_by',
         'created_at',
         'updated_at'
     ];

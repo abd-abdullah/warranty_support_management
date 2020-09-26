@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductCollection;
-use App\Http\Resources\ProductResource;
-use App\Models\Product;
+use App\Http\Resources\AdminUserCollection;
+use App\Http\Resources\AdminUserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class AdminUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,18 +19,20 @@ class ProductController extends Controller
     {
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
-        $products = Product::query();
+        $adminUsers = User::query();
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
-            $products->orderBy($request->input('sort_by'), $request->input('sort_order'));
+            $adminUsers->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $products->orderBy('id', 'DESC');
+            $adminUsers->orderBy('id', 'DESC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $products->where('name', 'like', "%{$request->input('query')}%");
+            $adminUsers->where('name', 'like', "%{$request->input('query')}%");
+            $adminUsers->orWhere('email', 'like', "%{$request->input('query')}%");
+            $adminUsers->orWhere('phone', 'like', "%{$request->input('query')}%");
         }
 
-        return new ProductCollection($products->paginate($limit));
+        return new AdminUserCollection($adminUsers->paginate($limit));
     }
 
     /**
@@ -53,39 +55,39 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\User  $admin_user
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(User $admin_user)
     {
-        return new ProductResource($product);
+        return new AdminUserResource($admin_user);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\User  $admin_user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, User $admin_user)
     {
         $request->validate([
             'name' => 'required|min:3',
-            'code' => 'required|unique:products,code,'.$product->id,
+            'code' => 'required|unique:products,code,'.$admin_user->id,
         ]);
         $data = $request->all();
-        $product->update($data);
+        $admin_user->update($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\User  $admin_user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(User $admin_user)
     {
-        $product->delete();
+        $admin_user->delete();
     }
 }

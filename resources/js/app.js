@@ -4,8 +4,13 @@ require('./main');
 import Vue from 'vue';
 import VueProgressBar from 'vue-progressbar';
 import Swal from 'vue-sweetalert2';
-import Toaster from 'v-toaster'
+import Toaster from 'v-toaster';
+// Import stylesheet
 import 'v-toaster/dist/v-toaster.css'
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 
 const SwalOptions = {
     title: 'Are you sure?',
@@ -31,6 +36,7 @@ const VueProgressBaroptions = {
     inverse: false
 }
 
+Vue.use(Loading);
 Vue.use(Swal, SwalOptions);
 Vue.use(Toaster, {timeout: 2000})
 Vue.use(VueProgressBar, VueProgressBaroptions)
