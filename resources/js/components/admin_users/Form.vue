@@ -34,7 +34,7 @@
                             <form action="">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group bmd-form-group">
+                                        <div class="form-group bmd-form-group" v-bind:class="{ 'is-filled': form.name !== null }">
                                             <label
                                                 for="name"
                                                 class="bmd-label-floating"
@@ -52,7 +52,7 @@
                                                 >{{ errors.name[0] }}</span
                                             >
                                         </div>
-                                        <div class="form-group bmd-form-group">
+                                        <div class="form-group bmd-form-group" v-bind:class="{ 'is-filled': form.email !== null }">
                                             <label
                                                 for="email"
                                                 class="bmd-label-floating"
@@ -70,7 +70,7 @@
                                                 >{{ errors.email[0] }}</span
                                             >
                                         </div>
-                                        <div class="form-group bmd-form-group">
+                                        <div class="form-group bmd-form-group" v-bind:class="{ 'is-filled': form.phone !== null }">
                                             <label
                                                 for="phone"
                                                 class="bmd-label-floating"
@@ -88,7 +88,7 @@
                                                 >{{ errors.phone[0] }}</span
                                             >
                                         </div>
-                                        <div class="form-group bmd-form-group">
+                                        <div class="form-group bmd-form-group" v-bind:class="{ 'is-filled': form.other_contact_numbers !== null }">
                                             <label
                                                 for="other_contact_numbers"
                                                 class="bmd-label-floating"
@@ -108,19 +108,18 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="form-group bmd-form-group">
+                                        <div class="form-group bmd-form-group " v-bind:class="{ 'is-filled': form.address !== null }">
                                             <label
                                                 for="address"
-                                                class="bmd-label-floating is_filled"
+                                                class="bmd-label-floating"
                                                 >Address</label
                                             >
-                                            <textarea
+                                            <input
+                                                type="text"
                                                 class="form-control"
                                                 id="address"
                                                 v-model="form.address"
-                                                placeholder="Input Address"
-                                            >
-                                            </textarea>
+                                            />
                                             <span
                                                 class="text-danger"
                                                 v-if="errors.address"
@@ -129,10 +128,10 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="form-group bmd-form-group">
+                                        <div class="form-group bmd-form-group" v-bind:class="{ 'is-filled': form.country_id !== null }">
                                             <label
                                                 for="country_id"
-                                                class="bmd-label-floating is_filled"
+                                                class="bmd-label-floating"
                                                 >Country</label
                                             >
                                             <select v-model="form.country_id">
@@ -186,12 +185,12 @@ export default {
                     : false,
             id: this.$route.params.id,
             form: {
-                name: "",
-                email: "",
-                phone: "",
-                other_contact_numbers: "",
-                photo: "",
-                country_id: ""
+                name: null,
+                email: null,
+                phone: null,
+                other_contact_numbers: null,
+                photo: null,
+                country_id: null
             },
             errors: []
         };

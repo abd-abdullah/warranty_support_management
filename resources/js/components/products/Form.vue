@@ -34,7 +34,7 @@
                             <form action="">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group bmd-form-group">
+                                        <div class="form-group bmd-form-group" v-bind:class="{ 'is-filled': form.name !== null }">
                                             <label
                                                 for="name"
                                                 class="bmd-label-floating"
@@ -54,7 +54,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="form-group bmd-form-group">
+                                        <div class="form-group bmd-form-group" v-bind:class="{ 'is-filled': form.code !== null }">
                                             <label
                                                 for="code"
                                                 class="bmd-label-floating"
@@ -111,8 +111,8 @@ export default {
                     : false,
             id: this.$route.params.id,
             form: {
-                name: "",
-                code: ""
+                name: null,
+                code: null
             },
             errors: []
         };

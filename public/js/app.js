@@ -2710,9 +2710,6 @@ __webpack_require__.r(__webpack_exports__);
     });
   }
 });
-window.addEventListener("load", function () {// Javascript method's body can be found in assets/js/demos.js
-  //md.initDashboardPageCharts();
-});
 
 /***/ }),
 
@@ -2901,19 +2898,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       isEdit: typeof this.$route.params.id != "undefined" && this.$route.params.id != null ? true : false,
       id: this.$route.params.id,
       form: {
-        name: "",
-        email: "",
-        phone: "",
-        other_contact_numbers: "",
-        photo: "",
-        country_id: ""
+        name: null,
+        email: null,
+        phone: null,
+        other_contact_numbers: null,
+        photo: null,
+        country_id: null
       },
       errors: []
     };
@@ -3698,8 +3694,8 @@ __webpack_require__.r(__webpack_exports__);
       isEdit: typeof this.$route.params.id != "undefined" && this.$route.params.id != null ? true : false,
       id: this.$route.params.id,
       form: {
-        name: "",
-        code: ""
+        name: null,
+        code: null
       },
       errors: []
     };
@@ -3990,7 +3986,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "/* them custom css\r\n@author Md. Abdullah\r\n@email: abdullah001rti@gmail.com\r\n*/\r\n\r\n.main-panel>.content {\r\n    margin-top: 35px !important;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.sorting {\r\n    cursor: pointer;\r\n    position: relative;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after {\r\n    content: \"\\2191\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 1em;\r\n    top: 11px; \r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before {\r\n    content: \"\\2193\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 0.5em;\r\n    top: 11px;\r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:after {\r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:before {\r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.desc:after {  \r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";  \r\n    opacity: 1;\r\n}\r\n\r\n.table-sortable > thead > tr > th.desc:before {    \r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n}\r\n\r\n/*Datatable css done*/\r\n\r\n/*sidebar active css*/\r\n\r\n.sidebar[data-color=azure] li>a.router-link-active {\r\n    background-color: #00bcd4;\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4);\r\n}", ""]);
+exports.push([module.i, "/* them custom css\r\n@author Md. Abdullah\r\n@email: abdullah001rti@gmail.com\r\n*/\r\n\r\n.main-panel>.content {\r\n    margin-top: 35px !important;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.sorting {\r\n    cursor: pointer;\r\n    position: relative;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after {\r\n    content: \"\\2191\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 1em;\r\n    top: 11px; \r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before {\r\n    content: \"\\2193\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 0.5em;\r\n    top: 11px;\r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:after {\r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:before {\r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.desc:after {  \r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";  \r\n    opacity: 1;\r\n}\r\n\r\n.table-sortable > thead > tr > th.desc:before {    \r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n}\r\n\r\n/*Datatable css done*/\r\n\r\n/*sidebar active css*/\r\n\r\n.sidebar[data-color=azure] li>a.router-link-active {\r\n    background-color: #00bcd4;\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4);\r\n}\r\n\r\ntextarea.form-control{\r\n    border-radius: 5px !important;\r\n    border: 1px solid #aaa !important;\r\n    background: none !important;\r\n}", ""]);
 
 // exports
 
@@ -20746,269 +20742,317 @@ var render = function() {
               _c("form", { attrs: { action: "" } }, [
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "form-group bmd-form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "bmd-label-floating",
-                          attrs: { for: "name" }
-                        },
-                        [_vm._v("Name")]
-                      ),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group bmd-form-group",
+                        class: { "is-filled": _vm.form.name !== null }
+                      },
+                      [
+                        _c(
+                          "label",
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.name,
-                            expression: "form.name"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", id: "name" },
-                        domProps: { value: _vm.form.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "name", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.name
-                        ? _c("span", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.name[0]))
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group bmd-form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "bmd-label-floating",
-                          attrs: { for: "email" }
-                        },
-                        [_vm._v("Email")]
-                      ),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.email,
-                            expression: "form.email"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "email", id: "email" },
-                        domProps: { value: _vm.form.email },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "email", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.email
-                        ? _c("span", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.email[0]))
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group bmd-form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "bmd-label-floating",
-                          attrs: { for: "phone" }
-                        },
-                        [_vm._v("Phone")]
-                      ),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.phone,
-                            expression: "form.phone"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "number", id: "phone" },
-                        domProps: { value: _vm.form.phone },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "phone", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.phone
-                        ? _c("span", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.phone[0]))
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group bmd-form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "bmd-label-floating",
-                          attrs: { for: "other_contact_numbers" }
-                        },
-                        [_vm._v("Other contact Numbers")]
-                      ),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.other_contact_numbers,
-                            expression: "form.other_contact_numbers"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", id: "other_contact_numbers" },
-                        domProps: { value: _vm.form.other_contact_numbers },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.form,
-                              "other_contact_numbers",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.other_contact_numbers
-                        ? _c("span", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.other_contact_numbers[0]))
-                          ])
-                        : _vm._e()
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "form-group bmd-form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "bmd-label-floating is_filled",
-                          attrs: { for: "address" }
-                        },
-                        [_vm._v("Address")]
-                      ),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.address,
-                            expression: "form.address"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "address", placeholder: "Input Address" },
-                        domProps: { value: _vm.form.address },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "address", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.address
-                        ? _c("span", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.address[0]))
-                          ])
-                        : _vm._e()
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "form-group bmd-form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "bmd-label-floating is_filled",
-                          attrs: { for: "country_id" }
-                        },
-                        [_vm._v("Country")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
+                            staticClass: "bmd-label-floating",
+                            attrs: { for: "name" }
+                          },
+                          [_vm._v("Name")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.country_id,
-                              expression: "form.country_id"
+                              value: _vm.form.name,
+                              expression: "form.name"
                             }
                           ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "name" },
+                          domProps: { value: _vm.form.name },
                           on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.name
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.errors.name[0]))
+                            ])
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group bmd-form-group",
+                        class: { "is-filled": _vm.form.email !== null }
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "bmd-label-floating",
+                            attrs: { for: "email" }
+                          },
+                          [_vm._v("Email")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.email,
+                              expression: "form.email"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "email", id: "email" },
+                          domProps: { value: _vm.form.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "email", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.email
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.errors.email[0]))
+                            ])
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group bmd-form-group",
+                        class: { "is-filled": _vm.form.phone !== null }
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "bmd-label-floating",
+                            attrs: { for: "phone" }
+                          },
+                          [_vm._v("Phone")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.phone,
+                              expression: "form.phone"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", id: "phone" },
+                          domProps: { value: _vm.form.phone },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "phone", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.phone
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.errors.phone[0]))
+                            ])
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group bmd-form-group",
+                        class: {
+                          "is-filled": _vm.form.other_contact_numbers !== null
+                        }
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "bmd-label-floating",
+                            attrs: { for: "other_contact_numbers" }
+                          },
+                          [_vm._v("Other contact Numbers")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.other_contact_numbers,
+                              expression: "form.other_contact_numbers"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "other_contact_numbers" },
+                          domProps: { value: _vm.form.other_contact_numbers },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
                               _vm.$set(
                                 _vm.form,
-                                "country_id",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
+                                "other_contact_numbers",
+                                $event.target.value
                               )
                             }
                           }
-                        },
-                        [
-                          _c("option", { attrs: { disabled: "", value: "" } }, [
-                            _vm._v("Select Country")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", [_vm._v("A")]),
-                          _vm._v(" "),
-                          _c("option", [_vm._v("B")]),
-                          _vm._v(" "),
-                          _c("option", [_vm._v("C")])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.errors.country_id
-                        ? _c("span", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.country_id[0]))
-                          ])
-                        : _vm._e()
-                    ])
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.other_contact_numbers
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.other_contact_numbers[0])
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group bmd-form-group ",
+                        class: { "is-filled": _vm.form.address !== null }
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "bmd-label-floating",
+                            attrs: { for: "address" }
+                          },
+                          [_vm._v("Address")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.address,
+                              expression: "form.address"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "address" },
+                          domProps: { value: _vm.form.address },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "address", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.address
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.errors.address[0]))
+                            ])
+                          : _vm._e()
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group bmd-form-group",
+                        class: { "is-filled": _vm.form.country_id !== null }
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "bmd-label-floating",
+                            attrs: { for: "country_id" }
+                          },
+                          [_vm._v("Country")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.country_id,
+                                expression: "form.country_id"
+                              }
+                            ],
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "country_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { disabled: "", value: "" } },
+                              [_vm._v("Select Country")]
+                            ),
+                            _vm._v(" "),
+                            _c("option", [_vm._v("A")]),
+                            _vm._v(" "),
+                            _c("option", [_vm._v("B")]),
+                            _vm._v(" "),
+                            _c("option", [_vm._v("C")])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.errors.country_id
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.errors.country_id[0]))
+                            ])
+                          : _vm._e()
+                      ]
+                    )
                   ])
                 ])
               ])
@@ -22479,85 +22523,99 @@ var render = function() {
               _c("form", { attrs: { action: "" } }, [
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "form-group bmd-form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "bmd-label-floating",
-                          attrs: { for: "name" }
-                        },
-                        [_vm._v("Name")]
-                      ),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group bmd-form-group",
+                        class: { "is-filled": _vm.form.name !== null }
+                      },
+                      [
+                        _c(
+                          "label",
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.name,
-                            expression: "form.name"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", id: "name" },
-                        domProps: { value: _vm.form.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                            staticClass: "bmd-label-floating",
+                            attrs: { for: "name" }
+                          },
+                          [_vm._v("Name")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
                             }
-                            _vm.$set(_vm.form, "name", $event.target.value)
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "name" },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.name
-                        ? _c("span", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.name[0]))
-                          ])
-                        : _vm._e()
-                    ])
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.name
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.errors.name[0]))
+                            ])
+                          : _vm._e()
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "form-group bmd-form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "bmd-label-floating",
-                          attrs: { for: "code" }
-                        },
-                        [_vm._v("Code")]
-                      ),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group bmd-form-group",
+                        class: { "is-filled": _vm.form.code !== null }
+                      },
+                      [
+                        _c(
+                          "label",
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.code,
-                            expression: "form.code"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", id: "code" },
-                        domProps: { value: _vm.form.code },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                            staticClass: "bmd-label-floating",
+                            attrs: { for: "code" }
+                          },
+                          [_vm._v("Code")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.code,
+                              expression: "form.code"
                             }
-                            _vm.$set(_vm.form, "code", $event.target.value)
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "code" },
+                          domProps: { value: _vm.form.code },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "code", $event.target.value)
+                            }
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.code
-                        ? _c("span", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.code[0]))
-                          ])
-                        : _vm._e()
-                    ])
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.code
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.errors.code[0]))
+                            ])
+                          : _vm._e()
+                      ]
+                    )
                   ])
                 ])
               ])
@@ -44113,25 +44171,11 @@ $(document).on("click", ".table-sortable .sorting", function () {
   $(document).find(".table-sortable .desc").not($(this)).removeClass('desc');
 }); //End
 
-$(document).on('focus', ".bmd-form-group input", function () {
+$(document).on('focus', ".bmd-form-group :input", function () {
   $(this).parent().addClass('is-focused');
 });
-$(document).on('focusout', ".bmd-form-group input", function () {
-  var checkVal = $(this).val();
-
-  if (checkVal == '') {
-    $(this).parent().removeClass('is-filled');
-  } else {
-    $(this).parent().addClass('is-filled');
-  }
-
+$(document).on('focusout', ".bmd-form-group :input", function () {
   $(this).parent().removeClass('is-focused');
-});
-window.addEventListener('load', function () {
-  $val = $(document).find(".bmd-form-group input").filter(function () {
-    return $.trim($(this).val()).length !== 0;
-  });
-  $val.parent().addClass('is-filled');
 });
 
 /***/ }),
