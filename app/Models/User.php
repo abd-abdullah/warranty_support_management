@@ -26,6 +26,7 @@ class User extends Authenticatable
         'phone',
         'other_contact_numbers',
         'photo',
+        'country_id',
         'division_id',
         'district_id',
         'upazila_id',
@@ -53,6 +54,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function country(){
+    	return $this->belongsTo(Country::class);
+    }
+    
     public function division(){
     	return $this->belongsTo(Division::class);
     }

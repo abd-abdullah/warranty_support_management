@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('other_contact_numbers')->nullable();
             $table->string('photo')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('division_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('upazila_id')->nullable();
@@ -29,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->foreign('country_id')->references('id')->on('countries');
             $table->foreign('division_id')->references('id')->on('divisions');
             $table->foreign('district_id')->references('id')->on('districts');
             $table->foreign('upazila_id')->references('id')->on('upazilas');

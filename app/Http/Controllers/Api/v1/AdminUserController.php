@@ -45,11 +45,22 @@ class AdminUserController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'code' => 'required|unique:products',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|numeric|digits:11',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'nullable|string|min:8',
         ]);
         $data = $request->all();
+        $data['user_type'] = 'admin';
         $data['created_by'] = auth()->id();
-        Product::create($data);
+        $data['email_verified_at'] = now();
+        if($request->password !== NULL){
+            $data['password'] = bcrypt($request->password);
+        }
+        else{
+            $data['password'] = bcrypt($request->phone);
+        }
+        return User::create($data);
     }
 
     /**
@@ -74,10 +85,14 @@ class AdminUserController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'code' => 'required|unique:products,code,'.$admin_user->id,
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|numeric|digits:11',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$admin_user->id,
+            'password' => 'nullable|string|min:8',
         ]);
-        $data = $request->all();
-        $admin_user->update($data);
+
+        $data = $request->except('password');
+        return $admin_user->update($data);
     }
 
     /**

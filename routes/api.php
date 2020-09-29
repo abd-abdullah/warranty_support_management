@@ -24,4 +24,9 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::ApiResource('products', 'ProductController');
     Route::ApiResource('admin-users', 'AdminUserController');
     Route::ApiResource('techinicians', 'ServiceMenController');
+    Route::get('countries', 'AddressController@getCountry')->name('countries.index');
+    Route::get('divisions/{country_id}', 'AddressController@getDivision')->name('divisions.index');
+    Route::get('districts/{division_id}', 'AddressController@getDistrict')->name('districts.index');
+    Route::get('upazilas/{district_id}', 'AddressController@getUpazila')->name('upazilas.index');
+    Route::get('post-offices/{upazila_id}', 'AddressController@getPostOffice')->name('post-offices.index');
 });

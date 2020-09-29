@@ -1,6 +1,5 @@
 require('./main');
 
-
 import Vue from 'vue';
 import VueProgressBar from 'vue-progressbar';
 import Swal from 'vue-sweetalert2';
@@ -10,6 +9,7 @@ import 'v-toaster/dist/v-toaster.css'
 import Loading from 'vue-loading-overlay';
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css';
+import Select2 from 'v-select2-component';
 
 
 const SwalOptions = {
@@ -40,7 +40,7 @@ Vue.use(Loading);
 Vue.use(Swal, SwalOptions);
 Vue.use(Toaster, {timeout: 2000})
 Vue.use(VueProgressBar, VueProgressBaroptions)
-
+Vue.component('Select2', Select2);
 
 import appLogin from './components/layouts/auth/app';
 import appMain from './components/layouts/main/app';
