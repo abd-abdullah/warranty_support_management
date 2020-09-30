@@ -63,11 +63,11 @@ class User extends Authenticatable
     }
 
     public function district(){
-    	return $this->belongsTo(Division::class);
+    	return $this->belongsTo(District::class);
     }
 
     public function upazila(){
-    	return $this->belongsTo(Division::class);
+    	return $this->belongsTo(Upazila::class);
     }
     
     public function createdBy(){

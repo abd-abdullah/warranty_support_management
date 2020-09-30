@@ -22,8 +22,11 @@ class AdminUserCollection extends ResourceCollection
                     'email' => $adminUser->email,
                     'phone' => $adminUser->phone,
                     'other_contact_numbers' => $adminUser->other_contact_numbers,
-                    'photo' => $adminUser->photo,
-                    'photo_path' => url('/'.$adminUser->photo),
+                    'address' => $adminUser->address,
+                    'country' => ($adminUser->country != NULL)?$adminUser->country->name:'',
+                    'division' => ($adminUser->division != NULL)?$adminUser->division->name:'',
+                    'district' => ($adminUser->district != NULL)?$adminUser->district->name:'',
+                    'upazila' => ($adminUser->upazila != NULL)?$adminUser->upazila->name:'',
                     'status' => $adminUser->status,
                 ];
             }),

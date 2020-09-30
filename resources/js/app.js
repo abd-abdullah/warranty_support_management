@@ -10,6 +10,7 @@ import Loading from 'vue-loading-overlay';
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css';
 import Select2 from 'v-select2-component';
+import vuejsDatepicker from 'vuejs-datepicker';
 
 
 const SwalOptions = {
@@ -41,6 +42,7 @@ Vue.use(Swal, SwalOptions);
 Vue.use(Toaster, {timeout: 2000})
 Vue.use(VueProgressBar, VueProgressBaroptions)
 Vue.component('Select2', Select2);
+Vue.component(vuejsDatepicker);
 
 import appLogin from './components/layouts/auth/app';
 import appMain from './components/layouts/main/app';

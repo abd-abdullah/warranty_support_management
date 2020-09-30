@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::ApiResource('products', 'ProductController');
     Route::ApiResource('admin-users', 'AdminUserController');
-    Route::ApiResource('techinicians', 'ServiceMenController');
+    Route::ApiResource('technicians', 'ServiceMenController');
     Route::get('countries', 'AddressController@getCountry')->name('countries.index');
     Route::get('divisions/{country_id}', 'AddressController@getDivision')->name('divisions.index');
     Route::get('districts/{division_id}', 'AddressController@getDistrict')->name('districts.index');

@@ -13,17 +13,17 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <h4 class="card-title" v-if="isEdit">
-                                        Edit Product
+                                        Edit Technician
                                     </h4>
                                     <h4 class="card-title" v-else>
-                                        Add Product
+                                        Add Technician
                                     </h4>
                                 </div>
                                 <div
                                     class="col-sm-12 col-md-6 text-right pr-md-0"
                                 >
                                     <router-link
-                                        to="/products"
+                                        to="/technicians"
                                         class="btn btn-sm btn-rose"
                                         >Back to list</router-link
                                     >
@@ -34,7 +34,12 @@
                             <form action="">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group bmd-form-group">
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled': form.name !== null
+                                            }"
+                                        >
                                             <label
                                                 for="name"
                                                 class="bmd-label-floating"
@@ -52,24 +57,225 @@
                                                 >{{ errors.name[0] }}</span
                                             >
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group bmd-form-group">
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled': form.email !== null
+                                            }"
+                                        >
                                             <label
-                                                for="code"
+                                                for="email"
                                                 class="bmd-label-floating"
-                                                >Code</label
+                                                >Email</label
+                                            >
+                                            <input
+                                                type="email"
+                                                class="form-control"
+                                                id="email"
+                                                v-model="form.email"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.email"
+                                                >{{ errors.email[0] }}</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled': form.password !== null,
+                                                'd-none': isEdit == true
+                                            }"
+                                        >
+                                            <label
+                                                for="password"
+                                                class="bmd-label-floating"
+                                                >Password</label
+                                            >
+                                            <input
+                                                type="password"
+                                                class="form-control"
+                                                id="password"
+                                                v-model="form.password"
+                                                placeholder="password"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.password"
+                                                >{{ errors.password[0] }}</span
+                                            >
+                                        </div>
+                                        <vuejs-datepicker></vuejs-datepicker>
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled': form.phone !== null
+                                            }"
+                                        >
+                                            <label
+                                                for="phone"
+                                                class="bmd-label-floating"
+                                                >Phone</label
+                                            >
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                id="phone"
+                                                v-model="form.phone"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.phone"
+                                                >{{ errors.phone[0] }}</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled':
+                                                    form.other_contact_numbers !==
+                                                    null
+                                            }"
+                                        >
+                                            <label
+                                                for="other_contact_numbers"
+                                                class="bmd-label-floating"
+                                                >Other contact Numbers</label
                                             >
                                             <input
                                                 type="text"
                                                 class="form-control"
-                                                id="code"
-                                                v-model="form.code"
+                                                id="other_contact_numbers"
+                                                v-model="
+                                                    form.other_contact_numbers
+                                                "
                                             />
                                             <span
                                                 class="text-danger"
-                                                v-if="errors.code"
-                                                >{{ errors.code[0] }}</span
+                                                v-if="
+                                                    errors.other_contact_numbers
+                                                "
+                                                >{{
+                                                    errors
+                                                        .other_contact_numbers[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label
+                                                class="select2-form-group"
+                                                >Country</label
+                                            >
+                                            <Select2
+                                                :options="optionsCountry"
+                                                v-model="form.country_id"
+                                                name="country_id"
+                                                id="country"
+                                                @change="getDropdown('api/v1/divisions/'+form.country_id, 'optionsDivision')"
+                                                placeholder="Select country"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.country_id"
+                                                >{{
+                                                    errors.country_id[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label
+                                                class="select2-form-group"
+                                                >Division</label
+                                            >
+                                            <Select2
+                                                :options="optionsDivision"
+                                                v-model="form.division_id"
+                                                name="division_id"
+                                                id="division"
+                                                @change="getDropdown('api/v1/districts/'+form.division_id, 'optionsDistrict')"
+                                                placeholder="Select Division"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.division_id"
+                                                >{{
+                                                    errors.division_id[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label
+                                                class="select2-form-group"
+                                                >District</label
+                                            >
+                                            <Select2
+                                                :options="optionsDistrict"
+                                                v-model="form.district_id"
+                                                name="district_id"
+                                                id="district"
+                                                @change="getDropdown('api/v1/upazilas/'+form.district_id, 'optionsUpazila')"
+                                                placeholder="Select District"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.district_id"
+                                                >{{
+                                                    errors.district_id[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label
+                                                class="select2-form-group"
+                                                >Upazila</label
+                                            >
+                                            <Select2
+                                                :options="optionsUpazila"
+                                                v-model="form.upazila_id"
+                                                name="upazila_id"
+                                                id="upazila"
+                                                placeholder="Select Upazila"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.upazila_id"
+                                                >{{
+                                                    errors.upazila_id[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>                                 
+                                    <div class="col-12">
+                                        <div
+                                            class="form-group bmd-form-group "
+                                            v-bind:class="{
+                                                'is-filled':
+                                                    form.address !== null
+                                            }"
+                                        >
+                                            <label
+                                                for="address"
+                                                class="bmd-label-floating"
+                                                >Address/Road no/House no</label
+                                            >
+                                            <textarea
+                                                type="text"
+                                                class="form-control"
+                                                id="address"
+                                                v-model="form.address"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.address"
+                                                >{{ errors.address[0] }}</span
                                             >
                                         </div>
                                     </div>
@@ -111,27 +317,53 @@ export default {
                     : false,
             id: this.$route.params.id,
             form: {
-                name: "",
-                code: ""
+                name: null,
+                email: null,
+                password: null,
+                phone: null,
+                other_contact_numbers: null,
+                photo: null,
+                country_id: 20,
+                division_id: null,
+                district_id: null,
+                upazila_id: null,
+                address: null
             },
-            errors: []
+            errors: [],
+            optionsCountry: [],
+            optionsDivision: [],
+            optionsDistrict: [],
+            optionsUpazila: []
         };
     },
 
     mounted() {
+        this.$Progress.start();
         if (this.isEdit) {
-            this.$Progress.start();
             this.$jsHelper
-                .get("api/v1/products/" + this.id)
+                .get("api/v1/technicians/" + this.id)
                 .then(response => {
-                    this.$Progress.finish();
                     this.form.name = response.data.data.name;
-                    this.form.code = response.data.data.code;
+                    this.form.email = response.data.data.email;
+                    this.form.phone = response.data.data.phone;
+                    this.form.other_contact_numbers =
+                        response.data.data.other_contact_numbers;
+                    this.form.photo = response.data.data.photo;
+                    this.form.country_id = response.data.data.country_id;
+                    this.form.division_id = response.data.data.division_id;
+                    this.form.district_id = response.data.data.district_id;
+                    this.form.upazila_id = response.data.data.upazila_id;
+                    this.form.address = response.data.data.address;
+                    this.selectOption();
                 })
                 .catch(error => {
                     this.$Progress.fail();
                     this.$toaster.error("Something went wrong");
                 });
+        }
+        else{
+            this.getDropdown('api/v1/countries', 'optionsCountry');
+            this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
         }
     },
 
@@ -139,11 +371,14 @@ export default {
         add() {
             this.$Progress.start();
             this.$jsHelper
-                .post("api/v1/products", this.form)
+                .post("api/v1/technicians", this.form)
                 .then(data => {
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
-                    setTimeout( () => this.$router.push({ name: "product"}), 1000);
+                    setTimeout(
+                        () => this.$router.push({ name: "admin_user" }),
+                        1000
+                    );
                 })
                 .catch(error => {
                     this.$Progress.fail();
@@ -156,11 +391,14 @@ export default {
         update() {
             this.$Progress.start();
             this.$jsHelper
-                .put("api/v1/products/"+this.id, this.form)
+                .put("api/v1/technicians/" + this.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
                     this.$toaster.info("Successfully Updated");
-                    setTimeout( () => this.$router.push({ name: "product"}), 1000);
+                    setTimeout(
+                        () => this.$router.push({ name: "admin_user" }),
+                        1000
+                    );
                 })
                 .catch(error => {
                     this.$Progress.fail();
@@ -168,6 +406,23 @@ export default {
                         this.errors = error.response.data.errors;
                     }
                 });
+        },
+        getDropdown(url, option){
+            this.$Progress.start();
+            this.$jsHelper.get(url).then(response => {
+                this[option] = response.data.map(function(val){
+                    return {id:val.id, text:val.name}
+                });
+                this.$Progress.finish();
+            }).catch(error => {
+                this.$Progress.fail();
+            });
+        },
+        selectOption(){
+            this.getDropdown('api/v1/countries', 'optionsCountry');
+            this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
+            this.getDropdown('api/v1/districts/'+this.form.division_id, 'optionsDistrict');
+            this.getDropdown('api/v1/upazilas/'+this.form.district_id, 'optionsUpazila');
         }
     }
 };

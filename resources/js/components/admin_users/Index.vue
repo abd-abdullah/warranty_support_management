@@ -30,9 +30,9 @@
                                     <tr>
                                         <th>SL#</th>
                                         <th v-on:click = "sort($event)" data-column="name" class="sorting">Name</th>
-                                        <th data-column="photo">Photo</th>
                                         <th v-on:click = "sort($event)" data-column="email" class="sorting">Email</th>
                                         <th v-on:click = "sort($event)" data-column="phone" class="sorting">Phone</th>
+                                        <th data-column="photo">Address</th>
                                         <th class="text-right">
                                             Actions
                                         </th>
@@ -45,10 +45,16 @@
                                     >
                                         <td>{{ pagination.from + index }}</td>
                                         <td>{{ admin_user.name }}</td>
-                                        <td><img v-bind:src="admin_user.photo" /></td>
                                         <td>{{ admin_user.email }}</td>
                                         <td>{{ admin_user.phone }}</td>
-                                        <td class="td-actions text-right">
+                                        <td>{{ 
+                                                ((admin_user.address != '' && admin_user.address != null)?admin_user.address+', ':'')+
+                                                ((admin_user.upazila != '')?admin_user.upazila+', ':'')+
+                                                ((admin_user.district != '')?admin_user.district+', ':'')+
+                                                ((admin_user.division != '')?admin_user.division+', ':'')+
+                                                ((admin_user.country != '')?admin_user.country:'')
+                                            }}</td>
+                                        <td class="td-actions w76 text-right">
                                             <router-link
                                                 :to="{ name: 'admin_user_form', params:{'id':admin_user.id}}"
                                                 type="button"
