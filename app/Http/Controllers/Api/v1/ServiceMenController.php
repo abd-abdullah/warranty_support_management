@@ -7,6 +7,7 @@ use App\Http\Resources\ServiceMenCollection;
 use App\Http\Resources\ServiceMenResource;
 use App\Models\ServiceMan;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ServiceMenController extends Controller
@@ -21,19 +22,22 @@ class ServiceMenController extends Controller
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
         $technicians = ServiceMan::query();
-        $technicians->join('users', 'service_men.user_id', '=', 'users.id');
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $technicians->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $technicians->orderBy('users.id', 'DESC');
+            $technicians->orderBy('id', 'DESC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $technicians->where('name', 'like', "%{$request->input('query')}%");
-            $technicians->orWhere('email', 'like', "%{$request->input('query')}%");
-            $technicians->orWhere('phone', 'like', "%{$request->input('query')}%");
+            $query = $request->input('query');
+            $technicians->whereHas('user', function($q) use($query){
+                $q->where('name', 'like', "%{$query}%");
+                $q->orWhere('email', 'like', "%{$query}%");
+                $q->orWhere('phone', 'like', "%{$query}%");
+            });
         }
-        $technicians->select('users.*', 'service_men.id', 'service_men.joining_date', 'service_men.salary');
+        $technicians->with('user');
+        $technicians->select('*');
         return new ServiceMenCollection($technicians->paginate($limit));
     }
 
@@ -45,7 +49,28 @@ class ServiceMenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|numeric|digits:11|unique:users',
+            'joining_date' => 'required|date|before_or_equal:today',
+            'password' => 'nullable|string|min:8',
+        ]);
+
+        $data = $request->all();
+        $data['user_type'] = 'service_men';
+        $data['created_by'] = auth()->id();
+        $data['joining_date'] = Carbon::parse($request->joining_date)->format('Y-m-d');
+        $data['email_verified_at'] = now();
+        if($request->password !== NULL){
+            $data['password'] = bcrypt($request->password);
+        }
+        else{
+            $data['password'] = bcrypt($request->phone);
+        }
+
+        $user = User::create($data);
+        return ServiceMan::create(['user_id' => $user->id, 'joining_date' => $data['joining_date']]);
     }
 
     /**
@@ -69,7 +94,18 @@ class ServiceMenController extends Controller
      */
     public function update(Request $request, ServiceMan $technician)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users,email,'.$technician->user_id,
+            'phone' => 'required|numeric|digits:11|unique:users,phone,'.$technician->user_id,
+            'joining_date' => 'required|date|before_or_equal:today',
+            'password' => 'nullable|string|min:8',
+        ]);
+   
+        $data = $request->except(['password', 'joining_date']);
+        $technician->user()->update($data);
+        $joining_date = Carbon::parse($request->joining_date)->format('Y-m-d');
+        $technician->update(['joining_date' => $joining_date]);
     }
 
     /**
@@ -80,6 +116,6 @@ class ServiceMenController extends Controller
      */
     public function destroy(ServiceMan $technician)
     {
-        //
+        $technician->delete();
     }
 }

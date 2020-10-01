@@ -72,6 +72,7 @@
                                                 type="email"
                                                 class="form-control"
                                                 id="email"
+                                                :readonly="isEdit === true"
                                                 v-model="form.email"
                                             />
                                             <span
@@ -97,7 +98,7 @@
                                                 class="form-control"
                                                 id="password"
                                                 v-model="form.password"
-                                                placeholder="password"
+                                                placeholder="*******"
                                             />
                                             <span
                                                 class="text-danger"
@@ -105,7 +106,19 @@
                                                 >{{ errors.password[0] }}</span
                                             >
                                         </div>
-                                        <vuejs-datepicker></vuejs-datepicker>
+                                        <div class="form-group bmd-form-group is-filled">
+                                        <label
+                                                for="joining_date"
+                                                class="bmd-label-floating"
+                                                >Date of Joining</label
+                                            >
+                                       <v-date-picker :masks="{ input: ['YYYY-MM-DD'], date:['YYYY-MM-DD']}" v-model='form.joining_date' />
+                                         <span
+                                                class="text-danger"
+                                                v-if="errors.joining_date"
+                                                >{{ errors.joining_date[0] }}</span
+                                            >
+                                        </div>
                                         <div
                                             class="form-group bmd-form-group"
                                             v-bind:class="{
@@ -319,6 +332,7 @@ export default {
             form: {
                 name: null,
                 email: null,
+                joining_date: new Date(),
                 password: null,
                 phone: null,
                 other_contact_numbers: null,
@@ -344,6 +358,7 @@ export default {
                 .get("api/v1/technicians/" + this.id)
                 .then(response => {
                     this.form.name = response.data.data.name;
+                    this.form.joining_date = new Date(response.data.data.date_of_join);
                     this.form.email = response.data.data.email;
                     this.form.phone = response.data.data.phone;
                     this.form.other_contact_numbers =
@@ -376,7 +391,7 @@ export default {
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
                     setTimeout(
-                        () => this.$router.push({ name: "admin_user" }),
+                        () => this.$router.push({ name: "tecnician" }),
                         1000
                     );
                 })
@@ -396,7 +411,7 @@ export default {
                     this.$Progress.finish();
                     this.$toaster.info("Successfully Updated");
                     setTimeout(
-                        () => this.$router.push({ name: "admin_user" }),
+                        () => this.$router.push({ name: "technician" }),
                         1000
                     );
                 })

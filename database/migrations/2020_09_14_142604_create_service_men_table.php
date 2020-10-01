@@ -18,6 +18,7 @@ class CreateServiceMenTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->decimal('salary', 8,2)->nullable();
             $table->dateTime('joining_date');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -32,6 +32,8 @@ class AdminUserController extends Controller
             $adminUsers->orWhere('phone', 'like', "%{$request->input('query')}%");
         }
 
+        $adminUsers->where('user_type', 'admin');
+
         return new AdminUserCollection($adminUsers->paginate($limit));
     }
 
@@ -46,8 +48,7 @@ class AdminUserController extends Controller
         $request->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
-            'phone' => 'required|numeric|digits:11',
-            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|numeric|digits:11|unique:users',
             'password' => 'nullable|string|min:8',
         ]);
         $data = $request->all();
@@ -85,9 +86,8 @@ class AdminUserController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|numeric|digits:11',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$admin_user->id,
+            'email' => 'required|email|unique:users,email.'.$admin_user->id,
+            'phone' => 'required|numeric|digits:11|unique:users,phone.'.$admin_user->id,
             'password' => 'nullable|string|min:8',
         ]);
 

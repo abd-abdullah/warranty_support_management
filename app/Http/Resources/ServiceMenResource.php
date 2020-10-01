@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ServiceMenResource extends JsonResource
@@ -20,7 +21,7 @@ class ServiceMenResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'salary' => $this->salary,
-            'date_of_join' => $this->joining_date,
+            'date_of_join' => Carbon::parse($this->joining_date)->format('Y-m-d'),
             'other_contact_numbers' => $this->other_contact_numbers,
             'country_id' => $this->country_id,
             'division_id' => $this->division_id,
