@@ -105,3 +105,11 @@ textarea.form-control{
 .w76{
     width: 76px;
 }
+
+.card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text) {
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px #9179dd;
+}
+
+.card.bg-city, .card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text), .card.card-rotate.bg-city .back, .card.card-rotate.bg-city .front {
+    background: linear-gradient(142deg,#cd30e8,#69abe1);
+}

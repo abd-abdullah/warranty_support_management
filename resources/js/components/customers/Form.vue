@@ -13,17 +13,17 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <h4 class="card-title" v-if="isEdit">
-                                        Edit Admin User
+                                        Edit Technician
                                     </h4>
                                     <h4 class="card-title" v-else>
-                                        Add Admin User
+                                        Add Technician
                                     </h4>
                                 </div>
                                 <div
                                     class="col-sm-12 col-md-6 text-right pr-md-0"
                                 >
                                     <router-link
-                                        to="/admin-users"
+                                        to="/customers"
                                         class="btn btn-sm btn-rose"
                                         >Back to list</router-link
                                     >
@@ -60,6 +60,29 @@
                                         <div
                                             class="form-group bmd-form-group"
                                             v-bind:class="{
+                                                'is-filled': form.customerId !== null
+                                            }"
+                                        >
+                                            <label
+                                                for="customerId"
+                                                class="bmd-label-floating"
+                                                >Customer ID</label
+                                            >
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="customerId"
+                                                v-model="form.customerId"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.customerId"
+                                                >{{ errors.customerId[0] }}</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
                                                 'is-filled': form.email !== null
                                             }"
                                         >
@@ -81,31 +104,7 @@
                                                 >{{ errors.email[0] }}</span
                                             >
                                         </div>
-                                        <div
-                                            class="form-group bmd-form-group"
-                                            v-bind:class="{
-                                                'is-filled': form.password !== null,
-                                                'd-none': isEdit == true
-                                            }"
-                                        >
-                                            <label
-                                                for="password"
-                                                class="bmd-label-floating"
-                                                >Password</label
-                                            >
-                                            <input
-                                                type="password"
-                                                class="form-control"
-                                                id="password"
-                                                v-model="form.password"
-                                                placeholder="password"
-                                            />
-                                            <span
-                                                class="text-danger"
-                                                v-if="errors.password"
-                                                >{{ errors.password[0] }}</span
-                                            >
-                                        </div>
+                                         
                                         <div
                                             class="form-group bmd-form-group"
                                             v-bind:class="{
@@ -319,7 +318,7 @@ export default {
             form: {
                 name: null,
                 email: null,
-                password: null,
+                customerId: null,
                 phone: null,
                 other_contact_numbers: null,
                 photo: null,
@@ -341,9 +340,10 @@ export default {
         this.$Progress.start();
         if (this.isEdit) {
             this.$jsHelper
-                .get("api/v1/admin-users/" + this.id)
+                .get("api/v1/customers/" + this.id)
                 .then(response => {
                     this.form.name = response.data.data.name;
+                    this.form.customerId = response.data.data.customerId;
                     this.form.email = response.data.data.email;
                     this.form.phone = response.data.data.phone;
                     this.form.other_contact_numbers =
@@ -371,12 +371,12 @@ export default {
         add() {
             this.$Progress.start();
             this.$jsHelper
-                .post("api/v1/admin-users", this.form)
+                .post("api/v1/customers", this.form)
                 .then(data => {
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
                     setTimeout(
-                        () => this.$router.push({ name: "admin_user" }),
+                        () => this.$router.push({ name: "customer" }),
                         1000
                     );
                 })
@@ -394,12 +394,12 @@ export default {
         update() {
             this.$Progress.start();
             this.$jsHelper
-                .put("api/v1/admin-users/" + this.id, this.form)
+                .put("api/v1/customers/" + this.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
                     this.$toaster.info("Successfully Updated");
                     setTimeout(
-                        () => this.$router.push({ name: "admin_user" }),
+                        () => this.$router.push({ name: "customer" }),
                         1000
                     );
                 })

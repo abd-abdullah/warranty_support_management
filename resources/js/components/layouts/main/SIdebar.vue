@@ -34,6 +34,12 @@ Tip 2: you can also add an image using data-image tag
                     >
                 </li>
                 <li class="nav-item">
+                    <router-link to="/customers" class="nav-link"
+                        ><i class="material-icons">Customers</i>
+                        <p>Customers</p></router-link
+                    >
+                </li>
+                <li class="nav-item">
                     <router-link to="/admin-users" class="nav-link"
                         ><i class="material-icons">Moderator</i>
                         <p>Moderator</p></router-link

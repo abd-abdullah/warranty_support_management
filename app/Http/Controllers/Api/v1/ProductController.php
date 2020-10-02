@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -47,7 +48,17 @@ class ProductController extends Controller
         ]);
         $data = $request->all();
         $data['created_by'] = auth()->id();
-        Product::create($data);
+        try{
+            \DB::beginTransaction();
+            Product::create($data);
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
     }
 
     /**
@@ -75,7 +86,17 @@ class ProductController extends Controller
             'code' => 'required|unique:products,code,'.$product->id,
         ]);
         $data = $request->all();
-        $product->update($data);
+        try{
+            \DB::beginTransaction();
+            $product->update($data);
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
     }
 
     /**

@@ -128,7 +128,7 @@
                                             <label
                                                 for="phone"
                                                 class="bmd-label-floating"
-                                                >Phone</label
+                                                >Mobile</label
                                             >
                                             <input
                                                 type="number"
@@ -175,7 +175,7 @@
                                             >
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-12 d-none">
                                         <div class="form-group">
                                             <label
                                                 class="select2-form-group"
@@ -391,7 +391,7 @@ export default {
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
                     setTimeout(
-                        () => this.$router.push({ name: "tecnician" }),
+                        () => this.$router.push({ name: "technician" }),
                         1000
                     );
                 })
@@ -399,6 +399,9 @@ export default {
                     this.$Progress.fail();
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
+                    }
+                    else{
+                        this.$toaster.error("Something went wrong");
                     }
                 });
         },
@@ -419,6 +422,9 @@ export default {
                     this.$Progress.fail();
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
+                    }
+                    else{
+                        this.$toaster.error("Something went wrong");
                     }
                 });
         },

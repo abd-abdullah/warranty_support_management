@@ -150,6 +150,9 @@ export default {
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }
+                    else{
+                        this.$toaster.error("Something went wrong");
+                    }
                 });
         },
 
@@ -166,6 +169,9 @@ export default {
                     this.$Progress.fail();
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
+                    }
+                    else{
+                        this.$toaster.error("Something went wrong");
                     }
                 });
         }

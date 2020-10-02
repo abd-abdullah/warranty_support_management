@@ -4,8 +4,8 @@
             <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
                 <form class="form" method action>
                     <div class="card card-login">
-                        <div class="card-header card-header-info text-center">
-                            <h4 class="card-title">Login</h4>
+                        <div class="card-header card-header-city text-center">
+                            <h4 class="card-title">City Water Purifier</h4>
                         </div>
                         <div class="card-body">
                             <span class="bmd-form-group">
@@ -55,7 +55,7 @@
                             <a
                                 @click.prevent="login"
                                 class="btn btn-info btn-link btn-lg"
-                                >Lets Go</a
+                                >Login</a
                             >
                         </div>
                     </div>

@@ -8,6 +8,7 @@ use App\Http\Resources\ServiceMenResource;
 use App\Models\ServiceMan;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 
 class ServiceMenController extends Controller
@@ -22,22 +23,21 @@ class ServiceMenController extends Controller
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
         $technicians = ServiceMan::query();
+        $technicians->join('users', 'users.id', '=', 'service_men.id');
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $technicians->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $technicians->orderBy('id', 'DESC');
+            $technicians->orderBy('service_men.id', 'DESC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
             $query = $request->input('query');
-            $technicians->whereHas('user', function($q) use($query){
-                $q->where('name', 'like', "%{$query}%");
-                $q->orWhere('email', 'like', "%{$query}%");
-                $q->orWhere('phone', 'like', "%{$query}%");
-            });
+            $technicians->where('name', 'like', "%{$query}%");
+            $technicians->orWhere('email', 'like', "%{$query}%");
+            $technicians->orWhere('phone', 'like', "%{$query}%");
         }
         $technicians->with('user');
-        $technicians->select('*');
+        $technicians->select('service_men.*');
         return new ServiceMenCollection($technicians->paginate($limit));
     }
 
@@ -69,8 +69,18 @@ class ServiceMenController extends Controller
             $data['password'] = bcrypt($request->phone);
         }
 
-        $user = User::create($data);
-        return ServiceMan::create(['user_id' => $user->id, 'joining_date' => $data['joining_date']]);
+        try{
+            \DB::beginTransaction();
+            $user = User::create($data);
+            ServiceMan::create(['user_id' => $user->id, 'joining_date' => $data['joining_date']]);
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
     }
 
     /**
@@ -103,9 +113,21 @@ class ServiceMenController extends Controller
         ]);
    
         $data = $request->except(['password', 'joining_date']);
-        $technician->user()->update($data);
-        $joining_date = Carbon::parse($request->joining_date)->format('Y-m-d');
-        $technician->update(['joining_date' => $joining_date]);
+
+        try{
+            \DB::beginTransaction();
+            $technician->user()->update($data);
+            $joining_date = Carbon::parse($request->joining_date)->format('Y-m-d');
+            $technician->update(['joining_date' => $joining_date]);
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
+       
     }
 
     /**

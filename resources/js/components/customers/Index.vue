@@ -10,10 +10,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
-                                    <h4 class="card-title">Technicians List</h4>
+                                    <h4 class="card-title">Customer List</h4>
                                 </div>
                                 <div class="col-sm-12 col-md-6 text-right pr-md-0">
-                                    <router-link to="/technicians/form" class="btn btn-sm btn-rose">Add
+                                    <router-link to="/customers/form" class="btn btn-sm btn-rose">Add
                                         <div class="ripple-container"></div>
                                     </router-link>
                                 </div> 
@@ -32,8 +32,8 @@
                                         <th v-on:click = "sort($event)" data-column="users.name" class="sorting">Name</th>
                                         <th v-on:click = "sort($event)" data-column="users.email" class="sorting">Email</th>
                                         <th v-on:click = "sort($event)" data-column="users.phone" class="sorting">Mobile</th>
+                                        <th v-on:click = "sort($event)" data-column="customerId" class="sorting">Customer ID</th>
                                         <th>Address</th>
-                                        <th v-on:click = "sort($event)" data-column="joining_date" class="sorting">Date of Join</th>
                                         <th class="text-right">
                                             Actions
                                         </th>
@@ -41,24 +41,24 @@
                                 </thead>
                                 <tbody>
                                     <tr
-                                        v-for="(technician, index) in technicians"
-                                        :key="technician.id"
+                                        v-for="(customer, index) in customers"
+                                        :key="customer.id"
                                     >
                                         <td>{{ pagination.from + index }}</td>
-                                        <td>{{ technician.name }}</td>
-                                        <td>{{ technician.email }}</td>
-                                        <td>{{ technician.phone }}</td>
+                                        <td>{{ customer.name }}</td>
+                                        <td>{{ customer.email }}</td>
+                                        <td>{{ customer.phone }}</td>
+                                        <td>{{ customer.customerId }}</td>
                                         <td>{{ 
-                                                ((technician.address != '' && technician.address != null)?technician.address+', ':'')+
-                                                ((technician.upazila != '')?technician.upazila+', ':'')+
-                                                ((technician.district != '')?technician.district+', ':'')+
-                                                ((technician.division != '')?technician.division+', ':'')+
-                                                ((technician.country != '')?technician.country:'')
+                                                ((customer.address != '' && customer.address != null)?customer.address+', ':'')+
+                                                ((customer.upazila != '')?customer.upazila+', ':'')+
+                                                ((customer.district != '')?customer.district+', ':'')+
+                                                ((customer.division != '')?customer.division+', ':'')+
+                                                ((customer.country != '')?customer.country:'')
                                             }}</td>
-                                        <td>{{ technician.date_of_join }}</td>
                                         <td class="td-actions w76 text-right">
                                             <router-link
-                                                :to="{ name: 'technician_form', params:{'id':technician.id}}"
+                                                :to="{ name: 'customer_form', params:{'id':customer.id}}"
                                                 type="button"
                                                 rel="tooltip"
                                                 class="btn btn-success btn-round"
@@ -70,7 +70,7 @@
                                                 >
                                             </router-link>
                                             <button
-                                                @click.prevent="remove(technician)"
+                                                @click.prevent="remove(customer)"
                                                 type="button"
                                                 rel="tooltip"
                                                 class="btn btn-danger btn-round"
@@ -108,7 +108,7 @@ export default {
                     sort_order:""
                 }
             },
-            technicians: [],
+            customers: [],
             pagination: {
                 current_page: 1,
                 per_page: 10
@@ -122,7 +122,7 @@ export default {
         getData() {
             this.$Progress.start();
             this.$jsHelper.get(
-                    "api/v1/technicians?page=" +
+                    "api/v1/customers?page=" +
                         this.pagination.current_page +
                         "&per_page=" +
                         this.pagination.per_page +
@@ -136,7 +136,7 @@ export default {
                 )
                 .then(response => {
                     this.$Progress.finish();
-                    this.technicians = response.data.data;
+                    this.customers = response.data.data;
                     this.pagination = response.data.meta;
                 })
                 .catch(e => {
@@ -156,10 +156,10 @@ export default {
             }
 
         },
-        remove(technician){
+        remove(customer){
             this.$swal("Are you sure to delete this admin user?").then((result) => {
                 if(result.isConfirmed === true){
-                    this.$jsHelper.delete('api/v1/technicians/'+technician.id).then(response =>{
+                    this.$jsHelper.delete('api/v1/customers/'+customer.id).then(response =>{
                         this.$Progress.finish();
                         this.$toaster.warning("Deleted successfully");
                         this.getData();

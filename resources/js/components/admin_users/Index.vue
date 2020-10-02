@@ -29,9 +29,9 @@
                                 <thead>
                                     <tr>
                                         <th>SL#</th>
-                                        <th v-on:click = "sort($event)" data-column="name" class="sorting">Name</th>
-                                        <th v-on:click = "sort($event)" data-column="email" class="sorting">Email</th>
-                                        <th v-on:click = "sort($event)" data-column="phone" class="sorting">Phone</th>
+                                        <th v-on:click = "sort($event)" data-column="users.name" class="sorting">Name</th>
+                                        <th v-on:click = "sort($event)" data-column="users.email" class="sorting">Email</th>
+                                        <th v-on:click = "sort($event)" data-column="users.phone" class="sorting">Mobile</th>
                                         <th data-column="photo">Address</th>
                                         <th class="text-right">
                                             Actions
