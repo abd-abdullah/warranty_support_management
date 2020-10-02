@@ -2,7 +2,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="offset-md-3 col-md-6">
+                <div class="col-md-12">
                     <div class="card">
                         <div
                             class="card-header card-header-rose card-header-icon"
@@ -13,17 +13,17 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <h4 class="card-title" v-if="isEdit">
-                                        Edit Product
+                                        Edit Purchase
                                     </h4>
                                     <h4 class="card-title" v-else>
-                                        Add Product
+                                        Add Purchase
                                     </h4>
                                 </div>
                                 <div
                                     class="col-sm-12 col-md-6 text-right pr-md-0"
                                 >
                                     <router-link
-                                        to="/products"
+                                        to="/sales"
                                         class="btn btn-sm btn-rose"
                                         >Back to list</router-link
                                     >
@@ -31,50 +31,628 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group bmd-form-group">
-                                            <label
-                                                for="name"
-                                                class="bmd-label-floating"
-                                                >Name</label
-                                            >
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                id="name"
-                                                v-model="form.name"
-                                            />
-                                            <span
-                                                class="text-danger"
-                                                v-if="errors.name"
-                                                >{{ errors.name[0] }}</span
-                                            >
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <fieldset class="border">
+                                        <legend class="border">
+                                            Customer Information
+                                        </legend>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="select2-form-group text-primary"
+                                                        >Existing customer</label
+                                                    >
+                                                    <Select2
+                                                        :options="
+                                                            optionsCustomer
+                                                        "
+                                                        v-model="
+                                                            form.old_customer_id
+                                                        "
+                                                        @change="setCustomarData()"
+                                                        id="old_customer"
+                                                        placeholder="Select Existing Customer"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.name !==
+                                                            null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="name"
+                                                        class="bmd-label-floating"
+                                                        >Name</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="name"
+                                                        v-model="form.name"
+                                                        :readonly="form.old_customer_id != null"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.name"
+                                                        >{{
+                                                            errors.name[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.customerId !==
+                                                            null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="customerId"
+                                                        class="bmd-label-floating"
+                                                        >Customer ID</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="customerId"
+                                                        :readonly="form.old_customer_id != null"
+                                                        v-model="
+                                                            form.customerId
+                                                        "
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.customerId
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .customerId[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.email !==
+                                                            null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="email"
+                                                        class="bmd-label-floating"
+                                                        >Email</label
+                                                    >
+                                                    <input
+                                                        type="email"
+                                                        class="form-control"
+                                                        id="email"
+                                                        :readonly="
+                                                            (isEdit === true || form.old_customer_id != null)
+                                                        "
+                                                        v-model="form.email"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.email"
+                                                        >{{
+                                                            errors.email[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.phone !==
+                                                            null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="phone"
+                                                        class="bmd-label-floating"
+                                                        >Mobile</label
+                                                    >
+                                                    <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        id="phone"
+                                                        :readonly="form.old_customer_id != null"
+                                                        v-model="form.phone"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.phone"
+                                                        >{{
+                                                            errors.phone[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.other_contact_numbers !==
+                                                            null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="other_contact_numbers"
+                                                        class="bmd-label-floating"
+                                                        >Other contact
+                                                        Numbers</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="other_contact_numbers"
+                                                        v-model="
+                                                            form.other_contact_numbers
+                                                        "
+                                                        :readonly="form.old_customer_id != null"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.other_contact_numbers
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .other_contact_numbers[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-none">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="select2-form-group"
+                                                        >Country</label
+                                                    >
+                                                    <Select2
+                                                        :options="
+                                                            optionsCountry
+                                                        "
+                                                        v-model="
+                                                            form.country_id
+                                                        "
+                                                        name="country_id"
+                                                        id="country"
+                                                        :readonly="form.old_customer_id != null"
+                                                        @change="
+                                                            getDropdown(
+                                                                'api/v1/divisions/' +
+                                                                    form.country_id,
+                                                                'optionsDivision'
+                                                            )
+                                                        "
+                                                        placeholder="Select country"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.country_id
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .country_id[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="select2-form-group"
+                                                        >Division</label
+                                                    >
+                                                    <Select2
+                                                        :options="
+                                                            optionsDivision
+                                                        "
+                                                        v-model="
+                                                            form.division_id
+                                                        "
+                                                        :disabled="form.old_customer_id != null"
+                                                        name="division_id"
+                                                        id="division"
+                                                        @change="
+                                                            getDropdown(
+                                                                'api/v1/districts/' +
+                                                                    form.division_id,
+                                                                'optionsDistrict'
+                                                            )
+                                                        "
+                                                        placeholder="Select Division"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.division_id
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .division_id[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="select2-form-group"
+                                                        >District</label
+                                                    >
+                                                    <Select2
+                                                        :options="
+                                                            optionsDistrict
+                                                        "
+                                                        v-model="
+                                                            form.district_id
+                                                        "
+                                                        :disabled="form.old_customer_id != null"
+                                                        name="district_id"
+                                                        id="district"
+                                                        @change="
+                                                            getDropdown(
+                                                                'api/v1/upazilas/' +
+                                                                    form.district_id,
+                                                                'optionsUpazila'
+                                                            )
+                                                        "
+                                                        placeholder="Select District"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.district_id
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .district_id[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="select2-form-group"
+                                                        >Upazila</label
+                                                    >
+                                                    <Select2
+                                                        :options="
+                                                            optionsUpazila
+                                                        "
+                                                        v-model="
+                                                            form.upazila_id
+                                                        "
+                                                        :disabled="form.old_customer_id != null"
+                                                        name="upazila_id"
+                                                        id="upazila"
+                                                        placeholder="Select Upazila"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.upazila_id
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .upazila_id[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group "
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.address !==
+                                                            null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="address"
+                                                        class="bmd-label-floating"
+                                                        >Address/Road
+                                                        no/House no</label
+                                                    >
+                                                    <textarea
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="address"
+                                                        v-model="
+                                                            form.address
+                                                        "
+                                                        :readonly="form.old_customer_id != null"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.address
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .address[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group bmd-form-group">
-                                            <label
-                                                for="code"
-                                                class="bmd-label-floating"
-                                                >Code</label
-                                            >
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                id="code"
-                                                v-model="form.code"
-                                            />
-                                            <span
-                                                class="text-danger"
-                                                v-if="errors.code"
-                                                >{{ errors.code[0] }}</span
-                                            >
-                                        </div>
-                                    </div>
+                                    </fieldset>
                                 </div>
-                            </form>
+                                <div class="col-md-4 col-sm-12">
+                                    <fieldset class="border">
+                                        <legend class="border">
+                                            Product Information
+                                        </legend>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="select2-form-group text-primary"
+                                                        >Existing Product</label
+                                                    >
+                                                    <Select2
+                                                        :options="
+                                                            optionsProduct
+                                                        "
+                                                        v-model="
+                                                            form.old_product_id
+                                                        "
+                                                        
+                                                        @change="setProductData()"
+                                                        id="old_product"
+                                                        placeholder="Select Existing Product"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.product_name !== null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="name"
+                                                        class="bmd-label-floating"
+                                                        >Name</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="product_name"
+                                                        :readonly="form.old_product_id != null"
+                                                        v-model="form.product_name"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.product_name"
+                                                        >{{
+                                                            errors.product_name[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.product_code !== null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="code"
+                                                        class="bmd-label-floating"
+                                                        >Code</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="code"
+                                                        :readonly="form.old_product_id != null"
+                                                        v-model="form.product_code"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.product_code"
+                                                        >{{
+                                                            errors.product_code[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                >
+                                                    <label
+                                                        for="code"
+                                                        class="bmd-label-floating"
+                                                        >Capacity</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="purchase_capacity"
+                                                        v-model="form.purchase_capacity"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.purchase_capacity"
+                                                        >{{
+                                                            errors.purchase_capacity[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <fieldset class="border">
+                                        <legend class="border">
+                                            Purchase Information
+                                        </legend>
+                                        <div class="row">
+                                            
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                >
+                                                    <label
+                                                        for="purchase_price"
+                                                        class="bmd-label-floating"
+                                                        >Price</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="purchase_price"
+                                                        v-model="form.purchase_price"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.purchase_price"
+                                                        >{{
+                                                            errors.purchase_price[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group"
+                                                >
+                                                <label
+                                                    for="purchase_from"
+                                                    class="mr-2"
+                                                    >Purchase from</label
+                                                >
+                                                <div
+                                                    class="form-check custom-control-inline mr-0"
+                                                >
+                                                    <label
+                                                        class="form-check-label"
+                                                    >
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            v-model="form.purchase_from"
+                                                            value="evaly"
+                                                        />Evaly
+                                                        <span class="circle">
+                                                            <span
+                                                                class="check"
+                                                            ></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div
+                                                    class="form-check custom-control-inline mr-0"
+                                                >
+                                                    <label
+                                                        class="form-check-label"
+                                                    >
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            v-model="form.purchase_from"
+                                                            value="other"
+                                                        />Other
+                                                        <span class="circle">
+                                                            <span
+                                                                class="check"
+                                                            ></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group is-filled"
+                                                >
+                                                    <label
+                                                        for="purchase_date"
+                                                        class="bmd-label-floating"
+                                                        >Purchase Date</label
+                                                    >
+                                                    <v-date-picker
+                                                        :masks="{
+                                                            input: [
+                                                                'YYYY-MM-DD'
+                                                            ],
+                                                            date: ['YYYY-MM-DD']
+                                                        }"
+                                                        v-model="
+                                                            form.purchase_date
+                                                        "
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.purchase_date
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .purchase_date[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                             <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group is-filled"
+                                                >
+                                                    <label
+                                                        for="last_date_of_warranty"
+                                                        class="bmd-label-floating"
+                                                        >Last Date of
+                                                        Warranty</label
+                                                    >
+                                                    <v-date-picker
+                                                        :masks="{
+                                                            input: [
+                                                                'YYYY-MM-DD'
+                                                            ],
+                                                            date: ['YYYY-MM-DD']
+                                                        }"
+                                                        v-model="
+                                                            form.last_date_of_warranty
+                                                        "
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.last_date_of_warranty
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .last_date_of_warranty[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer ml-auto">
                             <button
@@ -111,27 +689,67 @@ export default {
                     : false,
             id: this.$route.params.id,
             form: {
-                name: "",
-                code: ""
+                name: null,
+                customerId: null,
+                email: null,
+                password: null,
+                phone: null,
+                other_contact_numbers: null,
+                country_id: 20,
+                division_id: null,
+                district_id: null,
+                upazila_id: null,
+                address: null,
+                product_name:null,
+                product_code:null,
+                purchase_capacity:null,
+                purchase_price:null,
+                purchase_from:'evaly',
+                date_of_purchase: new Date(),
+                last_date_of_warranty: null, 
+                old_customer_id: null,
+                old_prodcut_id: null
             },
-            errors: []
+            errors: [],
+            optionsCustomer: [],
+            optionsProduct: [],
+            optionsCountry: [],
+            optionsDivision: [],
+            optionsDistrict: [],
+            optionsUpazila: []
         };
     },
 
     mounted() {
+        this.$Progress.start();
         if (this.isEdit) {
-            this.$Progress.start();
             this.$jsHelper
-                .get("api/v1/products/" + this.id)
+                .get("api/v1/sales/" + this.id)
                 .then(response => {
-                    this.$Progress.finish();
                     this.form.name = response.data.data.name;
-                    this.form.code = response.data.data.code;
+                    this.form.customerId = response.data.data.customerId;
+                    this.form.email = response.data.data.email;
+                    this.form.phone = response.data.data.phone;
+                    this.form.other_contact_numbers =
+                        response.data.data.other_contact_numbers;
+                    this.form.photo = response.data.data.photo;
+                    this.form.country_id = response.data.data.country_id;
+                    this.form.division_id = response.data.data.division_id;
+                    this.form.district_id = response.data.data.district_id;
+                    this.form.upazila_id = response.data.data.upazila_id;
+                    this.form.address = response.data.data.address;
+                    this.selectOption();
                 })
                 .catch(error => {
                     this.$Progress.fail();
                     this.$toaster.error("Something went wrong");
                 });
+        }
+        else{
+            this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
+            this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
+            this.getDropdown('api/v1/countries', 'optionsCountry');
+            this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
         }
     },
 
@@ -139,16 +757,22 @@ export default {
         add() {
             this.$Progress.start();
             this.$jsHelper
-                .post("api/v1/products", this.form)
+                .post("api/v1/sales", this.form)
                 .then(data => {
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
-                    setTimeout( () => this.$router.push({ name: "product"}), 1000);
+                    setTimeout(
+                        () => this.$router.push({ name: "technician" }),
+                        1000
+                    );
                 })
                 .catch(error => {
                     this.$Progress.fail();
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
+                    }
+                    else{
+                        this.$toaster.error("Something went wrong");
                     }
                 });
         },
@@ -156,18 +780,95 @@ export default {
         update() {
             this.$Progress.start();
             this.$jsHelper
-                .put("api/v1/products/"+this.id, this.form)
+                .put("api/v1/sales/" + this.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
                     this.$toaster.info("Successfully Updated");
-                    setTimeout( () => this.$router.push({ name: "product"}), 1000);
+                    setTimeout(
+                        () => this.$router.push({ name: "technician" }),
+                        1000
+                    );
                 })
                 .catch(error => {
                     this.$Progress.fail();
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }
+                    else{
+                        this.$toaster.error("Something went wrong");
+                    }
                 });
+        },
+        getDropdown(url, option){
+            this.$Progress.start();
+            this.$jsHelper.get(url).then(response => {
+                this[option] = response.data.map(function(val){
+                    return {id:val.id, text:val.name}
+                });
+                this.$Progress.finish();
+            }).catch(error => {
+                this.$Progress.fail();
+            });
+        },
+        getDropdownCustomer(url, option){
+            this.$Progress.start();
+            this.$jsHelper.get(url).then(response => {
+                this[option] = response.data.data.map(function(val){
+                    return {id:val.id, text:val.name+'-'+val.customerId+' ('+val.phone+')'}
+                });
+                this.$Progress.finish();
+            }).catch(error => {
+                this.$Progress.fail();
+            });
+        },
+        getDropdownProduct(url, option){
+            this.$Progress.start();
+            this.$jsHelper.get(url).then(response => {
+                this[option] = response.data.data.map(function(val){
+                    return {id:val.id, text:val.name+'-'+val.code}
+                });
+                this.$Progress.finish();
+            }).catch(error => {
+                this.$Progress.fail();
+            });
+        },
+        selectOption(){
+            this.getDropdown('api/v1/countries', 'optionsCountry');
+            this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
+            this.getDropdown('api/v1/districts/'+this.form.division_id, 'optionsDistrict');
+            this.getDropdown('api/v1/upazilas/'+this.form.district_id, 'optionsUpazila');
+        },
+
+        setCustomarData(){
+            this.$Progress.start();
+            this.$jsHelper.get('api/v1/customers/'+this.form.old_customer_id).then(response => {
+                this.form.name = response.data.data.name;
+                this.form.customerId = response.data.data.customerId;
+                this.form.email = response.data.data.email;
+                this.form.phone = response.data.data.phone;
+                this.form.other_contact_numbers =
+                    response.data.data.other_contact_numbers;
+                this.form.country_id = response.data.data.country_id;
+                this.form.division_id = response.data.data.division_id;
+                this.form.district_id = response.data.data.district_id;
+                this.form.upazila_id = response.data.data.upazila_id;
+                this.form.address = response.data.data.address;
+                this.selectOption();
+                this.$Progress.finish();
+            }).catch(error => {
+                this.$Progress.fail();
+            });
+        },
+        
+        setProductData(){
+            this.$Progress.start();
+            this.$jsHelper.get('api/v1/products/'+this.form.old_product_id).then(response => {
+                this.form.product_name = response.data.data.name,
+                this.form.product_code = response.data.data.code,
+                this.$Progress.finish();
+            }).catch(error => {
+                this.$Progress.fail();
+            });
         }
     }
 };

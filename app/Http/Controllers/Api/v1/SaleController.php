@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductCollection;
-use App\Http\Resources\ProductResource;
-use App\Models\Product;
-use Exception;
+use App\Http\Resources\SaleCollection;
+use App\Http\Resources\SaleResource;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class SaleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,18 +19,20 @@ class ProductController extends Controller
     {
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
-        $products = Product::query();
+        $sales = Sale::query();
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
-            $products->orderBy($request->input('sort_by'), $request->input('sort_order'));
+            $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $products->orderBy('id', 'DESC');
+            $sales->orderBy('id', 'DESC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $products->where('name', 'like', "%{$request->input('query')}%");
+            $sales->where('name', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('email', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('phone', 'like', "%{$request->input('query')}%");
         }
 
-        return new ProductCollection($products->paginate($limit));
+        return new SaleCollection($sales->paginate($limit));
     }
 
     /**
@@ -44,13 +45,23 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'code' => 'required|unique:products',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|numeric|digits:11|unique:users',
+            'password' => 'nullable|string|min:8',
         ]);
         $data = $request->all();
+        $data['user_type'] = 'admin';
         $data['created_by'] = auth()->id();
+        $data['email_verified_at'] = now();
+        if($request->password !== NULL){
+            $data['password'] = bcrypt($request->password);
+        }
+        else{
+            $data['password'] = bcrypt($request->phone);
+        }
         try{
             \DB::beginTransaction();
-            Product::create($data);
+            User::create($data);
             \DB::commit();
         }
         catch(Exception $e){
@@ -64,61 +75,34 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Sale $sale)
     {
-        return new ProductResource($product);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Sale $sale)
     {
-        $request->validate([
-            'name' => 'required|min:3',
-            'code' => 'required|unique:products,code,'.$product->id,
-        ]);
-        $data = $request->all();
-        try{
-            \DB::beginTransaction();
-            $product->update($data);
-            \DB::commit();
-        }
-        catch(Exception $e){
-            \DB::rollback();
-            return response()->json( [
-                'error' => ['db_error' => $e->getMessage()]
-            ], 501);
-        }
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Sale $sale)
     {
-        $product->delete();
-    }
-
-    /**
-     * get customer list for fropdown
-     *
-     * @return \Illuminate\Http\Response
-    */
-    public function getProduct()
-    {
-        $products = Product::get();
-        
-        return new ProductCollection($products);
+        //
     }
 }

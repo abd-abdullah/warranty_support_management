@@ -10,10 +10,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
-                                    <h4 class="card-title">Product List</h4>
+                                    <h4 class="card-title">Customer Purchase List</h4>
                                 </div>
                                 <div class="col-sm-12 col-md-6 text-right pr-md-0">
-                                    <router-link to="/products/form" class="btn btn-sm btn-rose">Add
+                                    <router-link to="/sales/form" class="btn btn-sm btn-rose">Add
                                         <div class="ripple-container"></div>
                                     </router-link>
                                 </div> 
@@ -39,16 +39,16 @@
                                 </thead>
                                 <tbody>
                                     <tr
-                                        v-for="(product, index) in products"
-                                        :key="product.id"
+                                        v-for="(sale, index) in sales"
+                                        :key="sale.id"
                                     >
                                         <td>{{ pagination.from + index }}</td>
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.code }}</td>
-                                        <td>{{ product.created_at }}</td>
+                                        <td>{{ sale.name }}</td>
+                                        <td>{{ sale.code }}</td>
+                                        <td>{{ sale.created_at }}</td>
                                         <td class="td-actions text-right">
                                             <router-link
-                                                :to="{ name: 'product_form', params:{'id':product.id}}"
+                                                :to="{ name: 'sale_form', params:{'id':sale.id}}"
                                                 type="button"
                                                 rel="tooltip"
                                                 class="btn btn-success btn-round"
@@ -60,7 +60,7 @@
                                                 >
                                             </router-link>
                                             <button
-                                                @click.prevent="remove(product)"
+                                                @click.prevent="remove(sale)"
                                                 type="button"
                                                 rel="tooltip"
                                                 class="btn btn-danger btn-round"
@@ -98,7 +98,7 @@ export default {
                     sort_order:""
                 }
             },
-            products: [],
+            sales: [],
             pagination: {
                 current_page: 1,
                 per_page: 10
@@ -112,7 +112,7 @@ export default {
         getData() {
             this.$Progress.start();
             this.$jsHelper.get(
-                    "api/v1/products?page=" +
+                    "api/v1/sales?page=" +
                         this.pagination.current_page +
                         "&per_page=" +
                         this.pagination.per_page +
@@ -126,7 +126,7 @@ export default {
                 )
                 .then(response => {
                     this.$Progress.finish();
-                    this.products = response.data.data;
+                    this.sales = response.data.data;
                     this.pagination = response.data.meta;
                 })
                 .catch(e => {
@@ -146,10 +146,10 @@ export default {
             }
 
         },
-        remove(product){
-            this.$swal("Are you sure to delete this product?").then((result) => {
+        remove(sale){
+            this.$swal("Are you sure to delete this sale?").then((result) => {
                 if(result.isConfirmed === true){
-                    this.$jsHelper.delete('api/v1/products/'+product.id).then(response =>{
+                    this.$jsHelper.delete('api/v1/sales/'+sale.id).then(response =>{
                         this.$Progress.finish();
                         this.$toaster.warning("Deleted successfully");
                         this.getData();

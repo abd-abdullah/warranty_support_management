@@ -25,7 +25,11 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::ApiResource('admin-users', 'AdminUserController');
     Route::ApiResource('technicians', 'ServiceMenController');
     Route::ApiResource('customers', 'CustomerController');
+    Route::ApiResource('sales', 'SaleController');
 
+
+    Route::get('products-all', 'ProductController@getProduct')->name('products.products-all');
+    Route::get('customers-all', 'CustomerController@getCustomer')->name('customer.customer-all');
     Route::get('countries', 'AddressController@getCountry')->name('countries.index');
     Route::get('divisions/{country_id}', 'AddressController@getDivision')->name('divisions.index');
     Route::get('districts/{division_id}', 'AddressController@getDistrict')->name('districts.index');

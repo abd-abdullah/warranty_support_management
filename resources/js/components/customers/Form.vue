@@ -13,10 +13,10 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <h4 class="card-title" v-if="isEdit">
-                                        Edit Technician
+                                        Edit Customer
                                     </h4>
                                     <h4 class="card-title" v-else>
-                                        Add Technician
+                                        Add Customer
                                     </h4>
                                 </div>
                                 <div

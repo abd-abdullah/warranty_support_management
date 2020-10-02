@@ -21,25 +21,25 @@ class CustomerController extends Controller
     {
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
-        $technicians = Customer::query();
-        $technicians->join('users', 'users.id', '=', 'customers.id');
+        $customers = Customer::query();
+        $customers->join('users', 'users.id', '=', 'customers.id');
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
-            $technicians->orderBy($request->input('sort_by'), $request->input('sort_order'));
+            $customers->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $technicians->orderBy('customers.id', 'DESC');
+            $customers->orderBy('customers.id', 'DESC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
             $query = $request->input('query');
-            $technicians->where('name', 'like', "%{$query}%");
-            $technicians->orWhere('email', 'like', "%{$query}%");
-            $technicians->orWhere('phone', 'like', "%{$query}%");
-            $technicians->orWhere('customerId', 'like', "%{$query}%");
+            $customers->where('name', 'like', "%{$query}%");
+            $customers->orWhere('email', 'like', "%{$query}%");
+            $customers->orWhere('phone', 'like', "%{$query}%");
+            $customers->orWhere('customerId', 'like', "%{$query}%");
         }
 
-        $technicians->with('user');
-        $technicians->select('customers.*');
-        return new CustomerCollection($technicians->paginate($limit));
+        $customers->with('user');
+        $customers->select('customers.*');
+        return new CustomerCollection($customers->paginate($limit));
     }
 
     /**
@@ -130,5 +130,17 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         $customer->delete();
+    }
+    
+    /**
+     * get customer list for fropdown
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCustomer()
+    {
+        $customers = Customer::get();
+        
+        return new CustomerCollection($customers);
     }
 }

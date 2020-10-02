@@ -13,6 +13,8 @@ import technician from '../components/technicians/index';
 import technician_form from '../components/technicians/form';
 import customer from '../components/customers/index';
 import customer_form from '../components/customers/form';
+import sale from '../components/sales/index';
+import sale_form from '../components/sales/form';
 
 const routes = [
     {
@@ -80,6 +82,18 @@ const routes = [
         name: "customer_form",
         component: customer_form,
         meta: { authOnly: true, title: 'Customer', props: true }
+    },
+    {
+        path: "/sales",
+        name: "sale",
+        component: sale,
+        meta: { authOnly: true, title: 'Sale' }
+    },
+    {
+        path: "/sales/form/:id?",
+        name: "sale_form",
+        component: sale_form,
+        meta: { authOnly: true, title: 'Sale', props: true }
     },
 ];
 
