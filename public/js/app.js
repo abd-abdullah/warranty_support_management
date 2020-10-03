@@ -5438,6 +5438,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5447,7 +5464,6 @@ __webpack_require__.r(__webpack_exports__);
         name: null,
         customerId: null,
         email: null,
-        password: null,
         phone: null,
         other_contact_numbers: null,
         country_id: 20,
@@ -5460,10 +5476,11 @@ __webpack_require__.r(__webpack_exports__);
         purchase_capacity: null,
         purchase_price: null,
         purchase_from: 'evaly',
-        date_of_purchase: new Date(),
+        date_of_purchase: null,
         last_date_of_warranty: null,
         old_customer_id: null,
-        old_prodcut_id: null
+        old_product_id: null,
+        old_user_id: null
       },
       errors: [],
       optionsCustomer: [],
@@ -5481,17 +5498,22 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.isEdit) {
       this.$jsHelper.get("api/v1/sales/" + this.id).then(function (response) {
-        _this.form.name = response.data.data.name;
-        _this.form.customerId = response.data.data.customerId;
-        _this.form.email = response.data.data.email;
-        _this.form.phone = response.data.data.phone;
-        _this.form.other_contact_numbers = response.data.data.other_contact_numbers;
-        _this.form.photo = response.data.data.photo;
-        _this.form.country_id = response.data.data.country_id;
-        _this.form.division_id = response.data.data.division_id;
-        _this.form.district_id = response.data.data.district_id;
-        _this.form.upazila_id = response.data.data.upazila_id;
-        _this.form.address = response.data.data.address;
+        _this.form.old_product_id = response.data.data.product_id;
+        _this.form.old_customer_id = response.data.data.customer_id;
+        _this.form.old_customer_id = response.data.data.customer_id;
+        _this.form.purchase_capacity = response.data.data.purchase_capacity;
+        _this.form.purchase_price = response.data.data.purchase_price;
+        _this.form.purchase_from = response.data.data.purchase_from;
+        _this.form.date_of_purchase = new Date(response.data.data.date_of_purchase);
+        _this.form.last_date_of_warranty = new Date(response.data.data.last_date_of_warranty);
+
+        _this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
+
+        _this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
+
+        _this.setCustomarData();
+
+        _this.setProductData();
 
         _this.selectOption();
       })["catch"](function (error) {
@@ -5518,7 +5540,7 @@ __webpack_require__.r(__webpack_exports__);
 
         setTimeout(function () {
           return _this2.$router.push({
-            name: "technician"
+            name: "sale"
           });
         }, 1000);
       })["catch"](function (error) {
@@ -5542,7 +5564,7 @@ __webpack_require__.r(__webpack_exports__);
 
         setTimeout(function () {
           return _this3.$router.push({
-            name: "technician"
+            name: "sale"
           });
         }, 1000);
       })["catch"](function (error) {
@@ -5617,6 +5639,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$Progress.start();
       this.$jsHelper.get('api/v1/customers/' + this.form.old_customer_id).then(function (response) {
+        _this7.form.old_user_id = response.data.data.user_id;
         _this7.form.name = response.data.data.name;
         _this7.form.customerId = response.data.data.customerId;
         _this7.form.email = response.data.data.email;
@@ -5644,6 +5667,26 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this8.$Progress.fail();
       });
+    },
+    resetSelectedCustomer: function resetSelectedCustomer() {
+      this.form.old_user_id = null;
+      this.form.old_customer_id = null;
+      this.form.name = null;
+      this.form.customerId = null;
+      this.form.email = null;
+      this.form.phone = null;
+      this.form.other_contact_numbers = null;
+      this.form.country_id = null;
+      this.form.division_id = null;
+      this.form.district_id = null;
+      this.form.upazila_id = null;
+      this.form.address = null;
+      this.selectOption();
+    },
+    resetSelectedProduct: function resetSelectedProduct() {
+      this.form.old_product_id = null;
+      this.form.product_name = null;
+      this.form.product_code = null;
     }
   }
 });
@@ -5659,6 +5702,32 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6530,7 +6599,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "/* them custom css\r\n@author Md. Abdullah\r\n@email: abdullah001rti@gmail.com\r\n*/\r\n\r\n.main-panel>.content {\r\n    margin-top: 35px !important;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.sorting {\r\n    cursor: pointer;\r\n    position: relative;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after {\r\n    content: \"\\2191\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 1em;\r\n    top: 11px; \r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before {\r\n    content: \"\\2193\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 0.5em;\r\n    top: 11px;\r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:after {\r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:before {\r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.desc:after {  \r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";  \r\n    opacity: 1;\r\n}\r\n\r\n.table-sortable > thead > tr > th.desc:before {    \r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n}\r\n\r\n/*Datatable css done*/\r\n\r\n/*sidebar active css*/\r\n\r\n.sidebar[data-color=azure] li>a.router-link-active {\r\n    background-color: #00bcd4;\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4);\r\n}\r\n\r\ntextarea.form-control{\r\n    border-radius: 5px !important;\r\n    border: 1px solid #aaa !important;\r\n    background: none !important;\r\n}\r\n\r\n.select2-container--default .select2-selection--single .select2-selection__arrow{\r\n    top:7px!important;\r\n}\r\n.select2-container .select2-selection--single .select2-selection__rendered {\r\n    padding-top: 3px!important;\r\n}\r\n.select2-container .select2-selection--single{\r\n    height: 37px!important;\r\n    border: 1px solid #d2d2d2 !important;\r\n}\r\n.select2-form-group{\r\n    position: absolute;\r\n    z-index: 9;\r\n    font-size: .6875rem;\r\n    margin: -7px 2px;\r\n    background: #fff;\r\n    padding: 1px;\r\n}\r\n\r\n.w76{\r\n    width: 76px;\r\n}\r\n\r\n.card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text) {\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px #9179dd;\r\n}\r\n\r\n.card.bg-city, .card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text), .card.card-rotate.bg-city .back, .card.card-rotate.bg-city .front {\r\n    background: linear-gradient(142deg,#cd30e8,#69abe1);\r\n}\r\n\r\nfieldset.border {\r\n    /*border: 1px groove #ddd !important;*/\r\n    padding: 0 1.4em 1.4em 1.4em !important;\r\n    box-shadow:  0px 0px 0px 0px #000;\r\n}\r\n\r\nlegend.border {\r\n    font-size: 1em !important;\r\n    font-weight: 400 !important;\r\n    text-align: left !important;\r\n    width:auto;\r\n    padding:0 10px;\r\n    border-bottom:none;\r\n}", ""]);
+exports.push([module.i, "/* them custom css\r\n@author Md. Abdullah\r\n@email: abdullah001rti@gmail.com\r\n*/\r\n\r\n.main-panel>.content {\r\n    margin-top: 35px !important;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.sorting {\r\n    cursor: pointer;\r\n    position: relative;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after {\r\n    content: \"\\2191\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 1em;\r\n    top: 11px; \r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before {\r\n    content: \"\\2193\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 0.5em;\r\n    top: 11px;\r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:after {\r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:before {\r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.desc:after {  \r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";  \r\n    opacity: 1;\r\n}\r\n\r\n.table-sortable > thead > tr > th.desc:before {    \r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n}\r\n\r\n/*Datatable css done*/\r\n\r\n/*sidebar active css*/\r\n\r\n.sidebar[data-color=azure] li>a.router-link-active {\r\n    background-color: #00bcd4;\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4);\r\n}\r\n\r\ntextarea.form-control{\r\n    border-radius: 5px !important;\r\n    border: 1px solid #aaa !important;\r\n    background: none !important;\r\n}\r\n\r\n.select2-container--default .select2-selection--single .select2-selection__arrow{\r\n    top:7px!important;\r\n}\r\n.select2-container .select2-selection--single .select2-selection__rendered {\r\n    padding-top: 3px!important;\r\n}\r\n.select2-container .select2-selection--single{\r\n    height: 37px!important;\r\n    border: 1px solid #d2d2d2 !important;\r\n}\r\n.select2-form-group{\r\n    position: absolute;\r\n    z-index: 9;\r\n    font-size: .6875rem;\r\n    margin: -7px 2px;\r\n    background: #fff;\r\n    padding: 1px;\r\n}\r\n\r\n.w76{\r\n    width: 76px;\r\n}\r\n\r\n.card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text) {\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px #9179dd;\r\n}\r\n\r\n.card.bg-city, .card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text), .card.card-rotate.bg-city .back, .card.card-rotate.bg-city .front {\r\n    background: linear-gradient(142deg,#cd30e8,#69abe1);\r\n}\r\n\r\nfieldset.border {\r\n    /*border: 1px groove #ddd !important;*/\r\n    padding: 0 1.4em 1.4em 1.4em !important;\r\n    box-shadow:  0px 0px 0px 0px #000;\r\n}\r\n\r\nlegend.border {\r\n    font-size: 1em !important;\r\n    font-weight: 400 !important;\r\n    text-align: left !important;\r\n    width:auto;\r\n    padding:0 10px;\r\n    border-bottom:none;\r\n}\r\n\r\n.nr{\r\n    white-space: nowrap;\r\n}\r\n\r\n.mw-100{\r\n    min-width: 100px;\r\n}\r\n.mw-105{\r\n    min-width: 105px;\r\n}\r\n.mw-110{\r\n    min-width: 110px;\r\n}\r\n.mw-115{\r\n    min-width: 115px;\r\n}\r\n.mw-120{\r\n    min-width: 120px;\r\n}\r\n.mw-125{\r\n    min-width: 125px;\r\n}\r\n.mw-130{\r\n    min-width: 130px;\r\n}\r\n.mw-135{\r\n    min-width: 135px;\r\n}\r\n.mw-140{\r\n    min-width: 140px;\r\n}\r\n.mw-145{\r\n    min-width: 145px;\r\n}\r\n.mw-150{\r\n    min-width: 150px;\r\n}\r\n.mw-155{\r\n    min-width: 155px;\r\n}\r\n.mw-160{\r\n    min-width: 160px;\r\n}\r\n.mw-165{\r\n    min-width: 165px;\r\n}\r\n.mw-170{\r\n    min-width: 170px;\r\n}\r\n.mw-175{\r\n    min-width: 175px;\r\n}\r\n.mw-180{\r\n    min-width: 180px;\r\n}\r\n.mw-185{\r\n    min-width: 185px;\r\n}\r\n.mw-190{\r\n    min-width: 190px;\r\n}\r\n.mw-195{\r\n    min-width: 195px;\r\n}\r\n.mw-200{\r\n    min-width: 200px;\r\n}", ""]);
 
 // exports
 
@@ -33512,6 +33581,23 @@ var render = function() {
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-12" }, [
                         _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-sm btn-tumblr float-right mt-n4 p-1",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.resetSelectedCustomer($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Reset")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c(
                           "div",
                           { staticClass: "form-group" },
                           [
@@ -34092,6 +34178,23 @@ var render = function() {
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-12" }, [
                         _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-sm btn-tumblr float-right mt-n4 p-1",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.resetSelectedProduct($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Reset")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c(
                           "div",
                           { staticClass: "form-group" },
                           [
@@ -34247,7 +34350,12 @@ var render = function() {
                       _c("div", { staticClass: "col-12" }, [
                         _c(
                           "div",
-                          { staticClass: "form-group bmd-form-group" },
+                          {
+                            staticClass: "form-group bmd-form-group",
+                            class: {
+                              "is-filled": _vm.form.purchase_capacity !== null
+                            }
+                          },
                           [
                             _c(
                               "label",
@@ -34310,7 +34418,12 @@ var render = function() {
                       _c("div", { staticClass: "col-12" }, [
                         _c(
                           "div",
-                          { staticClass: "form-group bmd-form-group" },
+                          {
+                            staticClass: "form-group bmd-form-group",
+                            class: {
+                              "is-filled": _vm.form.purchase_price !== null
+                            }
+                          },
                           [
                             _c(
                               "label",
@@ -34478,7 +34591,7 @@ var render = function() {
                               "label",
                               {
                                 staticClass: "bmd-label-floating",
-                                attrs: { for: "purchase_date" }
+                                attrs: { for: "date_of_purchase" }
                               },
                               [_vm._v("Purchase Date")]
                             ),
@@ -34488,21 +34601,25 @@ var render = function() {
                                 masks: {
                                   input: ["YYYY-MM-DD"],
                                   date: ["YYYY-MM-DD"]
+                                },
+                                popover: {
+                                  visibility: "click",
+                                  placement: "bottom"
                                 }
                               },
                               model: {
-                                value: _vm.form.purchase_date,
+                                value: _vm.form.date_of_purchase,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.form, "purchase_date", $$v)
+                                  _vm.$set(_vm.form, "date_of_purchase", $$v)
                                 },
                                 expression:
-                                  "\n                                                        form.purchase_date\n                                                    "
+                                  "\n                                                        form.date_of_purchase\n                                                    "
                               }
                             }),
                             _vm._v(" "),
-                            _vm.errors.purchase_date
+                            _vm.errors.date_of_purchase
                               ? _c("span", { staticClass: "text-danger" }, [
-                                  _vm._v(_vm._s(_vm.errors.purchase_date[0]))
+                                  _vm._v(_vm._s(_vm.errors.date_of_purchase[0]))
                                 ])
                               : _vm._e()
                           ],
@@ -34535,6 +34652,10 @@ var render = function() {
                                 masks: {
                                   input: ["YYYY-MM-DD"],
                                   date: ["YYYY-MM-DD"]
+                                },
+                                popover: {
+                                  visibility: "click",
+                                  placement: "bottom"
                                 }
                               },
                               model: {
@@ -34709,129 +34830,277 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _c("table", { staticClass: "table table-sortable" }, [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [_vm._v("SL#")]),
-                      _vm._v(" "),
-                      _c(
-                        "th",
-                        {
-                          staticClass: "sorting",
-                          attrs: { "data-column": "name" },
-                          on: {
-                            click: function($event) {
-                              return _vm.sort($event)
-                            }
-                          }
-                        },
-                        [_vm._v("Name")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "th",
-                        {
-                          staticClass: "sorting",
-                          attrs: { "data-column": "code" },
-                          on: {
-                            click: function($event) {
-                              return _vm.sort($event)
-                            }
-                          }
-                        },
-                        [_vm._v("Code")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "th",
-                        {
-                          staticClass: "sorting",
-                          attrs: { "data-column": "created_at" },
-                          on: {
-                            click: function($event) {
-                              return _vm.sort($event)
-                            }
-                          }
-                        },
-                        [_vm._v("Created Date")]
-                      ),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "text-right" }, [
-                        _vm._v(
-                          "\n                                        Actions\n                                    "
-                        )
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.sales, function(sale, index) {
-                      return _c("tr", { key: sale.id }, [
-                        _c("td", [_vm._v(_vm._s(_vm.pagination.from + index))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(sale.name))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(sale.code))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(sale.created_at))]),
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table table-sortable" }, [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [_vm._v("SL#")]),
                         _vm._v(" "),
                         _c(
-                          "td",
-                          { staticClass: "td-actions text-right" },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-success btn-round",
-                                attrs: {
-                                  to: {
-                                    name: "sale_form",
-                                    params: { id: sale.id }
-                                  },
-                                  type: "button",
-                                  rel: "tooltip",
-                                  "data-original-title": "",
-                                  title: ""
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "material-icons" }, [
-                                  _vm._v("edit")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger btn-round",
-                                attrs: {
-                                  type: "button",
-                                  rel: "tooltip",
-                                  "data-original-title": "",
-                                  title: ""
-                                },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.remove(sale)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "material-icons" }, [
-                                  _vm._v("close")
-                                ])
-                              ]
-                            )
-                          ],
-                          1
-                        )
+                          "th",
+                          {
+                            staticClass: "sorting mw-120",
+                            attrs: { "data-column": "users.name" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Name")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-120",
+                            attrs: { "data-column": "customers.customerID" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Customer ID")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-120",
+                            attrs: { "data-column": "users.phone" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Number")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-120",
+                            attrs: { "data-column": "users.email" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Email")]
+                        ),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "mw-180" }, [
+                          _vm._v("Address")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-180",
+                            attrs: { "data-column": "products.name" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Product Name")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-130",
+                            attrs: { "data-column": "products.code" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Product Code")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-140",
+                            attrs: { "data-column": "purchase_from" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Purchase From")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-100",
+                            attrs: { "data-column": "price" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Price")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-155",
+                            attrs: { "data-column": "date_of_purchase" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Purchase Date")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "sorting mw-170",
+                            attrs: { "data-column": "last_date_of_warranty" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sort($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Last Warranty Date")]
+                        ),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "mw-160" }, [
+                          _vm._v("Next Service Date")
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-right mw-100" }, [
+                          _vm._v(
+                            "\n                                        Actions\n                                    "
+                          )
+                        ])
                       ])
-                    }),
-                    0
-                  )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.sales, function(sale, index) {
+                        return _c("tr", { key: sale.id }, [
+                          _c("td", [
+                            _vm._v(_vm._s(_vm.pagination.from + index))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.customerId))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.phone))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.email))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                (sale.address != "" && sale.address != null
+                                  ? sale.address + ", "
+                                  : "") +
+                                  (sale.upazila != ""
+                                    ? sale.upazila + ", "
+                                    : "") +
+                                  (sale.district != ""
+                                    ? sale.district + ", "
+                                    : "") +
+                                  (sale.division != ""
+                                    ? sale.division + ", "
+                                    : "") +
+                                  (sale.country != "" ? sale.country : "")
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.product_name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.product_code))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.purchase_from))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.price))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.date_of_purchase))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(sale.last_date_of_warranty))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sale.next_service_time))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "td-actions text-right" },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-success btn-round",
+                                  attrs: {
+                                    to: {
+                                      name: "sale_form",
+                                      params: { id: sale.id }
+                                    },
+                                    type: "button",
+                                    rel: "tooltip",
+                                    "data-original-title": "",
+                                    title: ""
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "material-icons" }, [
+                                    _vm._v("edit")
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger btn-round",
+                                  attrs: {
+                                    type: "button",
+                                    rel: "tooltip",
+                                    "data-original-title": "",
+                                    title: ""
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.remove(sale)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "material-icons" }, [
+                                    _vm._v("close")
+                                  ])
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      }),
+                      0
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("pagination", {

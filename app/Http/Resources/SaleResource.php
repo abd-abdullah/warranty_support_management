@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SaleResource extends JsonResource
@@ -16,18 +17,13 @@ class SaleResource extends JsonResource
     {
         return[
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'other_contact_numbers' => $this->other_contact_numbers,
-            'country_id' => $this->country_id,
-            'division_id' => $this->division_id,
-            'district_id' => $this->district_id,
-            'upazila_id' => $this->upazila_id,
-            'address' => $this->address,
-            'photo' => $this->photo,
-            'photo_path' => url('/'.$this->photo),
-            'status' => $this->status,
+            'purchase_price' => $this->price,
+            'purchase_capacity' => $this->capacity,
+            'date_of_purchase' => Carbon::parse($this->date_of_purchase)->format('Y-m-d'),
+            'last_date_of_warranty' => Carbon::parse($this->last_date_of_warranty)->format('Y-m-d'),
+            'purchase_from' => $this->purchase_from,
+            'product_id' => $this->product_id,
+            'customer_id' => $this->customer_id,
         ];
     }
 }

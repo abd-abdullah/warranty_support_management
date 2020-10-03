@@ -16,6 +16,7 @@ class CustomerResource extends JsonResource
     {
         return[
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
@@ -27,8 +28,6 @@ class CustomerResource extends JsonResource
             'district_id' => $this->district_id,
             'upazila_id' => $this->upazila_id,
             'address' => $this->address,
-            'photo' => $this->photo,
-            'photo_path' => url('/'.$this->photo),
             'status' => $this->status,
         ];
     }

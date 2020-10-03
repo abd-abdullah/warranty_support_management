@@ -3,9 +3,15 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaleRequest;
 use App\Http\Resources\SaleCollection;
 use App\Http\Resources\SaleResource;
+use Exception;
+use App\Models\Customer;
+use App\Models\Product;
 use App\Models\Sale;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -20,6 +26,10 @@ class SaleController extends Controller
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
         $sales = Sale::query();
+        $sales->join('customers', 'customers.id', '=', 'sales.customer_id');
+        $sales->join('users', 'users.id', '=', 'customers.user_id');
+        $sales->join('products', 'products.id', '=', 'sales.product_id');
+         
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
@@ -27,11 +37,34 @@ class SaleController extends Controller
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $sales->where('name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('email', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('phone', 'like', "%{$request->input('query')}%");
+            $sales->where('users.name', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('users.email', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('users.phone', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('products.name', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('products.code', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('purchase_from', 'like', "%{$request->input('query')}%");
         }
 
+        $select = [
+            'users.name',
+            'users.email',
+            'users.phone',
+            'users.country_id',
+            'users.country_id',
+            'agencies.name',
+            'agencies.id',
+            'performance_of_r_a_s.status',
+            'performance_of_r_a_results.total',
+            'performance_of_r_a_results.id as resultId',
+        ];
+
+        $sales->with('customer');
+        $select = [
+            'products.name as product_name',
+            'products.code as product_code',
+            'sales.*',
+        ];
+        $sales->select($select);
         return new SaleCollection($sales->paginate($limit));
     }
 
@@ -41,27 +74,44 @@ class SaleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaleRequest $request)
     {
-        $request->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|numeric|digits:11|unique:users',
-            'password' => 'nullable|string|min:8',
-        ]);
-        $data = $request->all();
-        $data['user_type'] = 'admin';
-        $data['created_by'] = auth()->id();
-        $data['email_verified_at'] = now();
-        if($request->password !== NULL){
-            $data['password'] = bcrypt($request->password);
-        }
-        else{
-            $data['password'] = bcrypt($request->phone);
-        }
+        $product_id = $request->old_product_id;
+        $customer_id = $request->old_customer_id;
+        
         try{
             \DB::beginTransaction();
-            User::create($data);
+            if($customer_id == NULL && $customer_id == ''){
+                $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_','division_id','district_id','upazila_id','address');
+                $userData['user_type'] = 'customer';
+                $userData['created_by'] = auth()->id();
+                $userData['email_verified_at'] = now();
+                $userData['password'] = bcrypt($request->email);
+                $user = User::create($userData);
+                $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId]);
+                $customer_id = $customer->id;
+            }
+            if($product_id == NULL && $product_id == ''){
+                $productData = [
+                    'name' => $request->product_name,
+                    'code' => $request->product_code,
+                    'created_by' => auth()->id()
+                ];
+                $product = Product::create($productData);
+                $product_id = $product->id;
+            }
+
+            $purchaseData = [
+                'customer_id' => $customer_id,
+                'product_id' => $product_id,
+                'capacity' => $request->purchase_capacity,
+                'price' => $request->purchase_price,
+                'purchase_from' => $request->purchase_from,
+                'date_of_purchase' => Carbon::parse($request->date_of_purchase)->format('Y-m-d'),
+                'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d')
+            ];
+            Sale::create($purchaseData);
+            
             \DB::commit();
         }
         catch(Exception $e){
@@ -80,7 +130,7 @@ class SaleController extends Controller
      */
     public function show(Sale $sale)
     {
-        //
+        return new SaleResource($sale);
     }
 
     /**
@@ -90,9 +140,52 @@ class SaleController extends Controller
      * @param  \App\Models\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sale $sale)
+    public function update(SaleRequest $request, Sale $sale)
     {
-        //
+        $product_id = $request->old_product_id;
+        $customer_id = $request->old_customer_id;
+        
+        try{
+            \DB::beginTransaction();
+            if($customer_id == NULL && $customer_id == ''){
+                $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_','division_id','district_id','upazila_id','address');
+                $userData['user_type'] = 'customer';
+                $userData['created_by'] = auth()->id();
+                $userData['email_verified_at'] = now();
+                $userData['password'] = bcrypt($request->email);
+                $user = User::create($userData);
+                $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId]);
+                $customer_id = $customer->id;
+            }
+            if($product_id == NULL && $product_id == ''){
+                $productData = [
+                    'name' => $request->product_name,
+                    'code' => $request->product_code,
+                    'created_by' => auth()->id()
+                ];
+                $product = Product::create($productData);
+                $product_id = $product->id;
+            }
+
+            $purchaseData = [
+                'customer_id' => $customer_id,
+                'product_id' => $product_id,
+                'capacity' => $request->purchase_capacity,
+                'price' => $request->purchase_price,
+                'purchase_from' => $request->purchase_from,
+                'date_of_purchase' => Carbon::parse($request->date_of_purchase)->format('Y-m-d'),
+                'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d')
+            ];
+            $sale->update($purchaseData);
+            
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
     }
 
     /**
@@ -103,6 +196,6 @@ class SaleController extends Controller
      */
     public function destroy(Sale $sale)
     {
-        //
+        $sale->delete();
     }
 }

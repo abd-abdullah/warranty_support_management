@@ -39,6 +39,9 @@
                                         </legend>
                                         <div class="row">
                                             <div class="col-12">
+                                                <button class="btn btn-sm btn-tumblr float-right mt-n4 p-1" @click.prevent="resetSelectedCustomer">Reset</button>
+                                            </div>
+                                            <div class="col-12">
                                                 <div class="form-group">
                                                     <label
                                                         class="select2-form-group text-primary"
@@ -398,7 +401,11 @@
                                         <legend class="border">
                                             Product Information
                                         </legend>
+
                                         <div class="row">
+                                            <div class="col-12">
+                                                <button class="btn btn-sm btn-tumblr float-right mt-n4 p-1" @click.prevent="resetSelectedProduct">Reset</button>
+                                            </div>
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label
@@ -480,6 +487,10 @@
                                             <div class="col-12">
                                                 <div
                                                     class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.purchase_capacity !== null
+                                                    }"
                                                 >
                                                     <label
                                                         for="code"
@@ -514,6 +525,10 @@
                                             <div class="col-12">
                                                 <div
                                                     class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.purchase_price !== null
+                                                    }"
                                                 >
                                                     <label
                                                         for="purchase_price"
@@ -589,7 +604,7 @@
                                                     class="form-group bmd-form-group is-filled"
                                                 >
                                                     <label
-                                                        for="purchase_date"
+                                                        for="date_of_purchase"
                                                         class="bmd-label-floating"
                                                         >Purchase Date</label
                                                     >
@@ -601,17 +616,18 @@
                                                             date: ['YYYY-MM-DD']
                                                         }"
                                                         v-model="
-                                                            form.purchase_date
+                                                            form.date_of_purchase
                                                         "
+                                                        :popover="{ visibility: 'click', placement: 'bottom' }"
                                                     />
                                                     <span
                                                         class="text-danger"
                                                         v-if="
-                                                            errors.purchase_date
+                                                            errors.date_of_purchase
                                                         "
                                                         >{{
                                                             errors
-                                                                .purchase_date[0]
+                                                                .date_of_purchase[0]
                                                         }}</span
                                                     >
                                                 </div>
@@ -636,6 +652,7 @@
                                                         v-model="
                                                             form.last_date_of_warranty
                                                         "
+                                                        :popover="{ visibility: 'click',  placement: 'bottom'  }"
                                                     />
                                                     <span
                                                         class="text-danger"
@@ -692,7 +709,6 @@ export default {
                 name: null,
                 customerId: null,
                 email: null,
-                password: null,
                 phone: null,
                 other_contact_numbers: null,
                 country_id: 20,
@@ -705,10 +721,11 @@ export default {
                 purchase_capacity:null,
                 purchase_price:null,
                 purchase_from:'evaly',
-                date_of_purchase: new Date(),
+                date_of_purchase: null,
                 last_date_of_warranty: null, 
                 old_customer_id: null,
-                old_prodcut_id: null
+                old_product_id: null,
+                old_user_id: null
             },
             errors: [],
             optionsCustomer: [],
@@ -726,18 +743,18 @@ export default {
             this.$jsHelper
                 .get("api/v1/sales/" + this.id)
                 .then(response => {
-                    this.form.name = response.data.data.name;
-                    this.form.customerId = response.data.data.customerId;
-                    this.form.email = response.data.data.email;
-                    this.form.phone = response.data.data.phone;
-                    this.form.other_contact_numbers =
-                        response.data.data.other_contact_numbers;
-                    this.form.photo = response.data.data.photo;
-                    this.form.country_id = response.data.data.country_id;
-                    this.form.division_id = response.data.data.division_id;
-                    this.form.district_id = response.data.data.district_id;
-                    this.form.upazila_id = response.data.data.upazila_id;
-                    this.form.address = response.data.data.address;
+                    this.form.old_product_id = response.data.data.product_id;
+                    this.form.old_customer_id = response.data.data.customer_id;
+                    this.form.old_customer_id = response.data.data.customer_id;
+                    this.form.purchase_capacity = response.data.data.purchase_capacity;
+                    this.form.purchase_price = response.data.data.purchase_price;
+                    this.form.purchase_from = response.data.data.purchase_from;
+                    this.form.date_of_purchase = new Date(response.data.data.date_of_purchase);
+                    this.form.last_date_of_warranty = new Date(response.data.data.last_date_of_warranty);
+                    this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
+                    this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
+                    this.setCustomarData();
+                    this.setProductData();
                     this.selectOption();
                 })
                 .catch(error => {
@@ -762,7 +779,7 @@ export default {
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
                     setTimeout(
-                        () => this.$router.push({ name: "technician" }),
+                        () => this.$router.push({ name: "sale" }),
                         1000
                     );
                 })
@@ -785,7 +802,7 @@ export default {
                     this.$Progress.finish();
                     this.$toaster.info("Successfully Updated");
                     setTimeout(
-                        () => this.$router.push({ name: "technician" }),
+                        () => this.$router.push({ name: "sale" }),
                         1000
                     );
                 })
@@ -842,6 +859,7 @@ export default {
         setCustomarData(){
             this.$Progress.start();
             this.$jsHelper.get('api/v1/customers/'+this.form.old_customer_id).then(response => {
+                this.form.old_user_id = response.data.data.user_id;
                 this.form.name = response.data.data.name;
                 this.form.customerId = response.data.data.customerId;
                 this.form.email = response.data.data.email;
@@ -869,6 +887,28 @@ export default {
             }).catch(error => {
                 this.$Progress.fail();
             });
+        },
+
+        resetSelectedCustomer(){
+            this.form.old_user_id = null;
+            this.form.old_customer_id = null; 
+            this.form.name = null;
+            this.form.customerId = null;
+            this.form.email = null;
+            this.form.phone = null;
+            this.form.other_contact_numbers = null;
+            this.form.country_id = null;
+            this.form.division_id = null;
+            this.form.district_id = null;
+            this.form.upazila_id = null;
+            this.form.address = null;
+            this.selectOption(); 
+        },
+
+        resetSelectedProduct(){
+            this.form.old_product_id = null;
+            this.form.product_name = null;
+            this.form.product_code = null;
         }
     }
 };

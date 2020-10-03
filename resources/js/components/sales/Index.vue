@@ -25,14 +25,24 @@
                                 :param="param"
                                 @limit="getData()"
                             ></search>
+                            <div class="table-responsive">
                             <table class="table table-sortable">
                                 <thead>
                                     <tr>
                                         <th>SL#</th>
-                                        <th v-on:click = "sort($event)" data-column="name" class="sorting">Name</th>
-                                        <th v-on:click = "sort($event)" data-column="code" class="sorting">Code</th>
-                                        <th v-on:click = "sort($event)" data-column="created_at" class="sorting">Created Date</th>
-                                        <th class="text-right">
+                                        <th v-on:click = "sort($event)" data-column="users.name" class="sorting mw-120">Name</th>
+                                        <th v-on:click = "sort($event)" data-column="customers.customerID" class="sorting mw-120">Customer ID</th>
+                                        <th v-on:click = "sort($event)" data-column="users.phone" class="sorting mw-120">Number</th>
+                                        <th v-on:click = "sort($event)" data-column="users.email" class="sorting mw-120">Email</th>
+                                        <th class="mw-180">Address</th>
+                                        <th v-on:click = "sort($event)" data-column="products.name" class="sorting mw-180">Product Name</th>
+                                        <th v-on:click = "sort($event)" data-column="products.code" class="sorting mw-130">Product Code</th>
+                                        <th v-on:click = "sort($event)" data-column="purchase_from" class="sorting mw-140">Purchase From</th>
+                                        <th v-on:click = "sort($event)" data-column="price" class="sorting mw-100">Price</th>
+                                        <th v-on:click = "sort($event)" data-column="date_of_purchase" class="sorting mw-155">Purchase Date</th>
+                                        <th v-on:click = "sort($event)" data-column="last_date_of_warranty" class="sorting mw-170">Last Warranty Date</th>
+                                        <th class="mw-160">Next Service Date</th>
+                                        <th class="text-right mw-100">
                                             Actions
                                         </th>
                                     </tr>
@@ -44,8 +54,23 @@
                                     >
                                         <td>{{ pagination.from + index }}</td>
                                         <td>{{ sale.name }}</td>
-                                        <td>{{ sale.code }}</td>
-                                        <td>{{ sale.created_at }}</td>
+                                        <td>{{ sale.customerId }}</td>
+                                        <td>{{ sale.phone }}</td>
+                                        <td>{{ sale.email }}</td>
+                                        <td>{{ 
+                                                ((sale.address != '' && sale.address != null)?sale.address+', ':'')+
+                                                ((sale.upazila != '')?sale.upazila+', ':'')+
+                                                ((sale.district != '')?sale.district+', ':'')+
+                                                ((sale.division != '')?sale.division+', ':'')+
+                                                ((sale.country != '')?sale.country:'')
+                                            }}</td>
+                                        <td>{{ sale.product_name }}</td>
+                                        <td>{{ sale.product_code }}</td>
+                                        <td>{{ sale.purchase_from }}</td>
+                                        <td>{{ sale.price }}</td>
+                                        <td>{{ sale.date_of_purchase }}</td>
+                                        <td>{{ sale.last_date_of_warranty }}</td>
+                                        <td>{{ sale.next_service_time }}</td>
                                         <td class="td-actions text-right">
                                             <router-link
                                                 :to="{ name: 'sale_form', params:{'id':sale.id}}"
@@ -75,6 +100,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            </div>
                             <pagination
                                 :pagination="pagination"
                                 :offset="5"

@@ -22,6 +22,7 @@ class Sale extends Model
         'product_capacity',
         'date_of_purchase',
         'price',
+        'capacity',
         'purchase_from',
         'last_date_of_warranty',
         'created_at',
@@ -34,5 +35,14 @@ class Sale extends Model
     
     public function product(){
     	return $this->belongsTo(Product::class);
+    }
+   
+    public function customer_services(){
+    	return $this->hasMany(CustomerService::class);
+    }
+
+    public function customer_service()
+    {
+       return $this->hasOne(CustomerService::class)->latest();
     }
 }
