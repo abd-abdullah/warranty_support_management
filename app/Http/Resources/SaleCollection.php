@@ -19,6 +19,7 @@ class SaleCollection extends ResourceCollection
             'data' => $this->collection->transform(function($sale){
                 return[
                     'id' => $sale->id,
+                    'customer_id' => $sale->customer_id,
                     'name' => $sale->customer->user->name,
                     'email' => $sale->customer->user->email,
                     'phone' => $sale->customer->user->phone,
@@ -35,7 +36,7 @@ class SaleCollection extends ResourceCollection
                     'date_of_purchase' => Carbon::parse($sale->date_of_purchase)->format('Y-m-d'),
                     'last_date_of_warranty' => Carbon::parse($sale->last_date_of_warranty)->format('Y-m-d'),
                     'purchase_from' => $sale->purchase_from,
-                    'next_service_time' => ($sale->customer_service != NULL)?Carbon::parse($sale->customer_services->next_service_time)->format('Y-m-d'):'',
+                    'next_service_time' => ($sale->customer_service != NULL)?Carbon::parse($sale->customer_service->next_service_time)->format('Y-m-d'):'',
                 ];
             }),
         ];

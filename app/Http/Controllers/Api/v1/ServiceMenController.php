@@ -140,4 +140,16 @@ class ServiceMenController extends Controller
     {
         $technician->delete();
     }
+
+     /**
+     * get technician list for fropdown
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function getTechnician()
+    {
+        $technicians = ServiceMan::get();
+        
+        return new ServiceMenCollection($technicians);
+    }
 }

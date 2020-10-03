@@ -197,3 +197,7 @@ legend.border {
 .mw-200{
     min-width: 200px;
 }
+
+.select2{
+    width: 100% !important;
+}
