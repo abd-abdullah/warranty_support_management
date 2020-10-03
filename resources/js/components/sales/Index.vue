@@ -42,7 +42,7 @@
                                         <th v-on:click = "sort($event)" data-column="date_of_purchase" class="sorting mw-155">Purchase Date</th>
                                         <th v-on:click = "sort($event)" data-column="last_date_of_warranty" class="sorting mw-170">Last Warranty Date</th>
                                         <th class="mw-160">Next Service Date</th>
-                                        <th class="text-right mw-100">
+                                        <th class="text-right mw-120">
                                             Actions
                                         </th>
                                     </tr>
@@ -72,13 +72,21 @@
                                         <td>{{ sale.last_date_of_warranty }}</td>
                                         <td>{{ sale.next_service_time }}</td>
                                         <td class="td-actions text-right">
+                                            <button
+                                                @click.prevent="service(sale)"
+                                                type="button"
+                                                rel="tooltip"
+                                                class="btn btn-facebook btn-round"
+                                                title ="Add Service"
+                                            >
+                                            <span class="material-icons">add_box</span>
+                                            </button>
                                             <router-link
                                                 :to="{ name: 'sale_form', params:{'id':sale.id}}"
                                                 type="button"
                                                 rel="tooltip"
                                                 class="btn btn-success btn-round"
-                                                data-original-title
-                                                title
+                                                title ="Edit"
                                             >
                                                 <i class="material-icons"
                                                     >edit</i
@@ -90,7 +98,7 @@
                                                 rel="tooltip"
                                                 class="btn btn-danger btn-round"
                                                 data-original-title
-                                                title
+                                                title ="Delete"
                                             >
                                                 <i class="material-icons"
                                                     >close</i
@@ -108,6 +116,26 @@
                             ></pagination>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
                 </div>
             </div>
         </div>
@@ -185,6 +213,9 @@ export default {
                     });
                 }
             })
+        },
+        service(sale){
+            $('#exampleModal').modal('show');
         }
     }
 };

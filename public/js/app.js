@@ -2700,15 +2700,7 @@ __webpack_require__.r(__webpack_exports__);
       section_title: "Dashboard"
     };
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.$user.auth().then(function (response) {
-      console.log(response);
-    })["catch"](function (error) {
-      _this.$toaster.error("Something went wrong");
-    });
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -4113,6 +4105,49 @@ var defaultLayout = "defaultlayout";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5817,6 +5852,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5882,6 +5945,9 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    service: function service(sale) {
+      $('#exampleModal').modal('show');
     }
   }
 });
@@ -32383,12 +32449,6 @@ var render = function() {
                       [_vm._v("Profile")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [_vm._v("Settings")]
-                    ),
-                    _vm._v(" "),
                     _c("div", { staticClass: "dropdown-divider" }),
                     _vm._v(" "),
                     _c(
@@ -32499,7 +32559,9 @@ var staticRenderFns = [
           _c("span", { staticClass: "notification" }, [_vm._v("5")]),
           _vm._v(" "),
           _c("p", { staticClass: "d-lg-none d-md-block" }, [
-            _vm._v("\n               Some Actions\n             ")
+            _vm._v(
+              "\n                            Some Actions\n                        "
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "ripple-container" })
@@ -32515,22 +32577,6 @@ var staticRenderFns = [
         [
           _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
             _vm._v("Mike John responded to your email")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _vm._v("You have 5 new tasks")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _vm._v("You're now friend with Andrew")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _vm._v("Another Notification")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _vm._v("Another One")
           ])
         ]
       )
@@ -32556,7 +32602,9 @@ var staticRenderFns = [
         _c("i", { staticClass: "material-icons" }, [_vm._v("person")]),
         _vm._v(" "),
         _c("p", { staticClass: "d-lg-none d-md-block" }, [
-          _vm._v("\n               Account\n             ")
+          _vm._v(
+            "\n                            Account\n                        "
+          )
         ])
       ]
     )
@@ -34984,7 +35032,7 @@ var render = function() {
                           _vm._v("Next Service Date")
                         ]),
                         _vm._v(" "),
-                        _c("th", { staticClass: "text-right mw-100" }, [
+                        _c("th", { staticClass: "text-right mw-120" }, [
                           _vm._v(
                             "\n                                        Actions\n                                    "
                           )
@@ -35049,6 +35097,31 @@ var render = function() {
                             { staticClass: "td-actions text-right" },
                             [
                               _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-facebook btn-round",
+                                  attrs: {
+                                    type: "button",
+                                    rel: "tooltip",
+                                    title: "Add Service"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.service(sale)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    { staticClass: "material-icons" },
+                                    [_vm._v("add_box")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
                                 "router-link",
                                 {
                                   staticClass: "btn btn-success btn-round",
@@ -35059,8 +35132,7 @@ var render = function() {
                                     },
                                     type: "button",
                                     rel: "tooltip",
-                                    "data-original-title": "",
-                                    title: ""
+                                    title: "Edit"
                                   }
                                 },
                                 [
@@ -35078,7 +35150,7 @@ var render = function() {
                                     type: "button",
                                     rel: "tooltip",
                                     "data-original-title": "",
-                                    title: ""
+                                    title: "Delete"
                                   },
                                   on: {
                                     click: function($event) {
@@ -35117,7 +35189,9 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -35138,6 +35212,82 @@ var staticRenderFns = [
         _vm._v("Customer Purchase List")
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Modal title")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._v("\n                ...\n            ")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                  [_vm._v("Save changes")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true

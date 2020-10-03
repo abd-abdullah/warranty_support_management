@@ -780,14 +780,7 @@ export default {
         };
     },
     mounted() {
-        this.$user
-            .auth()
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                this.$toaster.error("Something went wrong");
-            });
+       
     }
 };
 </script>
