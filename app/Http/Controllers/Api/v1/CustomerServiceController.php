@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomerServiceCollection;
 use App\Models\CustomerService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,9 +16,40 @@ class CustomerServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $limit = (($request->per_page != NULL) ? $request->per_page : 10);
+        $limit = (($limit == -1) ? 9999999 : $limit);
+        $customerService = CustomerService::query();
+        $customerService->join('customers', 'customers.id', '=', 'customer_services.customer_id');
+        $customerService->join('users', 'users.id', '=', 'customers.user_id');
+        $customerService->join('sales', 'sales.id', '=', 'customer_services.sale_id');
+        $customerService->join('products', 'products.id', '=', 'sales.product_id');
+        $customerService->join('service_men', 'service_men.id', '=', 'customer_services.done_by');
+        $customerService->join('users as technicians', 'technicians.id', '=', 'service_men.user_id');
+         
+        if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
+            $customerService->orderBy($request->input('sort_by'), $request->input('sort_order'));
+        } else {
+            $customerService->orderBy('id', 'DESC');
+        }
+
+        if ($request->input('query') && $request->input('query') != "") {
+            $customerService->where('users.name', 'like', "%{$request->input('query')}%");
+            $customerService->orWhere('users.email', 'like', "%{$request->input('query')}%");
+            $customerService->orWhere('users.phone', 'like', "%{$request->input('query')}%");
+            $customerService->orWhere('products.name', 'like', "%{$request->input('query')}%");
+            $customerService->orWhere('products.code', 'like', "%{$request->input('query')}%");
+        }
+
+        $customerService->with('customer.user')->with('service_man.user');
+        $select = [
+            'products.name as product_name',
+            'products.code as product_code',
+            'customer_services.*',
+        ];
+        $customerService->select($select);
+        return new CustomerServiceCollection($customerService->paginate($limit));
     }
 
     /**

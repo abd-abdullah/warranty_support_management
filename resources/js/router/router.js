@@ -15,6 +15,7 @@ import customer from '../components/customers/index';
 import customer_form from '../components/customers/form';
 import sale from '../components/sales/index';
 import sale_form from '../components/sales/form';
+import customer_service from '../components/customer_services/index';
 
 const routes = [
     {
@@ -94,6 +95,12 @@ const routes = [
         name: "sale_form",
         component: sale_form,
         meta: { authOnly: true, title: 'Sale', props: true }
+    },
+    {
+        path: "/service-histories",
+        name: "customer_service",
+        component: customer_service,
+        meta: { authOnly: true, title: 'Service History', props: true }
     },
 ];
 

@@ -45,19 +45,6 @@ class SaleController extends Controller
             $sales->orWhere('purchase_from', 'like', "%{$request->input('query')}%");
         }
 
-        $select = [
-            'users.name',
-            'users.email',
-            'users.phone',
-            'users.country_id',
-            'users.country_id',
-            'agencies.name',
-            'agencies.id',
-            'performance_of_r_a_s.status',
-            'performance_of_r_a_results.total',
-            'performance_of_r_a_results.id as resultId',
-        ];
-
         $sales->with('customer');
         $select = [
             'products.name as product_name',

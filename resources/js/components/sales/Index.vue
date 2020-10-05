@@ -472,15 +472,15 @@
                                                                     optionsServiceMen
                                                                 "
                                                                 v-model="
-                                                                    form.done_by
+                                                                    form.done_id
                                                                 "
                                                                 placeholder="Select Technician"
                                                             />
                                                             <span
                                                                 class="text-danger"
-                                                                v-if="errors.done_by"
+                                                                v-if="errors.done_id"
                                                                 >{{
-                                                                    errors.done_by[0]
+                                                                    errors.done_id[0]
                                                                 }}</span
                                                             >
                                                         </div>
@@ -595,7 +595,7 @@ export default {
                 service_charge : null,
                 total_paid : null,
                 cost : null,
-                done_by : null,
+                done_id : null,
                 is_continue : true,
                 customer : null,
                 product : null,
@@ -684,7 +684,7 @@ export default {
             this.form.service_charge = null;
             this.form.total_paid = null;
             this.form.cost = null;
-            this.form.done_by = null;
+            this.form.done_id = null;
             this.form.is_continue = true;
             $("#exampleModal").modal("show");
         },
