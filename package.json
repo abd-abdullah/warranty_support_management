@@ -24,11 +24,13 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "chart.js": "^2.9.3",
         "install": "^0.13.0",
         "js-cookie": "^2.2.1",
         "v-calendar": "^1.0.8",
         "v-select2-component": "^0.4.3",
         "v-toaster": "^1.0.3",
+        "vue-chartjs": "^3.5.1",
         "vue-loading-overlay": "^3.4.1",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.4.3",

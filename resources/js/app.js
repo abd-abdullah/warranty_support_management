@@ -12,7 +12,6 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import Select2 from 'v-select2-component';
 import VCalendar from 'v-calendar';
 
-
 const SwalOptions = {
     title: 'Are you sure?',
     text: "You won't be able to revert this!",

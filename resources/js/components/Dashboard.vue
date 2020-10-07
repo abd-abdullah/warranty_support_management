@@ -88,12 +88,39 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header card-header-icon card-header-rose">
+                            <h4 class="card-title">Bars Chart
+                            <small>- Bar Chart</small>
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                           <service-bar-chart :styles="barchartStyles" :data=chart.Bar.data :options=chart.Bar.options />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header card-header-icon card-header-city">
+                            <h4 class="card-title">Line Chart Sales
+                            <small>- Line Chart</small>
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                           <service-line-chart :styles="barchartStyles" :data=chart.Line.data :options=chart.Line.options />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import ServiceBarChart from './partial/SaleAndServiceBarChart';
+import ServiceLineChart from './partial/ServiceLineChart';
 export default {
+    components: { ServiceBarChart,ServiceLineChart },
     name: "Dashboard",
     data() {
         return {
@@ -109,10 +136,56 @@ export default {
                 purchase_monthly:0,
                 service_monthly:0,
                 month: '',
+            },
+            chart:{
+                Bar:{
+                    data: {
+                        labels: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
+                        datasets: [
+                            {
+                                label: "Sale",
+                                backgroundColor: "blue",
+                                data: [3,7,4,45,50,24]
+                            },
+                            {
+                                label: "Service",
+                                backgroundColor: "red",
+                                data: [4,3,5,45,4,3]
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                },
+                Line:{
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mar', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [
+                            {
+                                label: "Sale",
+                                data: [3,7,4,45,234,24],
+                                borderColor:'blue',
+                            },
+                            {
+                                label: "Service",
+                                data: [4,3,5,234,4,3],
+                                borderColor:'red',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        fill:false,
+                    }
+                }
             }
         };
     },
     mounted() {
+        
         this.$Progress.start();
         this.$jsHelper
             .get("api/v1/dashboard")
@@ -125,6 +198,14 @@ export default {
                 this.$Progress.fail();
                 this.$toaster.error("Something went wrong");
             });
+    },
+    computed:{
+        barchartStyles(){
+            return {
+                height: '300px',
+                position: 'relative'
+            }
+        }
     }
 };
 </script>
