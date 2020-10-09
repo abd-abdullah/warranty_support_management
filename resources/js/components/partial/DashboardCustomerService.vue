@@ -1,166 +1,147 @@
 <template>
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div
-                            class="card-header card-header-rose card-header-icon"
-                        >
-                            <div class="card-icon">
-                                <i class="material-icons">assignment</i>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <h4 class="card-title">
-                                        Service History
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <search
-                                :pagination="pagination"
-                                :param="param"
-                                @limit="getData()"
-                            ></search>
-                            <div class="table-responsive">
-                                <table class="table table-sortable">
-                                    <thead>
-                                        <tr>
-                                            <th>SL#</th>
-                                            <th
-                                                v-on:click="sort($event)"
-                                                data-column="users.name"
-                                                class="sorting mw-120"
-                                            >
-                                                Customer
-                                            </th>
-                                            <th class="mw-180">Address</th>
-                                            <th
-                                                v-on:click="sort($event)"
-                                                data-column="products.name"
-                                                class="sorting mw-180"
-                                            >
-                                                Product Name
-                                            </th>
-                                            <th>
-                                                Technician
-                                            </th>
-                                            <th class="mw-120">
-                                                Service Time
-                                            </th>
-                                            <th class="mw-155">
-                                                Next Service Date
-                                            </th>
-                                            <th>
-                                                Continue
-                                            </th>
-                                            <th class="text-right mw-80">
-                                                Actions
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                            v-for="(service_history, index) in service_histories"
-                                            :key="service_history.id"
-                                        >
-                                            <td>
-                                                {{ pagination.from + index }}
-                                            </td>
-                                            <td class="ws-pre">{{ 
-                                                    service_history.name+'\n'+
-                                                    service_history.customerId+'\n'+
-                                                    service_history.phone 
-                                                }}</td>
-                                            <td>
-                                                {{
-                                                    (service_history.address != "" &&
-                                                    service_history.address != null
-                                                        ? service_history.address + ", "
-                                                        : "") +
-                                                        (service_history.upazila != ""
-                                                            ? service_history.upazila +
-                                                              ", "
-                                                            : "") +
-                                                        (service_history.district != ""
-                                                            ? service_history.district +
-                                                              ", "
-                                                            : "") +
-                                                        (service_history.division != ""
-                                                            ? service_history.division +
-                                                              ", "
-                                                            : "") +
-                                                        (service_history.country != ""
-                                                            ? service_history.country
-                                                            : "")
-                                                }}
-                                            </td>
-                                            <td>
-                                                {{ 
-                                                    service_history.product_name+' >> '+
-                                                    service_history.product_code
-                                                 }}
-                                            </td>
-                                            <td>{{
-                                                    service_history.technician_name+'\n'+
-                                                    service_history.technician_phone
-                                                }}
-                                            </td>
-                                            <td>
-                                                {{ service_history.service_time }}
-                                            </td>
-                                            <td>
-                                                {{ service_history.next_service_time }}
-                                            </td>
-                                            <td>
-                                                {{ (service_history.is_discontinue === 0)?'Yes':'No' }}
-                                            </td>
-                                            <td class="td-actions text-right">
-                                                <button
-                                                    @click.prevent="
-                                                        service(service_history)
-                                                    "
-                                                    type="button"
-                                                    rel="tooltip"
-                                                    class="btn btn-facebook btn-round"
-                                                    title="Add Service"
-                                                >
-                                                    <span class="material-icons"
-                                                        >edit</span
-                                                    >
-                                                </button>
-                                                <button
-                                                    @click.prevent="
-                                                        remove(service_history)
-                                                    "
-                                                    type="button"
-                                                    rel="tooltip"
-                                                    class="btn btn-danger btn-round"
-                                                    data-original-title
-                                                    title="Delete"
-                                                >
-                                                    <i class="material-icons"
-                                                        >close</i
-                                                    >
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <pagination
-                                :pagination="pagination"
-                                :offset="5"
-                                @paginate="getData()"
-                            ></pagination>
+    <div>
+        <div class="card mt-0">
+            <div
+                class="card-header card-header-rose card-header-icon"
+            >
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <h4 class="card-title">
+                            Upcoming Service List
+                        </h4>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="float-right mt-2">
+                            <button v-on:click="searchUpcoming('todays')" :class="filter.today?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Today</button>
+                            <button v-on:click="searchUpcoming('next_7_days')" :class="filter.next_7_day?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Next 7 Days</button>
+                            <button v-on:click="searchUpcoming('next_30_days')" :class="filter.next_30_day?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Next 30 Days</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card-body">
+                <search
+                    :pagination="pagination"
+                    :param="param"
+                    @limit="getData()"
+                ></search>
+                <div class="table-responsive">
+                    <table class="table table-sortable">
+                        <thead>
+                            <tr>
+                                <th>SL#</th>
+                                <th
+                                    v-on:click="sort($event)"
+                                    data-column="users.name"
+                                    class="sorting mw-120"
+                                >
+                                    Customer
+                                </th>
+                                
+                                <th
+                                    v-on:click="sort($event)"
+                                    data-column="users.phone"
+                                    class="sorting"
+                                >
+                                    Phone
+                                </th>
+                                
+                                <th class="mw-180">Address</th>
+                                <th
+                                    v-on:click="sort($event)"
+                                    data-column="products.name"
+                                    class="sorting mw-180"
+                                >
+                                    Product Name
+                                </th>
+                                <th class="mw-155">
+                                    Prev. Service Date
+                                </th>
+                                <th class="mw-155">
+                                    Next Service Date
+                                </th>
+                                <th class="text-right">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                v-for="(sale, index) in sales"
+                                :key="sale.id"
+                            >
+                                <td>
+                                    {{ pagination.from + index }}
+                                </td>
+                                <td class="ws-pre">{{ 
+                                        sale.name+'\n'+
+                                        sale.customerId+'\n'+
+                                        sale.email 
+                                    }}</td>
+                                <td>{{sale.phone}}</td>
+                                <td>
+                                    {{
+                                        (sale.address != "" &&
+                                        sale.address != null
+                                            ? sale.address + ", "
+                                            : "") +
+                                            (sale.upazila != ""
+                                                ? sale.upazila +
+                                                    ", "
+                                                : "") +
+                                            (sale.district != ""
+                                                ? sale.district +
+                                                    ", "
+                                                : "") +
+                                            (sale.division != ""
+                                                ? sale.division +
+                                                    ", "
+                                                : "") +
+                                            (sale.country != ""
+                                                ? sale.country
+                                                : "")
+                                    }}
+                                </td>
+                                <td>
+                                    {{ 
+                                        sale.product_name+' >> '+
+                                        sale.product_code
+                                        }}
+                                </td>
+                                <td>
+                                    {{ sale.service_time }}
+                                </td>
+                                <td>
+                                    {{ sale.next_service_time }}
+                                </td>
+                                <td class="td-actions text-right">
+                                    <button
+                                        @click.prevent="
+                                            service(sale)
+                                        "
+                                        type="button"
+                                        rel="tooltip"
+                                        class="btn btn-facebook btn-round"
+                                        title="Add Service"
+                                    >
+                                        <span class="material-icons"
+                                            >add_box</span
+                                        >
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <pagination
+                    :pagination="pagination"
+                    :offset="5"
+                    @paginate="getData()"
+                ></pagination>
+            </div>
         </div>
-        <!-- Modal -->
+
+          <!-- Modal -->
         <div
             class="modal fade"
             id="exampleModal"
@@ -196,7 +177,7 @@
                                         data-toggle="tab"
                                         href="#link7"
                                         role="tablist"
-                                        >Update Service</a
+                                        >Add Service</a
                                     >
                                 </li>
                             </ul>
@@ -501,8 +482,8 @@
                         >
                             Close
                         </button>
-                        <button type="button" @click.prevent="update" class="btn btn-primary">
-                            Update
+                        <button type="button" @click.prevent="add" class="btn btn-primary">
+                            Save changes
                         </button>
                     </div>
                 </div>
@@ -521,10 +502,15 @@ export default {
                     sort_order: ""
                 }
             },
-            service_histories: [],
+            sales: [],
             pagination: {
                 current_page: 1,
                 per_page: 10
+            },
+            filter:{
+                today:1,
+                next_7_day:0,
+                next_30_day:0
             },
             form:{
                 customer : null,
@@ -540,7 +526,6 @@ export default {
                 cost : null,
                 done_by : null,
                 is_continue : true,
-                id : null,
             },
             errors: [],
             optionsServiceMen: []
@@ -563,7 +548,7 @@ export default {
             this.$Progress.start();
             this.$jsHelper
                 .get(
-                    "api/v1/customer-services?page=" +
+                    "api/v1/sales?page=" +
                         this.pagination.current_page +
                         "&per_page=" +
                         this.pagination.per_page +
@@ -576,7 +561,7 @@ export default {
                 )
                 .then(response => {
                     this.$Progress.finish();
-                    this.service_histories = response.data.data;
+                    this.sales = response.data.data;
                     this.pagination = response.data.meta;
                 })
                 .catch(e => {
@@ -594,49 +579,31 @@ export default {
                 this.getData();
             }
         },
-        remove(sale) {
-            this.$swal("Are you sure to delete this sale?").then(result => {
-                if (result.isConfirmed === true) {
-                    this.$jsHelper
-                        .delete("api/v1/customer-services/" + sale.id)
-                        .then(response => {
-                            this.$Progress.finish();
-                            this.$toaster.warning("Deleted successfully");
-                            this.getData();
-                        })
-                        .catch(e => {
-                            this.$Progress.fail();
-                            this.$toaster.error("Something went wrong");
-                        });
-                }
-            });
-        },
-        service(service) {
+        
+        service(sale) {
             this.errors = [];
-            this.form.customer = service.name+'-'+service.customerId;
-            this.form.product = service.product_name+'-'+service.product_code;
-            this.form.service_id = service.id;
-            this.form.customer_id = service.customer_id;
-            this.form.service_time = new Date(service.service_time);
-            this.form.service_for = service.service_for;
-            this.form.next_service_time = new Date(service.next_service_time);
-            this.form.remarks = service.remarks;
-            this.form.service_charge = service.service_charge;
-            this.form.total_paid = service.total_paid;
-            this.form.cost = service.cost;
-            this.form.done_by = service.done_by;
-            this.form.sale_id = service.sale_id;
-            this.form.is_continue = (service.is_discontinue === 0)?1:0;
-            this.form.id = service.id;
+            this.form.customer = sale.name+'-'+sale.customerId;
+            this.form.product = sale.product_name+'-'+sale.product_code;
+            this.form.sale_id = sale.id;
+            this.form.customer_id = sale.customer_id;
+            this.form.service_time = null;
+            this.form.service_for = null;
+            this.form.next_service_time = null;
+            this.form.remarks = null;
+            this.form.service_charge = null;
+            this.form.total_paid = null;
+            this.form.cost = null;
+            this.form.done_by = null;
+            this.form.is_continue = true;
             $("#exampleModal").modal("show");
         },
-        update() {
+        add() {
             this.$Progress.start();
             this.$jsHelper
-                .put("api/v1/customer-services/"+this.form.id, this.form)
+                .post("api/v1/customer-services", this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$toaster.success("Successfully Updated");
+                    this.$toaster.success("Successfully Added");
                     this.getData();
                     $("#exampleModal").modal("hide");
                 })
@@ -649,6 +616,23 @@ export default {
                         this.$toaster.error("Something went wrong");
                     }
                 });
+        },
+        searchUpcoming(srcType){
+            if(srcType === 'todays'){
+                this.filter.today = 1;
+                this.filter.next_7_day = 0;
+                this.filter.next_30_day = 0;
+            }
+            else if(srcType === 'next_7_days'){
+                this.filter.next_7_day = 1;
+                this.filter.next_30_day = 0;
+                this.filter.today = 0;
+            }
+            else{
+                this.filter.next_7_day = 0;
+                this.filter.next_30_day = 1;
+                this.filter.today = 0;
+            }
         }
     }
 };

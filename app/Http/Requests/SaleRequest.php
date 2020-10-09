@@ -25,13 +25,13 @@ class SaleRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email,'.$this->request->get('old_user_id'),
-            'phone' => 'required|numeric|digits:11|unique:users,phone,'.$this->request->get('old_user_id'),
-            'customerId' => 'required|string|unique:customers,customerId,'.$this->request->get('old_customer_id'),
+            'email' => 'bail|nullable|email|unique:users,email,'.$this->request->get('old_user_id'),
+            'phone' => 'bail|required|numeric|digits:11|unique:users,phone,'.$this->request->get('old_user_id'),
+            'customerId' => 'bail|required|string|unique:customers,customerId,'.$this->request->get('old_customer_id'),
             'address' => 'required|string|min:4',
 
             'product_name' => 'required|min:3',
-            'product_code' => 'required|unique:products,code,'.$this->request->get('old_product_id'),
+            'product_code' => 'bail|required|unique:products,code,'.$this->request->get('old_product_id'),
 
             'purchase_capacity' => 'required',
             'purchase_price' => 'bail|nullable|numeric',

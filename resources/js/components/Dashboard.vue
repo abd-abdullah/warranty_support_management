@@ -89,10 +89,10 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="card">
+                    <div class="card mt-0">
                         <div class="card-header card-header-icon card-header-rose">
-                            <h4 class="card-title">Bars Chart
-                            <small>- Bar Chart</small>
+                            <h4 class="card-title">Sales & Service Chart
+                            <small class="font-weight-bold text-primary">- Previous 30 days</small>
                             </h4>
                         </div>
                         <div class="card-body">
@@ -101,16 +101,19 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="card">
+                    <div class="card mt-0">
                         <div class="card-header card-header-icon card-header-city">
-                            <h4 class="card-title">Line Chart Sales
-                            <small>- Line Chart</small>
+                            <h4 class="card-title">Sales vs Service
+                            <small class="font-weight-bold text-primary">- 2020</small>
                             </h4>
                         </div>
                         <div class="card-body">
                            <service-line-chart :styles="barchartStyles" :data=chart.Line.data :options=chart.Line.options />
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-12">
+                    <dashboard-customer-service />
                 </div>
             </div>
         </div>
@@ -119,8 +122,9 @@
 <script>
 import ServiceBarChart from './partial/SaleAndServiceBarChart';
 import ServiceLineChart from './partial/ServiceLineChart';
+import DashboardCustomerService from './partial/DashboardCustomerService';
 export default {
-    components: { ServiceBarChart,ServiceLineChart },
+    components: { ServiceBarChart,ServiceLineChart, DashboardCustomerService },
     name: "Dashboard",
     data() {
         return {
@@ -202,7 +206,7 @@ export default {
     computed:{
         barchartStyles(){
             return {
-                height: '300px',
+                height: '250px',
                 position: 'relative'
             }
         }

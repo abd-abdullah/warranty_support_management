@@ -43,7 +43,7 @@
                                             <label
                                                 for="name"
                                                 class="bmd-label-floating"
-                                                >Name</label
+                                                >Name<strong class="text-danger"> *</strong></label
                                             >
                                             <input
                                                 type="text"
@@ -66,7 +66,7 @@
                                             <label
                                                 for="email"
                                                 class="bmd-label-floating"
-                                                >Email</label
+                                                >Email<strong class="text-danger"> *</strong></label
                                             >
                                             <input
                                                 type="email"
@@ -110,7 +110,7 @@
                                         <label
                                                 for="joining_date"
                                                 class="bmd-label-floating"
-                                                >Date of Joining</label
+                                                >Date of Joining<strong class="text-danger"> *</strong></label
                                             >
                                        <v-date-picker :masks="{ input: ['YYYY-MM-DD'], date:['YYYY-MM-DD']}" v-model='form.joining_date' />
                                          <span
@@ -128,7 +128,7 @@
                                             <label
                                                 for="phone"
                                                 class="bmd-label-floating"
-                                                >Mobile</label
+                                                >Mobile<strong class="text-danger"> *</strong></label
                                             >
                                             <input
                                                 type="number"
@@ -277,7 +277,7 @@
                                             <label
                                                 for="address"
                                                 class="bmd-label-floating"
-                                                >Address/Road no/House no</label
+                                                >Address/Road no/House no<strong class="text-danger"> *</strong></label
                                             >
                                             <textarea
                                                 type="text"

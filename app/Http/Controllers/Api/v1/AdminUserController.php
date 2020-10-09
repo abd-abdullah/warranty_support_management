@@ -51,6 +51,7 @@ class AdminUserController extends Controller
             'email' => 'required|email|unique:users',
             'phone' => 'required|numeric|digits:11|unique:users',
             'password' => 'nullable|string|min:8',
+            'address' => 'required|string|min:4',
         ]);
         $data = $request->all();
         $data['user_type'] = 'admin';
@@ -97,9 +98,10 @@ class AdminUserController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email.'.$admin_user->id,
-            'phone' => 'required|numeric|digits:11|unique:users,phone.'.$admin_user->id,
+            'email' => 'required|email|unique:users,email,'.$admin_user->id,
+            'phone' => 'required|numeric|digits:11|unique:users,phone,'.$admin_user->id,
             'password' => 'nullable|string|min:8',
+            'address' => 'required|string|min:4',
         ]);
 
         $data = $request->except('password');

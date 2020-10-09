@@ -134,6 +134,18 @@ legend.border {
     white-space: nowrap;
 }
 
+.mw-80{
+    min-width: 80px;
+}
+.mw-85{
+    min-width: 85px;
+}
+.mw-90{
+    min-width: 90px;
+}
+.mw-95{
+    min-width: 95px;
+}
 .mw-100{
     min-width: 100px;
 }
@@ -200,4 +212,20 @@ legend.border {
 
 .select2{
     width: 100% !important;
+}
+
+.btn-group-xs .btn, .btn-group-xs>.btn, .btn.btn-xs {
+    padding: .30625rem 1.0rem;
+    font-size: .5875rem;
+    line-height: 1;
+    border-radius: .1rem;
+}
+
+.ws-pre{
+    white-space: pre;
+}
+
+.sidebar .sidebar-wrapper {
+    overflow-y: auto;
+    overflow-x: hidden;
 }

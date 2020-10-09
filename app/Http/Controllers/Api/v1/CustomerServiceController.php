@@ -111,7 +111,33 @@ class CustomerServiceController extends Controller
      */
     public function update(Request $request, CustomerService $customerService)
     {
-        //
+        $request->validate([
+            'service_time' => 'required|date|before_or_equal:today',
+            'next_service_time' => 'bail|nullable|date|after:service_time',
+            'service_for' => 'required|string|min:10',
+            'service_charge' => 'required|numeric|min:0',
+            'total_paid' => 'required|numeric|min:0',
+            'done_by' => 'required|numeric',
+            'cost' => 'nullable|numeric|min:0',
+            'remarks' => 'required|string|min:10',
+        ]);
+        $data = $request->all();
+        $data['is_dicontinue'] = ($request->is_continue === true)?0:1;
+        $data['service_time'] = Carbon::parse($request->service_time)->format('Y-m-d');
+        $data['next_service_time'] = ($request->next_service_time != NULL)?Carbon::parse($request->next_service_time)->format('Y-m-d'):NULL;
+        $data['due'] = (int)$request->service_charge - (int)$request->total_paid;
+
+        try{
+            \DB::beginTransaction();
+            $customerService->update($data);
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
     }
 
     /**
@@ -122,6 +148,6 @@ class CustomerServiceController extends Controller
      */
     public function destroy(CustomerService $customerService)
     {
-        //
+        $customerService->delete();
     }
 }

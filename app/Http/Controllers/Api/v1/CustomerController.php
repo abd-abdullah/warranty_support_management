@@ -52,10 +52,11 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|numeric|digits:11|unique:users',
+            'email' => 'bail|nullable|email|unique:users,email',
+            'phone' => 'required|numeric|digits:11|unique:users,phone',
             'customerId' => 'required|string|unique:customers,customerId',
             'password' => 'nullable|string|min:8',
+            'address' => 'required|string|min:4',
         ]);
 
         $data = $request->all();
@@ -63,6 +64,7 @@ class CustomerController extends Controller
         $data['created_by'] = auth()->id();
         $data['email_verified_at'] = now();
         $data['password'] = bcrypt($request->email);
+        $data['status'] = 0;
 
         try{
             \DB::beginTransaction();
@@ -101,10 +103,11 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email,'.$customer->user_id,
+            'email' => 'bail|nullable|email|unique:users,email,'.$customer->user_id,
             'phone' => 'required|numeric|digits:11|unique:users,phone,'.$customer->user_id,
-            'customerId' => 'required|string|unique:customers,customerId'.$customer->id,
+            'customerId' => 'required|string|unique:customers,customerId,'.$customer->id,
             'password' => 'nullable|string|min:8',
+            'address' => 'required|string|min:4',
         ]);
    
         $data = $request->except(['customerId']);

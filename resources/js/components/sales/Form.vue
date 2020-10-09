@@ -72,7 +72,7 @@
                                                     <label
                                                         for="name"
                                                         class="bmd-label-floating"
-                                                        >Name</label
+                                                        >Name<strong class="text-danger"> *</strong></label
                                                     >
                                                     <input
                                                         type="text"
@@ -100,7 +100,7 @@
                                                     <label
                                                         for="customerId"
                                                         class="bmd-label-floating"
-                                                        >Customer ID</label
+                                                        >Customer ID<strong class="text-danger"> *</strong></label
                                                     >
                                                     <input
                                                         type="text"
@@ -164,7 +164,7 @@
                                                     <label
                                                         for="phone"
                                                         class="bmd-label-floating"
-                                                        >Mobile</label
+                                                        >Mobile<strong class="text-danger"> *</strong></label
                                                     >
                                                     <input
                                                         type="number"
@@ -370,7 +370,7 @@
                                                         for="address"
                                                         class="bmd-label-floating"
                                                         >Address/Road
-                                                        no/House no</label
+                                                        no/House no<strong class="text-danger"> *</strong></label
                                                     >
                                                     <textarea
                                                         type="text"
@@ -437,7 +437,7 @@
                                                     <label
                                                         for="name"
                                                         class="bmd-label-floating"
-                                                        >Name</label
+                                                        >Name<strong class="text-danger"> *</strong></label
                                                     >
                                                     <input
                                                         type="text"
@@ -466,7 +466,7 @@
                                                     <label
                                                         for="code"
                                                         class="bmd-label-floating"
-                                                        >Code</label
+                                                        >Code<strong class="text-danger"> *</strong></label
                                                     >
                                                     <input
                                                         type="text"
@@ -495,7 +495,7 @@
                                                     <label
                                                         for="code"
                                                         class="bmd-label-floating"
-                                                        >Capacity</label
+                                                        >Capacity<strong class="text-danger"> *</strong></label
                                                     >
                                                     <input
                                                         type="text"
@@ -606,7 +606,7 @@
                                                     <label
                                                         for="date_of_purchase"
                                                         class="bmd-label-floating"
-                                                        >Purchase Date</label
+                                                        >Purchase Date<strong class="text-danger"> *</strong></label
                                                     >
                                                     <v-date-picker
                                                         :masks="{
@@ -640,7 +640,7 @@
                                                         for="last_date_of_warranty"
                                                         class="bmd-label-floating"
                                                         >Last Date of
-                                                        Warranty</label
+                                                        Warranty<strong class="text-danger"> *</strong></label
                                                     >
                                                     <v-date-picker
                                                         :masks="{

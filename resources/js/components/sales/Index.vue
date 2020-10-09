@@ -44,28 +44,7 @@
                                                 data-column="users.name"
                                                 class="sorting mw-120"
                                             >
-                                                Name
-                                            </th>
-                                            <th
-                                                v-on:click="sort($event)"
-                                                data-column="customers.customerID"
-                                                class="sorting mw-120"
-                                            >
-                                                Customer ID
-                                            </th>
-                                            <th
-                                                v-on:click="sort($event)"
-                                                data-column="users.phone"
-                                                class="sorting mw-120"
-                                            >
-                                                Number
-                                            </th>
-                                            <th
-                                                v-on:click="sort($event)"
-                                                data-column="users.email"
-                                                class="sorting mw-120"
-                                            >
-                                                Email
+                                                Customer
                                             </th>
                                             <th class="mw-180">Address</th>
                                             <th
@@ -74,13 +53,6 @@
                                                 class="sorting mw-180"
                                             >
                                                 Product Name
-                                            </th>
-                                            <th
-                                                v-on:click="sort($event)"
-                                                data-column="products.code"
-                                                class="sorting mw-130"
-                                            >
-                                                Product Code
                                             </th>
                                             <th
                                                 v-on:click="sort($event)"
@@ -126,10 +98,12 @@
                                             <td>
                                                 {{ pagination.from + index }}
                                             </td>
-                                            <td>{{ sale.name }}</td>
-                                            <td>{{ sale.customerId }}</td>
-                                            <td>{{ sale.phone }}</td>
-                                            <td>{{ sale.email }}</td>
+                                            <td class="ws-pre">{{
+                                                    sale.name+'\n'+
+                                                    sale.customerId+'\n'+
+                                                    sale.phone+'\n'+
+                                                    sale.email 
+                                                }}</td>
                                             <td>
                                                 {{
                                                     (sale.address != "" &&
@@ -153,8 +127,10 @@
                                                             : "")
                                                 }}
                                             </td>
-                                            <td>{{ sale.product_name }}</td>
-                                            <td>{{ sale.product_code }}</td>
+                                            <td>{{ 
+                                                sale.product_name+' >> '+
+                                                sale.product_code
+                                                }}</td>
                                             <td>{{ sale.purchase_from }}</td>
                                             <td>{{ sale.price }}</td>
                                             <td>{{ sale.date_of_purchase }}</td>
@@ -280,7 +256,7 @@
                                                             <label
                                                                 class="bmd-label-floating"
                                                                  for="customer"
-                                                                >Customer</label
+                                                                >Customer<strong class="text-danger"> *</strong></label
                                                             >
                                                             <input
                                                                 type="text"
@@ -301,7 +277,7 @@
                                                             <label
                                                                 class="bmd-label-floating"
                                                                 for="product"
-                                                                >Product</label
+                                                                >Product<strong class="text-danger"> *</strong></label
                                                             >
                                                             <input
                                                                 type="text"
@@ -318,7 +294,7 @@
                                                             <label
                                                                 for="service_time"
                                                                 class="bmd-label-floating"
-                                                                >Service Date</label
+                                                                >Service Date<strong class="text-danger"> *</strong></label
                                                             >
                                                             <v-date-picker
                                                                 :masks="{
@@ -388,7 +364,7 @@
                                                             <label
                                                                 for="service_charge"
                                                                 class="bmd-label-floating"
-                                                                >Service Charge</label
+                                                                >Service Charge<strong class="text-danger"> *</strong></label
                                                             >
                                                             <input
                                                                 type="text"
@@ -416,7 +392,7 @@
                                                             <label
                                                                 for="total_paid"
                                                                 class="bmd-label-floating"
-                                                                >Total Paid</label
+                                                                >Total Paid<strong class="text-danger"> *</strong></label
                                                             >
                                                             <input
                                                                 type="text"
@@ -465,22 +441,22 @@
                                                         <div class="form-group">
                                                             <label
                                                                 class="select2-form-group text-primary"
-                                                                >Done by</label
+                                                                >Done by<strong class="text-danger"> *</strong></label
                                                             >
                                                             <Select2
                                                                 :options="
                                                                     optionsServiceMen
                                                                 "
                                                                 v-model="
-                                                                    form.done_id
+                                                                    form.done_by
                                                                 "
                                                                 placeholder="Select Technician"
                                                             />
                                                             <span
                                                                 class="text-danger"
-                                                                v-if="errors.done_id"
+                                                                v-if="errors.done_by"
                                                                 >{{
-                                                                    errors.done_id[0]
+                                                                    errors.done_by[0]
                                                                 }}</span
                                                             >
                                                         </div>
@@ -496,7 +472,7 @@
                                                             <label
                                                                 for="service_for"
                                                                 class="bmd-label-floating"
-                                                                >Service Details</label
+                                                                >Service Details<strong class="text-danger"> *</strong></label
                                                             >
                                                             <textarea
                                                                 type="text"
@@ -522,7 +498,7 @@
                                                             <label
                                                                 for="remarks"
                                                                 class="bmd-label-floating"
-                                                                >Remarks</label
+                                                                >Remarks<strong class="text-danger"> *</strong></label
                                                             >
                                                             <textarea
                                                                 type="text"
@@ -588,6 +564,10 @@ export default {
                 per_page: 10
             },
             form:{
+                customer : null,
+                product : null,
+                sale_id : null,
+                customer_id : null,
                 service_time : null,
                 service_for : null,
                 next_service_time : null,
@@ -595,12 +575,8 @@ export default {
                 service_charge : null,
                 total_paid : null,
                 cost : null,
-                done_id : null,
+                done_by : null,
                 is_continue : true,
-                customer : null,
-                product : null,
-                id : null,
-                customer_id : null,
             },
             errors: [],
             optionsServiceMen: []
@@ -684,7 +660,7 @@ export default {
             this.form.service_charge = null;
             this.form.total_paid = null;
             this.form.cost = null;
-            this.form.done_id = null;
+            this.form.done_by = null;
             this.form.is_continue = true;
             $("#exampleModal").modal("show");
         },

@@ -55,6 +55,7 @@ class ServiceMenController extends Controller
             'phone' => 'required|numeric|digits:11|unique:users',
             'joining_date' => 'required|date|before_or_equal:today',
             'password' => 'nullable|string|min:8',
+            'address' => 'required|string|min:4',
         ]);
 
         $data = $request->all();
@@ -62,6 +63,7 @@ class ServiceMenController extends Controller
         $data['created_by'] = auth()->id();
         $data['joining_date'] = Carbon::parse($request->joining_date)->format('Y-m-d');
         $data['email_verified_at'] = now();
+        $data['status'] = 0;
         if($request->password !== NULL){
             $data['password'] = bcrypt($request->password);
         }
@@ -110,6 +112,7 @@ class ServiceMenController extends Controller
             'phone' => 'required|numeric|digits:11|unique:users,phone,'.$technician->user_id,
             'joining_date' => 'required|date|before_or_equal:today',
             'password' => 'nullable|string|min:8',
+            'address' => 'required|string|min:4',
         ]);
    
         $data = $request->except(['password', 'joining_date']);

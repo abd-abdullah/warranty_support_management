@@ -38,7 +38,7 @@
                                             <label
                                                 for="name"
                                                 class="bmd-label-floating"
-                                                >Name</label
+                                                >Name<strong class="text-danger"> *</strong></label
                                             >
                                             <input
                                                 type="text"
@@ -58,7 +58,7 @@
                                             <label
                                                 for="code"
                                                 class="bmd-label-floating"
-                                                >Code</label
+                                                >Code<strong class="text-danger"> *</strong></label
                                             >
                                             <input
                                                 type="text"

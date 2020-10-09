@@ -54,6 +54,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function setEmailAttribute($value) {
+        if ( empty($value) ) {
+            $this->attributes['email'] = NULL;
+        } else {
+            $this->attributes['email'] = $value;
+        }
+    }
+
     public function country(){
     	return $this->belongsTo(Country::class);
     }

@@ -42,7 +42,8 @@ class CustomerServiceCollection extends ResourceCollection
                     'total_paid' => $customerService->service_charge,
                     'service_charge' => $customerService->total_paid,
                     'cost' => $customerService->cost,
-                    'cost' => $customerService->cost,
+                    'sale_id' => $customerService->sale_id,
+                    'done_by' => $customerService->done_by,
                 ];
             }),
         ];

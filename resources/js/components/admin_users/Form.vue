@@ -43,7 +43,7 @@
                                             <label
                                                 for="name"
                                                 class="bmd-label-floating"
-                                                >Name</label
+                                                >Name<strong class="text-danger"> *</strong></label
                                             >
                                             <input
                                                 type="text"
@@ -66,7 +66,7 @@
                                             <label
                                                 for="email"
                                                 class="bmd-label-floating"
-                                                >Email</label
+                                                >Email<strong class="text-danger"> *</strong></label
                                             >
                                             <input
                                                 type="email"
@@ -115,7 +115,7 @@
                                             <label
                                                 for="phone"
                                                 class="bmd-label-floating"
-                                                >Mobile</label
+                                                >Mobile<strong class="text-danger"> *</strong></label
                                             >
                                             <input
                                                 type="number"
@@ -264,7 +264,7 @@
                                             <label
                                                 for="address"
                                                 class="bmd-label-floating"
-                                                >Address/Road no/House no</label
+                                                >Address/Road no/House no<strong class="text-danger"> *</strong></label
                                             >
                                             <textarea
                                                 type="text"

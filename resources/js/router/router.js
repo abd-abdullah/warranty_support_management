@@ -105,7 +105,6 @@ const routes = [
 ];
 
 const router = new VueRouter({
-    base: process.env.MIX_APP_URL,
     routes, // short for `routes: routes`
 })
 
