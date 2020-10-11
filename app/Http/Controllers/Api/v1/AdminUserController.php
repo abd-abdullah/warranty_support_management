@@ -126,6 +126,9 @@ class AdminUserController extends Controller
      */
     public function destroy(User $admin_user)
     {
+        if($admin_user->id == 1){
+            abort();
+        }
         $admin_user->delete();
     }
 }
