@@ -349,7 +349,6 @@ export default {
                     this.form.other_contact_numbers =
                         response.data.data.other_contact_numbers;
                     this.form.photo = response.data.data.photo;
-                    this.form.country_id = response.data.data.country_id;
                     this.form.division_id = response.data.data.division_id;
                     this.form.district_id = response.data.data.district_id;
                     this.form.upazila_id = response.data.data.upazila_id;
