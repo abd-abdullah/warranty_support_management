@@ -13,8 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('{path}', function () {
-    return view('welcome');
-})->where('path', '(.*)');
-
+Route::get('{path}','HomeController@allRequest')->where('path', '(.*)');
 Auth::routes();

@@ -25,4 +25,15 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * return welcome for every request.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function allRequest()
+    {
+        return view('welcome');
+    }
+
 }

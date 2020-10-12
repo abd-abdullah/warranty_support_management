@@ -11,7 +11,7 @@
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link href="{{asset('css/app.css')}}" rel="stylesheet" />
+  <link href="{{asset('css/app.css?v='.env('PJVER',1))}}" rel="stylesheet" />
 </head>
 
 <body>
@@ -24,7 +24,7 @@
             return "<?php echo url('');?>/"+addr;
         };
   </script>
-  <script src="{{asset('js/app.js')}}"></script>
+  <script src="{{asset('js/app.js?v='.env('PJVER',1))}}"></script>
 </body>
 
 </html>
