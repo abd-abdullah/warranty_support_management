@@ -7,7 +7,7 @@
                         <div
                             class="card-header card-header-rose card-header-icon"
                         >
-                            <div class="card-icon">
+                            <div class="card-icon d-md-block d-none">
                                 <i class="material-icons">assignment</i>
                             </div>
                             <div class="row">

@@ -1,6 +1,6 @@
 <template>
    <div class="row">
-    <div class="col-sm-12 col-md-6">
+    <div class="col-6">
         <div>
         <label>
             Show
@@ -15,7 +15,7 @@
         </label>
         </div>
     </div>
-    <div class="col-sm-12 col-md-6">
+    <div class="col-6">
         <div class="float-right">
         <label>
             <span class="bmd-form-group bmd-form-group-sm">

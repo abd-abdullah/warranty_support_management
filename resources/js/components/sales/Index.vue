@@ -7,21 +7,21 @@
                         <div
                             class="card-header card-header-rose card-header-icon"
                         >
-                            <div class="card-icon">
+                            <div class="card-icon d-md-block d-none">
                                 <i class="material-icons">assignment</i>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-6">
                                     <h4 class="card-title">
                                         Customer Purchase List
                                     </h4>
                                 </div>
                                 <div
-                                    class="col-sm-12 col-md-6 text-right pr-md-0"
+                                    class="col-6 text-right pr-md-0"
                                 >
                                     <router-link
                                         to="/sales/form"
-                                        class="btn btn-sm btn-rose"
+                                        class="btn btn-sm btn-rose mt-2"
                                         >Add
                                         <div class="ripple-container"></div>
                                     </router-link>

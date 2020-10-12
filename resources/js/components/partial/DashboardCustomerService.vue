@@ -11,7 +11,7 @@
                         </h4>
                     </div>
                     <div class="col-sm-12 col-md-6">
-                        <div class="float-right mt-2">
+                        <div class="float-left float-md-right mt-2">
                             <button v-on:click="searchUpcoming('todays')" :class="filter.today?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Today</button>
                             <button v-on:click="searchUpcoming('next_7_days')" :class="filter.next_7_day?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Next 7 Days</button>
                             <button v-on:click="searchUpcoming('next_30_days')" :class="filter.next_30_day?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Next 30 Days</button>

@@ -5,15 +5,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-rose card-header-icon">
-                            <div class="card-icon">
+                            <div class="card-icon d-md-block d-none">
                                 <i class="material-icons">assignment</i>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-6">
                                     <h4 class="card-title">Technicians List</h4>
                                 </div>
-                                <div class="col-sm-12 col-md-6 text-right pr-md-0">
-                                    <router-link to="/technicians/form" class="btn btn-sm btn-rose">Add
+                                <div class="col-6 text-right pr-md-0">
+                                    <router-link to="/technicians/form" class="btn btn-sm btn-rosem mt-2">Add
                                         <div class="ripple-container"></div>
                                     </router-link>
                                 </div> 
@@ -25,66 +25,69 @@
                                 :param="param"
                                 @limit="getData()"
                             ></search>
-                            <table class="table table-sortable">
-                                <thead>
-                                    <tr>
-                                        <th>SL#</th>
-                                        <th v-on:click = "sort($event)" data-column="users.name" class="sorting">Name</th>
-                                        <th v-on:click = "sort($event)" data-column="users.email" class="sorting">Email</th>
-                                        <th v-on:click = "sort($event)" data-column="users.phone" class="sorting">Mobile</th>
-                                        <th>Address</th>
-                                        <th v-on:click = "sort($event)" data-column="joining_date" class="sorting">Date of Join</th>
-                                        <th class="text-right">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr
-                                        v-for="(technician, index) in technicians"
-                                        :key="technician.id"
-                                    >
-                                        <td>{{ pagination.from + index }}</td>
-                                        <td>{{ technician.name }}</td>
-                                        <td>{{ technician.email }}</td>
-                                        <td>{{ technician.phone }}</td>
-                                        <td>{{ 
-                                                ((technician.address != '' && technician.address != null)?technician.address+', ':'')+
-                                                ((technician.upazila != '')?technician.upazila+', ':'')+
-                                                ((technician.district != '')?technician.district+', ':'')+
-                                                ((technician.division != '')?technician.division+', ':'')+
-                                                ((technician.country != '')?technician.country:'')
-                                            }}</td>
-                                        <td>{{ technician.date_of_join }}</td>
-                                        <td class="td-actions w76 text-right">
-                                            <router-link
-                                                :to="{ name: 'technician_form', params:{'id':technician.id}}"
-                                                type="button"
-                                                rel="tooltip"
-                                                class="btn btn-success btn-round"
-                                                data-original-title
-                                                title
-                                            >
-                                                <i class="material-icons"
-                                                    >edit</i
+                            
+                            <div class="table-responsive">
+                                <table class="table table-sortable">
+                                    <thead>
+                                        <tr>
+                                            <th>SL#</th>
+                                            <th v-on:click = "sort($event)" data-column="users.name" class="sorting mw-80">Name</th>
+                                            <th v-on:click = "sort($event)" data-column="users.email" class="sorting mw-80">Email</th>
+                                            <th v-on:click = "sort($event)" data-column="users.phone" class="sorting mw-80">Mobile</th>
+                                            <th>Address</th>
+                                            <th v-on:click = "sort($event)" data-column="joining_date" class="sorting mw-120">Date of Join</th>
+                                            <th class="text-right mw-80">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="(technician, index) in technicians"
+                                            :key="technician.id"
+                                        >
+                                            <td>{{ pagination.from + index }}</td>
+                                            <td>{{ technician.name }}</td>
+                                            <td>{{ technician.email }}</td>
+                                            <td>{{ technician.phone }}</td>
+                                            <td>{{ 
+                                                    ((technician.address != '' && technician.address != null)?technician.address+', ':'')+
+                                                    ((technician.upazila != '')?technician.upazila+', ':'')+
+                                                    ((technician.district != '')?technician.district+', ':'')+
+                                                    ((technician.division != '')?technician.division+', ':'')+
+                                                    ((technician.country != '')?technician.country:'')
+                                                }}</td>
+                                            <td>{{ technician.date_of_join }}</td>
+                                            <td class="td-actions w76 text-right">
+                                                <router-link
+                                                    :to="{ name: 'technician_form', params:{'id':technician.id}}"
+                                                    type="button"
+                                                    rel="tooltip"
+                                                    class="btn btn-success btn-round"
+                                                    data-original-title
+                                                    title
                                                 >
-                                            </router-link>
-                                            <button
-                                                @click.prevent="remove(technician)"
-                                                type="button"
-                                                rel="tooltip"
-                                                class="btn btn-danger btn-round"
-                                                data-original-title
-                                                title
-                                            >
-                                                <i class="material-icons"
-                                                    >close</i
+                                                    <i class="material-icons"
+                                                        >edit</i
+                                                    >
+                                                </router-link>
+                                                <button
+                                                    @click.prevent="remove(technician)"
+                                                    type="button"
+                                                    rel="tooltip"
+                                                    class="btn btn-danger btn-round"
+                                                    data-original-title
+                                                    title
                                                 >
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                                    <i class="material-icons"
+                                                        >close</i
+                                                    >
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <pagination
                                 :pagination="pagination"
                                 :offset="5"

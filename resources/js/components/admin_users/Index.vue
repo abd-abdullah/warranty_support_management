@@ -5,15 +5,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-rose card-header-icon">
-                            <div class="card-icon">
+                            <div class="card-icon d-md-block d-none">
                                 <i class="material-icons">assignment</i>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-6">
                                     <h4 class="card-title">Admin List</h4>
                                 </div>
-                                <div class="col-sm-12 col-md-6 text-right pr-md-0">
-                                    <router-link to="/admin-users/form" class="btn btn-sm btn-rose">Add
+                                <div class="col-6 text-right pr-md-0">
+                                    <router-link to="/admin-users/form" class="btn btn-sm btn-rose mt-2">Add
                                         <div class="ripple-container"></div>
                                     </router-link>
                                 </div> 
@@ -25,64 +25,67 @@
                                 :param="param"
                                 @limit="getData()"
                             ></search>
-                            <table class="table table-sortable">
-                                <thead>
-                                    <tr>
-                                        <th>SL#</th>
-                                        <th v-on:click = "sort($event)" data-column="users.name" class="sorting">Name</th>
-                                        <th v-on:click = "sort($event)" data-column="users.email" class="sorting">Email</th>
-                                        <th v-on:click = "sort($event)" data-column="users.phone" class="sorting">Mobile</th>
-                                        <th data-column="photo">Address</th>
-                                        <th class="text-right">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr
-                                        v-for="(admin_user, index) in admin_users"
-                                        :key="admin_user.id"
-                                    >
-                                        <td>{{ pagination.from + index }}</td>
-                                        <td>{{ admin_user.name }}</td>
-                                        <td>{{ admin_user.email }}</td>
-                                        <td>{{ admin_user.phone }}</td>
-                                        <td>{{ 
-                                                ((admin_user.address != '' && admin_user.address != null)?admin_user.address+', ':'')+
-                                                ((admin_user.upazila != '')?admin_user.upazila+', ':'')+
-                                                ((admin_user.district != '')?admin_user.district+', ':'')+
-                                                ((admin_user.division != '')?admin_user.division+', ':'')+
-                                                ((admin_user.country != '')?admin_user.country:'')
-                                            }}</td>
-                                        <td class="td-actions w76 text-right">
-                                            <router-link
-                                                :to="{ name: 'admin_user_form', params:{'id':admin_user.id}}"
-                                                type="button"
-                                                rel="tooltip"
-                                                class="btn btn-success btn-round"
-                                                data-original-title
-                                                title
-                                            >
-                                                <i class="material-icons"
-                                                    >edit</i
+                            
+                            <div class="table-responsive">
+                                <table class="table table-sortable">
+                                    <thead>
+                                        <tr>
+                                            <th>SL#</th>
+                                            <th v-on:click = "sort($event)" data-column="users.name" class="sorting mw-80">Name</th>
+                                            <th v-on:click = "sort($event)" data-column="users.email" class="sorting mw-80">Email</th>
+                                            <th v-on:click = "sort($event)" data-column="users.phone" class="sorting mw-80">Mobile</th>
+                                            <th data-column="photo">Address</th>
+                                            <th class="text-right mw-80">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="(admin_user, index) in admin_users"
+                                            :key="admin_user.id"
+                                        >
+                                            <td>{{ pagination.from + index }}</td>
+                                            <td>{{ admin_user.name }}</td>
+                                            <td>{{ admin_user.email }}</td>
+                                            <td>{{ admin_user.phone }}</td>
+                                            <td>{{ 
+                                                    ((admin_user.address != '' && admin_user.address != null)?admin_user.address+', ':'')+
+                                                    ((admin_user.upazila != '')?admin_user.upazila+', ':'')+
+                                                    ((admin_user.district != '')?admin_user.district+', ':'')+
+                                                    ((admin_user.division != '')?admin_user.division+', ':'')+
+                                                    ((admin_user.country != '')?admin_user.country:'')
+                                                }}</td>
+                                            <td class="td-actions w76 text-right">
+                                                <router-link
+                                                    :to="{ name: 'admin_user_form', params:{'id':admin_user.id}}"
+                                                    type="button"
+                                                    rel="tooltip"
+                                                    class="btn btn-success btn-round"
+                                                    data-original-title
+                                                    title
                                                 >
-                                            </router-link>
-                                            <button
-                                                @click.prevent="remove(admin_user)"
-                                                type="button"
-                                                rel="tooltip"
-                                                class="btn btn-danger btn-round"
-                                                data-original-title
-                                                title
-                                            >
-                                                <i class="material-icons"
-                                                    >close</i
+                                                    <i class="material-icons"
+                                                        >edit</i
+                                                    >
+                                                </router-link>
+                                                <button
+                                                    @click.prevent="remove(admin_user)"
+                                                    type="button"
+                                                    rel="tooltip"
+                                                    class="btn btn-danger btn-round"
+                                                    data-original-title
+                                                    title
                                                 >
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                                    <i class="material-icons"
+                                                        >close</i
+                                                    >
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <pagination
                                 :pagination="pagination"
                                 :offset="5"

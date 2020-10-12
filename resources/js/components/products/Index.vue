@@ -5,15 +5,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header card-header-rose card-header-icon">
-                            <div class="card-icon">
+                            <div class="card-icon d-md-block d-none">
                                 <i class="material-icons">assignment</i>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-6">
                                     <h4 class="card-title">Product List</h4>
                                 </div>
-                                <div class="col-sm-12 col-md-6 text-right pr-md-0">
-                                    <router-link to="/products/form" class="btn btn-sm btn-rose">Add
+                                <div class="col-6 text-right pr-md-0">
+                                    <router-link to="/products/form" class="btn btn-sm btn-rose mt-2">Add
                                         <div class="ripple-container"></div>
                                     </router-link>
                                 </div> 
@@ -25,56 +25,59 @@
                                 :param="param"
                                 @limit="getData()"
                             ></search>
-                            <table class="table table-sortable">
-                                <thead>
-                                    <tr>
-                                        <th>SL#</th>
-                                        <th v-on:click = "sort($event)" data-column="name" class="sorting">Name</th>
-                                        <th v-on:click = "sort($event)" data-column="code" class="sorting">Code</th>
-                                        <th v-on:click = "sort($event)" data-column="created_at" class="sorting">Created Date</th>
-                                        <th class="text-right">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr
-                                        v-for="(product, index) in products"
-                                        :key="product.id"
-                                    >
-                                        <td>{{ pagination.from + index }}</td>
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.code }}</td>
-                                        <td>{{ product.created_at }}</td>
-                                        <td class="td-actions text-right">
-                                            <router-link
-                                                :to="{ name: 'product_form', params:{'id':product.id}}"
-                                                type="button"
-                                                rel="tooltip"
-                                                class="btn btn-success btn-round"
-                                                data-original-title
-                                                title
-                                            >
-                                                <i class="material-icons"
-                                                    >edit</i
+                            
+                            <div class="table-responsive">
+                                <table class="table table-sortable">
+                                    <thead>
+                                        <tr>
+                                            <th>SL#</th>
+                                            <th v-on:click = "sort($event)" data-column="name" class="sorting mw-80">Name</th>
+                                            <th v-on:click = "sort($event)" data-column="code" class="sorting mw-80">Code</th>
+                                            <th v-on:click = "sort($event)" data-column="created_at" class="sorting mw-125">Created Date</th>
+                                            <th class="text-right mw-80">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="(product, index) in products"
+                                            :key="product.id"
+                                        >
+                                            <td>{{ pagination.from + index }}</td>
+                                            <td>{{ product.name }}</td>
+                                            <td>{{ product.code }}</td>
+                                            <td>{{ product.created_at }}</td>
+                                            <td class="td-actions text-right">
+                                                <router-link
+                                                    :to="{ name: 'product_form', params:{'id':product.id}}"
+                                                    type="button"
+                                                    rel="tooltip"
+                                                    class="btn btn-success btn-round"
+                                                    data-original-title
+                                                    title
                                                 >
-                                            </router-link>
-                                            <button
-                                                @click.prevent="remove(product)"
-                                                type="button"
-                                                rel="tooltip"
-                                                class="btn btn-danger btn-round"
-                                                data-original-title
-                                                title
-                                            >
-                                                <i class="material-icons"
-                                                    >close</i
+                                                    <i class="material-icons"
+                                                        >edit</i
+                                                    >
+                                                </router-link>
+                                                <button
+                                                    @click.prevent="remove(product)"
+                                                    type="button"
+                                                    rel="tooltip"
+                                                    class="btn btn-danger btn-round"
+                                                    data-original-title
+                                                    title
                                                 >
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                                    <i class="material-icons"
+                                                        >close</i
+                                                    >
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <pagination
                                 :pagination="pagination"
                                 :offset="5"
