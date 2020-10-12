@@ -16,7 +16,8 @@
         "laravel/framework": "^7.24",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.4"
+        "laravel/ui": "^2.4",
+        "barryvdh/composer-cleanup-plugin": "0.2.x"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

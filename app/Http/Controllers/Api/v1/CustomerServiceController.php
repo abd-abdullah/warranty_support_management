@@ -38,6 +38,7 @@ class CustomerServiceController extends Controller
             $customerService->where('users.name', 'like', "%{$request->input('query')}%");
             $customerService->orWhere('users.email', 'like', "%{$request->input('query')}%");
             $customerService->orWhere('users.phone', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
             $customerService->orWhere('products.name', 'like', "%{$request->input('query')}%");
             $customerService->orWhere('products.code', 'like', "%{$request->input('query')}%");
         }
