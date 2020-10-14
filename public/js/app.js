@@ -6239,6 +6239,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6262,6 +6295,7 @@ __webpack_require__.r(__webpack_exports__);
         purchase_from: 'evaly',
         date_of_purchase: null,
         last_date_of_warranty: null,
+        next_service_date: null,
         old_customer_id: null,
         old_product_id: null,
         old_user_id: null
@@ -6290,6 +6324,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.form.purchase_from = response.data.data.purchase_from;
         _this.form.date_of_purchase = new Date(response.data.data.date_of_purchase);
         _this.form.last_date_of_warranty = new Date(response.data.data.last_date_of_warranty);
+        _this.form.next_service_date = new Date(response.data.data.next_service_date);
 
         _this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
 
@@ -70417,7 +70452,14 @@ var render = function() {
                                         }
                                       },
                                       [
-                                        _vm._m(10),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "bmd-label-floating",
+                                            attrs: { for: "remarks" }
+                                          },
+                                          [_vm._v("Remarks")]
+                                        ),
                                         _vm._v(" "),
                                         _c("textarea", {
                                           directives: [
@@ -70750,19 +70792,6 @@ var staticRenderFns = [
       { staticClass: "bmd-label-floating", attrs: { for: "service_for" } },
       [
         _vm._v("Service Details"),
-        _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "bmd-label-floating", attrs: { for: "remarks" } },
-      [
-        _vm._v("Remarks"),
         _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
       ]
     )
@@ -72401,9 +72430,11 @@ var render = function() {
                 "router-link",
                 { staticClass: "nav-link", attrs: { to: "/sales" } },
                 [
-                  _c("i", { staticClass: "material-icons" }, [_vm._v("Sale")]),
+                  _c("i", { staticClass: "material-icons" }, [
+                    _vm._v("Purchase")
+                  ]),
                   _vm._v(" "),
-                  _c("p", [_vm._v("Sale")])
+                  _c("p", [_vm._v("Purchase")])
                 ]
               )
             ],
@@ -73400,7 +73431,14 @@ var render = function() {
                                         }
                                       },
                                       [
-                                        _vm._m(10),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "bmd-label-floating",
+                                            attrs: { for: "remarks" }
+                                          },
+                                          [_vm._v("Remarks")]
+                                        ),
                                         _vm._v(" "),
                                         _c("textarea", {
                                           directives: [
@@ -73721,19 +73759,6 @@ var staticRenderFns = [
       { staticClass: "bmd-label-floating", attrs: { for: "service_for" } },
       [
         _vm._v("Service Details"),
-        _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "bmd-label-floating", attrs: { for: "remarks" } },
-      [
-        _vm._v("Remarks"),
         _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
       ]
     )
@@ -74935,9 +74960,7 @@ var render = function() {
                           "div",
                           { staticClass: "form-group" },
                           [
-                            _c("label", { staticClass: "select2-form-group" }, [
-                              _vm._v("Division")
-                            ]),
+                            _vm._m(4),
                             _vm._v(" "),
                             _c("Select2", {
                               attrs: {
@@ -74975,87 +74998,107 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-12" }, [
-                        _c(
-                          "div",
-                          { staticClass: "form-group" },
-                          [
-                            _c("label", { staticClass: "select2-form-group" }, [
-                              _vm._v("District")
-                            ]),
-                            _vm._v(" "),
-                            _c("Select2", {
-                              attrs: {
-                                options: _vm.optionsDistrict,
-                                disabled: _vm.form.old_customer_id != null,
-                                name: "district_id",
-                                id: "district",
-                                placeholder: "Select District"
-                              },
-                              on: {
-                                change: function($event) {
-                                  return _vm.getDropdown(
-                                    "api/v1/upazilas/" + _vm.form.district_id,
-                                    "optionsUpazila"
-                                  )
+                      _c(
+                        "div",
+                        {
+                          class:
+                            _vm.form.division_id != null &&
+                            _vm.form.division_id != ""
+                              ? "col-12"
+                              : "col-12 d-none"
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "form-group" },
+                            [
+                              _vm._m(5),
+                              _vm._v(" "),
+                              _c("Select2", {
+                                attrs: {
+                                  options: _vm.optionsDistrict,
+                                  disabled: _vm.form.old_customer_id != null,
+                                  name: "district_id",
+                                  id: "district",
+                                  placeholder: "Select District"
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.getDropdown(
+                                      "api/v1/upazilas/" + _vm.form.district_id,
+                                      "optionsUpazila"
+                                    )
+                                  }
+                                },
+                                model: {
+                                  value: _vm.form.district_id,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "district_id", $$v)
+                                  },
+                                  expression:
+                                    "\n                                                        form.district_id\n                                                    "
                                 }
-                              },
-                              model: {
-                                value: _vm.form.district_id,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.form, "district_id", $$v)
-                                },
-                                expression:
-                                  "\n                                                        form.district_id\n                                                    "
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.district_id
-                              ? _c("span", { staticClass: "text-danger" }, [
-                                  _vm._v(_vm._s(_vm.errors.district_id[0]))
-                                ])
-                              : _vm._e()
-                          ],
-                          1
-                        )
-                      ]),
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.district_id
+                                ? _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(_vm.errors.district_id[0]))
+                                  ])
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-12" }, [
-                        _c(
-                          "div",
-                          { staticClass: "form-group" },
-                          [
-                            _c("label", { staticClass: "select2-form-group" }, [
-                              _vm._v("Upazila")
-                            ]),
-                            _vm._v(" "),
-                            _c("Select2", {
-                              attrs: {
-                                options: _vm.optionsUpazila,
-                                disabled: _vm.form.old_customer_id != null,
-                                name: "upazila_id",
-                                id: "upazila",
-                                placeholder: "Select Upazila"
-                              },
-                              model: {
-                                value: _vm.form.upazila_id,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.form, "upazila_id", $$v)
+                      _c(
+                        "div",
+                        {
+                          class:
+                            _vm.form.district_id != null &&
+                            _vm.form.district_id != ""
+                              ? "col-12"
+                              : "col-12 d-none"
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "form-group" },
+                            [
+                              _c(
+                                "label",
+                                { staticClass: "select2-form-group" },
+                                [_vm._v("Upazila")]
+                              ),
+                              _vm._v(" "),
+                              _c("Select2", {
+                                attrs: {
+                                  options: _vm.optionsUpazila,
+                                  disabled: _vm.form.old_customer_id != null,
+                                  name: "upazila_id",
+                                  id: "upazila",
+                                  placeholder: "Select Upazila"
                                 },
-                                expression:
-                                  "\n                                                        form.upazila_id\n                                                    "
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.upazila_id
-                              ? _c("span", { staticClass: "text-danger" }, [
-                                  _vm._v(_vm._s(_vm.errors.upazila_id[0]))
-                                ])
-                              : _vm._e()
-                          ],
-                          1
-                        )
-                      ]),
+                                model: {
+                                  value: _vm.form.upazila_id,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "upazila_id", $$v)
+                                  },
+                                  expression:
+                                    "\n                                                        form.upazila_id\n                                                    "
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.upazila_id
+                                ? _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(_vm.errors.upazila_id[0]))
+                                  ])
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-12" }, [
                         _c(
@@ -75067,7 +75110,7 @@ var render = function() {
                             }
                           },
                           [
-                            _vm._m(4),
+                            _vm._m(6),
                             _vm._v(" "),
                             _c("textarea", {
                               directives: [
@@ -75186,7 +75229,7 @@ var render = function() {
                             }
                           },
                           [
-                            _vm._m(5),
+                            _vm._m(7),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -75237,7 +75280,7 @@ var render = function() {
                             }
                           },
                           [
-                            _vm._m(6),
+                            _vm._m(8),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -75288,7 +75331,7 @@ var render = function() {
                             }
                           },
                           [
-                            _vm._m(7),
+                            _vm._m(9),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -75349,14 +75392,7 @@ var render = function() {
                             }
                           },
                           [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "bmd-label-floating",
-                                attrs: { for: "purchase_price" }
-                              },
-                              [_vm._v("Price")]
-                            ),
+                            _vm._m(10),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -75448,7 +75484,7 @@ var render = function() {
                                     _vm._v(
                                       "Evaly\n                                                    "
                                     ),
-                                    _vm._m(8)
+                                    _vm._m(11)
                                   ]
                                 )
                               ]
@@ -75495,7 +75531,7 @@ var render = function() {
                                     _vm._v(
                                       "Other\n                                                    "
                                     ),
-                                    _vm._m(9)
+                                    _vm._m(12)
                                   ]
                                 )
                               ]
@@ -75511,7 +75547,7 @@ var render = function() {
                             staticClass: "form-group bmd-form-group is-filled"
                           },
                           [
-                            _vm._m(10),
+                            _vm._m(13),
                             _vm._v(" "),
                             _c("v-date-picker", {
                               attrs: {
@@ -75551,7 +75587,7 @@ var render = function() {
                             staticClass: "form-group bmd-form-group is-filled"
                           },
                           [
-                            _vm._m(11),
+                            _vm._m(14),
                             _vm._v(" "),
                             _c("v-date-picker", {
                               attrs: {
@@ -75582,6 +75618,55 @@ var render = function() {
                               ? _c("span", { staticClass: "text-danger" }, [
                                   _vm._v(
                                     _vm._s(_vm.errors.last_date_of_warranty[0])
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-group bmd-form-group is-filled"
+                          },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "bmd-label-floating",
+                                attrs: { for: "last_date_of_warranty" }
+                              },
+                              [_vm._v("Next Service Date")]
+                            ),
+                            _vm._v(" "),
+                            _c("v-date-picker", {
+                              attrs: {
+                                masks: {
+                                  input: ["YYYY-MM-DD"],
+                                  date: ["YYYY-MM-DD"]
+                                },
+                                popover: {
+                                  visibility: "click",
+                                  placement: "bottom"
+                                }
+                              },
+                              model: {
+                                value: _vm.form.next_service_date,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "next_service_date", $$v)
+                                },
+                                expression:
+                                  "\n                                                        form.next_service_date\n                                                    "
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors.next_service_date
+                              ? _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.next_service_date[0])
                                   )
                                 ])
                               : _vm._e()
@@ -75692,6 +75777,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "select2-form-group" }, [
+      _vm._v("Division"),
+      _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "select2-form-group" }, [
+      _vm._v("District"),
+      _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "label",
       { staticClass: "bmd-label-floating", attrs: { for: "address" } },
@@ -75738,6 +75841,19 @@ var staticRenderFns = [
       { staticClass: "bmd-label-floating", attrs: { for: "code" } },
       [
         _vm._v("Capacity"),
+        _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "bmd-label-floating", attrs: { for: "purchase_price" } },
+      [
+        _vm._v("Price"),
         _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
       ]
     )
@@ -76741,7 +76857,14 @@ var render = function() {
                                         }
                                       },
                                       [
-                                        _vm._m(11),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "bmd-label-floating",
+                                            attrs: { for: "remarks" }
+                                          },
+                                          [_vm._v("Remarks")]
+                                        ),
                                         _vm._v(" "),
                                         _c("textarea", {
                                           directives: [
@@ -77070,19 +77193,6 @@ var staticRenderFns = [
       { staticClass: "bmd-label-floating", attrs: { for: "service_for" } },
       [
         _vm._v("Service Details"),
-        _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "bmd-label-floating", attrs: { for: "remarks" } },
-      [
-        _vm._v("Remarks"),
         _c("strong", { staticClass: "text-danger" }, [_vm._v(" *")])
       ]
     )
@@ -77801,7 +77911,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rosem mt-2",
+                          staticClass: "btn btn-sm btn-rose mt-2",
                           attrs: { to: "/technicians/form" }
                         },
                         [
@@ -101631,7 +101741,7 @@ var routes = [{
   component: _components_sales_index__WEBPACK_IMPORTED_MODULE_12__["default"],
   meta: {
     authOnly: true,
-    title: 'Sale'
+    title: 'Purchase'
   }
 }, {
   path: "/sales/form/:id?",
@@ -101639,7 +101749,7 @@ var routes = [{
   component: _components_sales_form__WEBPACK_IMPORTED_MODULE_13__["default"],
   meta: {
     authOnly: true,
-    title: 'Sale',
+    title: 'Purchase',
     props: true
   }
 }, {

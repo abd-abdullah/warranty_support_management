@@ -257,7 +257,7 @@
                                                 <div class="form-group">
                                                     <label
                                                         class="select2-form-group"
-                                                        >Division</label
+                                                        >Division<strong class="text-danger"> *</strong></label
                                                     >
                                                     <Select2
                                                         :options="
@@ -290,11 +290,11 @@
                                                     >
                                                 </div>
                                             </div>
-                                            <div class="col-12">
+                                            <div :class="(form.division_id != null && form.division_id != '') ?'col-12':'col-12 d-none'" >
                                                 <div class="form-group">
                                                     <label
                                                         class="select2-form-group"
-                                                        >District</label
+                                                        >District<strong class="text-danger"> *</strong></label
                                                     >
                                                     <Select2
                                                         :options="
@@ -327,7 +327,7 @@
                                                     >
                                                 </div>
                                             </div>
-                                            <div class="col-12">
+                                            <div :class="(form.district_id != null && form.district_id != '') ?'col-12':'col-12 d-none'">
                                                 <div class="form-group">
                                                     <label
                                                         class="select2-form-group"
@@ -533,7 +533,7 @@
                                                     <label
                                                         for="purchase_price"
                                                         class="bmd-label-floating"
-                                                        >Price</label
+                                                        >Price<strong class="text-danger"> *</strong></label
                                                     >
                                                     <input
                                                         type="text"
@@ -666,6 +666,39 @@
                                                     >
                                                 </div>
                                             </div>
+                                             <div class="col-12">
+                                                <div
+                                                    class="form-group bmd-form-group is-filled"
+                                                >
+                                                    <label
+                                                        for="last_date_of_warranty"
+                                                        class="bmd-label-floating"
+                                                        >Next Service Date</label
+                                                    >
+                                                    <v-date-picker
+                                                        :masks="{
+                                                            input: [
+                                                                'YYYY-MM-DD'
+                                                            ],
+                                                            date: ['YYYY-MM-DD']
+                                                        }"
+                                                        v-model="
+                                                            form.next_service_date
+                                                        "
+                                                        :popover="{ visibility: 'click',  placement: 'bottom'  }"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.next_service_date
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .next_service_date[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
                                         </div>
                                     </fieldset>
                                 </div>
@@ -723,6 +756,7 @@ export default {
                 purchase_from:'evaly',
                 date_of_purchase: null,
                 last_date_of_warranty: null, 
+                next_service_date: null, 
                 old_customer_id: null,
                 old_product_id: null,
                 old_user_id: null
@@ -751,6 +785,7 @@ export default {
                     this.form.purchase_from = response.data.data.purchase_from;
                     this.form.date_of_purchase = new Date(response.data.data.date_of_purchase);
                     this.form.last_date_of_warranty = new Date(response.data.data.last_date_of_warranty);
+                    this.form.next_service_date = new Date(response.data.data.next_service_date);
                     this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
                     this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
                     this.setCustomarData();

@@ -88,13 +88,13 @@ const routes = [
         path: "/sales",
         name: "sale",
         component: sale,
-        meta: { authOnly: true, title: 'Sale' }
+        meta: { authOnly: true, title: 'Purchase' }
     },
     {
         path: "/sales/form/:id?",
         name: "sale_form",
         component: sale_form,
-        meta: { authOnly: true, title: 'Sale', props: true }
+        meta: { authOnly: true, title: 'Purchase', props: true }
     },
     {
         path: "/service-histories",

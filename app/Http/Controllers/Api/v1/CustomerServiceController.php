@@ -69,7 +69,7 @@ class CustomerServiceController extends Controller
             'total_paid' => 'required|numeric|min:0',
             'done_by' => 'required|numeric',
             'cost' => 'nullable|numeric|min:0',
-            'remarks' => 'required|string|min:10',
+            'remarks' => 'nullable|string|min:10',
         ]);
         $data = $request->all();
         $data['created_by'] = auth()->id();
@@ -120,7 +120,7 @@ class CustomerServiceController extends Controller
             'total_paid' => 'required|numeric|min:0',
             'done_by' => 'required|numeric',
             'cost' => 'nullable|numeric|min:0',
-            'remarks' => 'required|string|min:10',
+            'remarks' => 'nullable|string|min:10',
         ]);
         $data = $request->all();
         $data['is_dicontinue'] = ($request->is_continue === true)?0:1;

@@ -461,7 +461,7 @@
                                                             <label
                                                                 for="remarks"
                                                                 class="bmd-label-floating"
-                                                                >Remarks<strong class="text-danger"> *</strong></label
+                                                                >Remarks</label
                                                             >
                                                             <textarea
                                                                 type="text"
