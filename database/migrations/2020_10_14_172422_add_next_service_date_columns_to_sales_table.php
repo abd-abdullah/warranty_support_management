@@ -14,7 +14,7 @@ class AddNextServiceDateColumnsToSalesTable extends Migration
     public function up()
     {
         Schema::table('sales', function (Blueprint $table) {
-            $table->dateTime('next_service_date')->after('last_date_of_warranty');
+            $table->dateTime('next_service_date')->after('last_date_of_warranty')->nullable();
         });
     }
 
