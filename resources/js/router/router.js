@@ -13,6 +13,8 @@ import technician from '../components/technicians/index';
 import technician_form from '../components/technicians/form';
 import customer from '../components/customers/index';
 import customer_form from '../components/customers/form';
+import customer_type from '../components/settings/customer_types/index';
+import customer_type_form from '../components/settings/customer_types/form';
 import sale from '../components/sales/index';
 import sale_form from '../components/sales/form';
 import customer_service from '../components/customer_services/index';
@@ -71,6 +73,18 @@ const routes = [
         name: "technician_form",
         component: technician_form,
         meta: { authOnly: true, title: 'Technician', props: true }
+    },
+    {
+        path: "/customer-types",
+        name: "customer_type",
+        component: customer_type,
+        meta: { authOnly: true, title: 'Customer Type' }
+    },
+    {
+        path: "/customer-types/form/:id?",
+        name: "customer_type_form",
+        component: customer_type_form,
+        meta: { authOnly: true, title: 'Customer Type', props: true }
     },
     {
         path: "/customers",

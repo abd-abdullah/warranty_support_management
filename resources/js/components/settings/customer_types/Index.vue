@@ -10,10 +10,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <h4 class="card-title">Customer List</h4>
+                                    <h4 class="card-title">Customert Type List</h4>
                                 </div>
                                 <div class="col-6 text-right pr-md-0">
-                                    <router-link to="/customers/form" class="btn btn-sm btn-rose mt-2">Add
+                                    <router-link to="/customer-types/form" class="btn btn-sm btn-rose mt-2">Add
                                         <div class="ripple-container"></div>
                                     </router-link>
                                 </div> 
@@ -31,12 +31,8 @@
                                     <thead>
                                         <tr>
                                             <th>SL#</th>
-                                            <th v-on:click = "sort($event)" data-column="users.name" class="sorting mw-80">Name</th>
-                                            <th v-on:click = "sort($event)" data-column="users.email" class="sorting mw-80">Email</th>
-                                            <th v-on:click = "sort($event)" data-column="users.phone" class="sorting mw-80">Mobile</th>
-                                            <th v-on:click = "sort($event)" data-column="customerId" class="sorting mw-120">Customer ID</th>
-                                            <th v-on:click = "sort($event)" data-column="customer_types.name" class="sorting mw-80">Type</th>
-                                            <th class="mw-100">Address</th>
+                                            <th v-on:click = "sort($event)" data-column="name" class="sorting mw-80">Name</th>
+                                            <th v-on:click = "sort($event)" data-column="created_at" class="sorting mw-125">Created Date</th>
                                             <th class="text-right mw-80">
                                                 Actions
                                             </th>
@@ -44,25 +40,15 @@
                                     </thead>
                                     <tbody>
                                         <tr
-                                            v-for="(customer, index) in customers"
-                                            :key="customer.id"
+                                            v-for="(customer_type, index) in customer_types"
+                                            :key="customer_type.id"
                                         >
                                             <td>{{ pagination.from + index }}</td>
-                                            <td>{{ customer.name }}</td>
-                                            <td>{{ customer.email }}</td>
-                                            <td>{{ customer.phone }}</td>
-                                            <td>{{ customer.customerId }}</td>
-                                            <td>{{ customer.customer_type }}</td>
-                                            <td>{{ 
-                                                    ((customer.address != '' && customer.address != null)?customer.address+', ':'')+
-                                                    ((customer.upazila != '')?customer.upazila+', ':'')+
-                                                    ((customer.district != '')?customer.district+', ':'')+
-                                                    ((customer.division != '')?customer.division+', ':'')+
-                                                    ((customer.country != '')?customer.country:'')
-                                                }}</td>
-                                            <td class="td-actions w76 text-right">
+                                            <td>{{ customer_type.name }}</td>
+                                            <td>{{ customer_type.created_at }}</td>
+                                            <td class="td-actions text-right">
                                                 <router-link
-                                                    :to="{ name: 'customer_form', params:{'id':customer.id}}"
+                                                    :to="{ name: 'customer_type_form', params:{'id':customer_type.id}}"
                                                     type="button"
                                                     rel="tooltip"
                                                     class="btn btn-success btn-round"
@@ -74,7 +60,7 @@
                                                     >
                                                 </router-link>
                                                 <button
-                                                    @click.prevent="remove(customer)"
+                                                    @click.prevent="remove(customer_type)"
                                                     type="button"
                                                     rel="tooltip"
                                                     class="btn btn-danger btn-round"
@@ -113,7 +99,7 @@ export default {
                     sort_order:""
                 }
             },
-            customers: [],
+            customer_types: [],
             pagination: {
                 current_page: 1,
                 per_page: 10
@@ -127,7 +113,7 @@ export default {
         getData() {
             this.$Progress.start();
             this.$jsHelper.get(
-                    "api/v1/customers?page=" +
+                    "api/v1/customer-types?page=" +
                         this.pagination.current_page +
                         "&per_page=" +
                         this.pagination.per_page +
@@ -141,7 +127,7 @@ export default {
                 )
                 .then(response => {
                     this.$Progress.finish();
-                    this.customers = response.data.data;
+                    this.customer_types = response.data.data;
                     this.pagination = response.data.meta;
                 })
                 .catch(e => {
@@ -161,10 +147,10 @@ export default {
             }
 
         },
-        remove(customer){
-            this.$swal("Are you sure to delete this admin user?").then((result) => {
+        remove(customer_type){
+            this.$swal("Are you sure to delete this customer_type?").then((result) => {
                 if(result.isConfirmed === true){
-                    this.$jsHelper.delete('api/v1/customers/'+customer.id).then(response =>{
+                    this.$jsHelper.delete('api/v1/customer-types/'+customer_type.id).then(response =>{
                         this.$Progress.finish();
                         this.$toaster.warning("Deleted successfully");
                         this.getData();

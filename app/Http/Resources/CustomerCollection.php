@@ -15,20 +15,22 @@ class CustomerCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection->transform(function($technician){
+            'data' => $this->collection->transform(function($customer){
                 return[
-                    'id' => $technician->id,
-                    'customerId' => $technician->customerId,
-                    'name' => $technician->user->name,
-                    'email' => $technician->user->email,
-                    'phone' => $technician->user->phone,
-                    'other_contact_numbers' => $technician->user->other_contact_numbers,
-                    'address' => $technician->user->address,
-                    'country' => ($technician->user->country != NULL)?$technician->user->country->name:'',
-                    'division' => ($technician->user->division != NULL)?$technician->user->division->name:'',
-                    'district' => ($technician->user->district != NULL)?$technician->user->district->name:'',
-                    'upazila' => ($technician->user->upazila != NULL)?$technician->user->upazila->name:'',
-                    'status' => $technician->status,
+                    'id' => $customer->id,
+                    'customer_type_id' => $customer->customer_type_id,
+                    'customer_type' => $customer->customer_type->name,
+                    'customerId' => $customer->customerId,
+                    'name' => $customer->user->name,
+                    'email' => $customer->user->email,
+                    'phone' => $customer->user->phone,
+                    'other_contact_numbers' => $customer->user->other_contact_numbers,
+                    'address' => $customer->user->address,
+                    'country' => ($customer->user->country != NULL)?$customer->user->country->name:'',
+                    'division' => ($customer->user->division != NULL)?$customer->user->division->name:'',
+                    'district' => ($customer->user->district != NULL)?$customer->user->district->name:'',
+                    'upazila' => ($customer->user->upazila != NULL)?$customer->user->upazila->name:'',
+                    'status' => $customer->status,
                 ];
             }),
         ];

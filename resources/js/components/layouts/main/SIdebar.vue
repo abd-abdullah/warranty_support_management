@@ -57,6 +57,24 @@ Tip 2: you can also add an image using data-image tag
                         <p>Moderator</p></router-link
                     >
                 </li>
+                <li class="nav-item ">
+                    <a class="nav-link" data-toggle="collapse" href="#setting">
+                        <i class="material-icons">power_settings_new</i>
+                        <p> Settings
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="setting">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <router-link to="/customer-types" class="nav-link"
+                                    ><i class="material-icons">CT</i>
+                                    <p>Customer Type</p>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

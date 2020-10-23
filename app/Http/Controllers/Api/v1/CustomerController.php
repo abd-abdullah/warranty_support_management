@@ -23,6 +23,7 @@ class CustomerController extends Controller
         $limit = (($limit == -1) ? 9999999 : $limit);
         $customers = Customer::query();
         $customers->join('users', 'users.id', '=', 'customers.id');
+        $customers->join('customer_types', 'customer_types.id', '=', 'customers.customer_type_id');
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $customers->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
@@ -31,7 +32,8 @@ class CustomerController extends Controller
 
         if ($request->input('query') && $request->input('query') != "") {
             $query = $request->input('query');
-            $customers->where('name', 'like', "%{$query}%");
+            $customers->where('users.name', 'like', "%{$query}%");
+            $customers->orWhere('customer_types.name', 'like', "%{$query}%");
             $customers->orWhere('email', 'like', "%{$query}%");
             $customers->orWhere('phone', 'like', "%{$query}%");
             $customers->orWhere('customerId', 'like', "%{$query}%");
@@ -51,10 +53,14 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'customer_type_id' => 'required',
             'name' => 'required|min:3',
             'email' => 'bail|nullable|email|unique:users,email',
             'phone' => 'required|numeric|digits:11|unique:users,phone',
             'customerId' => 'required|string|unique:customers,customerId',
+            'country_id' => 'required',
+            'division_id' => 'required',
+            'district_id' => 'required',
             'password' => 'nullable|string|min:8',
             'address' => 'required|string|min:4',
         ]);
@@ -69,7 +75,7 @@ class CustomerController extends Controller
         try{
             \DB::beginTransaction();
             $user = User::create($data);
-            Customer::create(['user_id' => $user->id, 'customerId' => $data['customerId']]);
+            Customer::create(['user_id' => $user->id, 'customer_type_id'=> $data['customer_type_id'], 'customerId' => $data['customerId']]);
             \DB::commit();
         }
         catch(Exception $e){
@@ -102,19 +108,23 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         $request->validate([
+            'customer_type_id' => 'required',
             'name' => 'required|min:3',
             'email' => 'bail|nullable|email|unique:users,email,'.$customer->user_id,
             'phone' => 'required|numeric|digits:11|unique:users,phone,'.$customer->user_id,
             'customerId' => 'required|string|unique:customers,customerId,'.$customer->id,
+            'country_id' => 'required',
+            'division_id' => 'required',
+            'district_id' => 'required',
             'password' => 'nullable|string|min:8',
             'address' => 'required|string|min:4',
         ]);
    
-        $data = $request->except(['customerId']);
+        $data = $request->except(['customerId', 'customer_type_id']);
         try{
             \DB::beginTransaction();
             $customer->user()->update($data);
-            $customer->update(['customerId' => $request->customerId]);
+            $customer->update(['customerId' => $request->customerId, 'customer_type_id'=> $request->customer_type_id]);
         }
         catch(Exception $e){
             \DB::rollback();

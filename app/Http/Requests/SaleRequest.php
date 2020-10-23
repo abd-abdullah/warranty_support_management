@@ -24,6 +24,7 @@ class SaleRequest extends FormRequest
     public function rules()
     {
         return [
+            'customer_type_id' => 'required',
             'name' => 'required|min:3',
             'email' => 'bail|nullable|email|unique:users,email,'.$this->request->get('old_user_id'),
             'phone' => 'bail|required|numeric|digits:11|unique:users,phone,'.$this->request->get('old_user_id'),

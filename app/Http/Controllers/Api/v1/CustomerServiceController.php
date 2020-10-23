@@ -151,4 +151,35 @@ class CustomerServiceController extends Controller
     {
         $customerService->delete();
     }
+
+    /**
+     * Store a change data.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeDate(Request $request)
+    {
+        $request->validate([
+            'next_service_time' => 'bail|nullable|date|after:today',
+            'remarks' => 'required|string|min:10',
+        ]);
+        $data = $request->all();
+        $data['created_by'] = auth()->id();
+        $data['is_dicontinue'] = ($request->is_continue === true)?0:1;
+        $data['status'] = 2;
+        $data['next_service_time'] = ($request->next_service_time != NULL)?(Carbon::parse($request->next_service_time)->format('Y-m-d')):(Carbon::now()->addMonth(3));
+
+        try{
+            \DB::beginTransaction();
+            CustomerService::create($data);
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
+    }
 }

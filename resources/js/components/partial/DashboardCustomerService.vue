@@ -55,12 +55,9 @@
                                     Product Name
                                 </th>
                                 <th class="mw-155">
-                                    Prev. Service Date
-                                </th>
-                                <th class="mw-155">
                                     Next Service Date
                                 </th>
-                                <th class="text-right">
+                                <th class="mw-80 text-right">
                                     Actions
                                 </th>
                             </tr>
@@ -109,9 +106,6 @@
                                         }}
                                 </td>
                                 <td>
-                                    {{ sale.service_time }}
-                                </td>
-                                <td>
                                     {{ sale.next_service_time }}
                                 </td>
                                 <td class="td-actions text-right">
@@ -128,6 +122,19 @@
                                             >add_box</span
                                         >
                                     </button>
+                                    <button
+                                        @click.prevent="
+                                            serviceChange(sale)
+                                        "
+                                        type="button"
+                                        rel="tooltip"
+                                        class="btn btn-linkedin btn-round"
+                                        title="Change Time"
+                                    >
+                                        <span class="material-icons"
+                                            >published_with_changes</span
+                                        >
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -141,7 +148,7 @@
             </div>
         </div>
 
-          <!-- Modal -->
+        <!-- Modal service add -->
         <div
             class="modal fade"
             id="exampleModal"
@@ -489,6 +496,166 @@
                 </div>
             </div>
         </div>
+       
+        <!-- Modal service time change -->
+        <div
+            class="modal fade"
+            id="timeChangeModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="timeChangeModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="font-weight-bold modal-title text-primary" id="timeChangeModalLabel">
+                            Change Customer Service
+                        </h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled':
+                                                    form.customer !== null
+                                            }"
+                                        >
+                                            <label
+                                                class="bmd-label-floating"
+                                                    for="customer"
+                                                >Customer<strong class="text-danger"> *</strong></label
+                                            >
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                readonly
+                                                v-model="form.customer"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled':
+                                                    form.product !== null
+                                            }"
+                                        >
+                                            <label
+                                                class="bmd-label-floating"
+                                                for="product"
+                                                >Product<strong class="text-danger"> *</strong></label
+                                            >
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                readonly
+                                                v-model="form.product"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div
+                                            class="form-group bmd-form-group is-filled"
+                                        >
+                                            <label
+                                                for="next_service_time"
+                                                class="bmd-label-floating"
+                                                >Next Service Date</label
+                                            >
+                                            <v-date-picker
+                                                :masks="{
+                                                    input: [
+                                                        'YYYY-MM-DD'
+                                                    ],
+                                                    date: ['YYYY-MM-DD']
+                                                }"
+                                                v-model="
+                                                    form.next_service_time
+                                                "
+                                                :popover="{ visibility: 'click', placement: 'bottom' }"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="
+                                                    errors.next_service_time
+                                                "
+                                                >{{
+                                                    errors
+                                                        .next_service_time[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div
+                                            class="form-group bmd-form-group "
+                                            v-bind:class="{
+                                                'is-filled':
+                                                    form.remarks !== null
+                                            }"
+                                        >
+                                            <label
+                                                for="remarks"
+                                                class="bmd-label-floating"
+                                                >Remarks<strong class="text-danger"> *</strong></label
+                                            >
+                                            <textarea
+                                                type="text"
+                                                class="form-control"
+                                                id="remarks"
+                                                v-model="form.remarks"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.remarks"
+                                                >{{ errors.remarks[0] }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="togglebutton">
+                                            <label>
+                                                <input type="checkbox" v-model="form.is_continue">
+                                                <span class="toggle"></span>
+                                                Service Continue
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button type="button" @click.prevent="changeAdd" class="btn btn-primary">
+                            Change Service Time
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -597,6 +764,17 @@ export default {
             this.form.is_continue = true;
             $("#exampleModal").modal("show");
         },
+        serviceChange(sale) {
+            this.errors = [];
+            this.form.customer = sale.name+'-'+sale.customerId;
+            this.form.product = sale.product_name+'-'+sale.product_code;
+            this.form.sale_id = sale.id;
+            this.form.customer_id = sale.customer_id;
+            this.form.next_service_time = null;
+            this.form.remarks = null;
+            this.form.is_continue = true;
+            $("#timeChangeModal").modal("show");
+        },
         add() {
             this.$Progress.start();
             this.$jsHelper
@@ -606,6 +784,26 @@ export default {
                     this.$toaster.success("Successfully Added");
                     this.getData();
                     $("#exampleModal").modal("hide");
+                })
+                .catch(error => {
+                    this.$Progress.fail();
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                    else{
+                        this.$toaster.error("Something went wrong");
+                    }
+                });
+        },
+        changeAdd() {
+            this.$Progress.start();
+            this.$jsHelper
+                .post("api/v1/customer-services/change", this.form)
+                .then(data => {
+                    this.$Progress.finish();
+                    this.$toaster.success("Successfully Changed");
+                    this.getData();
+                    $("#timeChangeModal").modal("hide");
                 })
                 .catch(error => {
                     this.$Progress.fail();

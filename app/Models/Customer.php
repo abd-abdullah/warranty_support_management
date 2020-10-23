@@ -18,6 +18,7 @@ class Customer extends Model
     protected $fillable = [
         'id',
     	'user_id',
+    	'customer_type_id',
         'customerId',
         'created_at',
         'updated_at'
@@ -25,6 +26,10 @@ class Customer extends Model
 
     public function user(){
     	return $this->belongsTo(User::class);
+    }
+    
+    public function customer_type(){
+    	return $this->belongsTo(CustomerType::class);
     }
     
     public function createdBy(){

@@ -61,6 +61,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="select2-form-group"
+                                                        >Customer Type<strong class="text-danger"> *</strong></label
+                                                    >
+                                                    <Select2
+                                                        :options="optionsCustomerType"
+                                                        v-model="form.customer_type_id"
+                                                        name="customer_type_id"
+                                                        id="customer_type"
+                                                        placeholder="Select Customer Type"
+                                                        :disabled="form.old_customer_id != null"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.customer_type_id"
+                                                        >{{
+                                                            errors.customer_type_id[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
                                                 <div
                                                     class="form-group bmd-form-group"
                                                     v-bind:class="{
@@ -739,6 +762,7 @@ export default {
                     : false,
             id: this.$route.params.id,
             form: {
+                customer_type_id: null,
                 name: null,
                 customerId: null,
                 email: null,
@@ -767,7 +791,8 @@ export default {
             optionsCountry: [],
             optionsDivision: [],
             optionsDistrict: [],
-            optionsUpazila: []
+            optionsUpazila: [],
+            optionsCustomerType: []
         };
     },
 
@@ -779,13 +804,13 @@ export default {
                 .then(response => {
                     this.form.old_product_id = response.data.data.product_id;
                     this.form.old_customer_id = response.data.data.customer_id;
-                    this.form.old_customer_id = response.data.data.customer_id;
                     this.form.purchase_capacity = response.data.data.purchase_capacity;
                     this.form.purchase_price = response.data.data.purchase_price;
                     this.form.purchase_from = response.data.data.purchase_from;
                     this.form.date_of_purchase = new Date(response.data.data.date_of_purchase);
                     this.form.last_date_of_warranty = new Date(response.data.data.last_date_of_warranty);
                     this.form.next_service_date = new Date(response.data.data.next_service_date);
+                    this.getDropdownCustomer('api/v1/customer-types-all', 'optionsCustomerType');
                     this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
                     this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
                     this.setCustomarData();
@@ -798,6 +823,7 @@ export default {
                 });
         }
         else{
+            this.getDropdown('api/v1/customer-types-all', 'optionsCustomerType');
             this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
             this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
             this.getDropdown('api/v1/countries', 'optionsCountry');
@@ -896,6 +922,7 @@ export default {
             this.$jsHelper.get('api/v1/customers/'+this.form.old_customer_id).then(response => {
                 this.form.old_user_id = response.data.data.user_id;
                 this.form.name = response.data.data.name;
+                this.form.customer_type_id = response.data.data.customer_type_id;
                 this.form.customerId = response.data.data.customerId;
                 this.form.email = response.data.data.email;
                 this.form.phone = response.data.data.phone;
@@ -926,6 +953,7 @@ export default {
         resetSelectedCustomer(){
             this.form.old_user_id = null;
             this.form.old_customer_id = null; 
+            this.form.customer_type_id = null;
             this.form.name = null;
             this.form.customerId = null;
             this.form.email = null;

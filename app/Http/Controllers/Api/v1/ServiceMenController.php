@@ -55,6 +55,9 @@ class ServiceMenController extends Controller
             'phone' => 'required|numeric|digits:11|unique:users',
             'joining_date' => 'required|date|before_or_equal:today',
             'password' => 'nullable|string|min:8',
+            'country_id' => 'required',
+            'division_id' => 'required',
+            'district_id' => 'required',
             'address' => 'required|string|min:4',
         ]);
 
@@ -112,6 +115,9 @@ class ServiceMenController extends Controller
             'phone' => 'required|numeric|digits:11|unique:users,phone,'.$technician->user_id,
             'joining_date' => 'required|date|before_or_equal:today',
             'password' => 'nullable|string|min:8',
+            'country_id' => 'required',
+            'division_id' => 'required',
+            'district_id' => 'required',
             'address' => 'required|string|min:4',
         ]);
    

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\District;
 use App\Models\Division;
-use App\Models\PostOffice;
 use App\Models\Upazila;
 
 class AddressController extends Controller
@@ -22,9 +21,6 @@ class AddressController extends Controller
     }
     public function getUpazila($district_id){
         return Upazila::whereDistrictId($district_id)->get();
-    }
-    public function getPostOffice($upazila_id){
-        return PostOffice::whereUpazilaId($upazila_id)->get();
     }
     
 }

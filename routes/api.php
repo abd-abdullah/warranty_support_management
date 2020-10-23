@@ -18,12 +18,15 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::ApiResource('admin-users', 'AdminUserController');
     Route::ApiResource('technicians', 'ServiceMenController');
     Route::ApiResource('customers', 'CustomerController');
+    Route::ApiResource('customer-types', 'CustomerTypeController');
     Route::ApiResource('sales', 'SaleController');
     Route::ApiResource('customer-services', 'CustomerServiceController');
+    Route::post('customer-services/change', 'CustomerServiceController@changeDate')->name('customer-services.change');
 
     Route::get('dashboard', 'DashboardController')->name('dashboard');
     Route::get('technicians-all', 'ServiceMenController@getTechnician')->name('technicians.technicians-all');
     Route::get('products-all', 'ProductController@getProduct')->name('products.products-all');
+    Route::get('customer-types-all', 'CustomerTypeController@getCustomerType')->name('customer-types.customer-type-all');
     Route::get('customers-all', 'CustomerController@getCustomer')->name('customer.customer-all');
     Route::get('countries', 'AddressController@getCountry')->name('countries.index');
     Route::get('divisions/{country_id}', 'AddressController@getDivision')->name('divisions.index');

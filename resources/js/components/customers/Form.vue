@@ -34,6 +34,28 @@
                             <form action="">
                                 <div class="row">
                                     <div class="col-12">
+                                        <div class="form-group">
+                                            <label
+                                                class="select2-form-group"
+                                                >Customer Type<strong class="text-danger"> *</strong></label
+                                            >
+                                            <Select2
+                                                :options="optionsCustomerType"
+                                                v-model="form.customer_type_id"
+                                                name="customer_type_id"
+                                                id="customer_type"
+                                                placeholder="Select Customer Type"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.customer_type_id"
+                                                >{{
+                                                    errors.customer_type_id[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
                                         <div
                                             class="form-group bmd-form-group"
                                             v-bind:class="{
@@ -188,7 +210,7 @@
                                         <div class="form-group">
                                             <label
                                                 class="select2-form-group"
-                                                >Division</label
+                                                >Division<strong class="text-danger"> *</strong></label
                                             >
                                             <Select2
                                                 :options="optionsDivision"
@@ -207,11 +229,11 @@
                                             >
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div :class="(form.division_id != null && form.division_id != '') ?'col-12':'col-12 d-none'">
                                         <div class="form-group">
                                             <label
                                                 class="select2-form-group"
-                                                >District</label
+                                                >District<strong class="text-danger"> *</strong></label
                                             >
                                             <Select2
                                                 :options="optionsDistrict"
@@ -230,7 +252,7 @@
                                             >
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div :class="(form.district_id != null && form.district_id != '') ?'col-12':'col-12 d-none'">
                                         <div class="form-group">
                                             <label
                                                 class="select2-form-group"
@@ -316,6 +338,7 @@ export default {
                     : false,
             id: this.$route.params.id,
             form: {
+                customer_type_id: null,
                 name: null,
                 email: null,
                 customerId: null,
@@ -332,7 +355,8 @@ export default {
             optionsCountry: [],
             optionsDivision: [],
             optionsDistrict: [],
-            optionsUpazila: []
+            optionsUpazila: [],
+            optionsCustomerType: []
         };
     },
 
@@ -342,6 +366,7 @@ export default {
             this.$jsHelper
                 .get("api/v1/customers/" + this.id)
                 .then(response => {
+                    this.form.customer_type_id = response.data.data.customer_type_id;
                     this.form.name = response.data.data.name;
                     this.form.customerId = response.data.data.customerId;
                     this.form.email = response.data.data.email;
@@ -361,6 +386,7 @@ export default {
                 });
         }
         else{
+            this.getDropdown('api/v1/customer-types-all', 'optionsCustomerType');
             this.getDropdown('api/v1/countries', 'optionsCountry');
             this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
         }
@@ -424,6 +450,7 @@ export default {
             });
         },
         selectOption(){
+            this.getDropdown('api/v1/customer-types-all', 'optionsCustomerType');
             this.getDropdown('api/v1/countries', 'optionsCountry');
             this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
             this.getDropdown('api/v1/districts/'+this.form.division_id, 'optionsDistrict');

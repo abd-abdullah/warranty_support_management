@@ -179,7 +179,7 @@
                                         <div class="form-group">
                                             <label
                                                 class="select2-form-group"
-                                                >Country</label
+                                                >Country<strong class="text-danger"> *</strong></label
                                             >
                                             <Select2
                                                 :options="optionsCountry"
@@ -202,7 +202,7 @@
                                         <div class="form-group">
                                             <label
                                                 class="select2-form-group"
-                                                >Division</label
+                                                >Division<strong class="text-danger"> *</strong></label
                                             >
                                             <Select2
                                                 :options="optionsDivision"
@@ -221,11 +221,11 @@
                                             >
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div :class="(form.division_id != null && form.division_id != '') ?'col-12':'col-12 d-none'">
                                         <div class="form-group">
                                             <label
                                                 class="select2-form-group"
-                                                >District</label
+                                                >District<strong class="text-danger"> *</strong></label
                                             >
                                             <Select2
                                                 :options="optionsDistrict"
@@ -244,7 +244,7 @@
                                             >
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div :class="(form.district_id != null && form.district_id != '') ?'col-12':'col-12 d-none'">
                                         <div class="form-group">
                                             <label
                                                 class="select2-form-group"

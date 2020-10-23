@@ -70,13 +70,14 @@ class SaleController extends Controller
         try{
             \DB::beginTransaction();
             if($customer_id == NULL && $customer_id == ''){
-                $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_','division_id','district_id','upazila_id','address');
+                $userData = $request->only( 'name','customerId','email','password','phone','other_contact_numbers','country_','division_id','district_id','upazila_id','address');
                 $userData['user_type'] = 'customer';
                 $userData['created_by'] = auth()->id();
+                $userData['status'] = 0;
                 $userData['email_verified_at'] = now();
                 $userData['password'] = bcrypt($request->email);
                 $user = User::create($userData);
-                $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId]);
+                $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId, 'customer_type_id' => $request->customer_type_id]);
                 $customer_id = $customer->id;
             }
             if($product_id == NULL && $product_id == ''){
@@ -96,7 +97,8 @@ class SaleController extends Controller
                 'price' => $request->purchase_price,
                 'purchase_from' => $request->purchase_from,
                 'date_of_purchase' => Carbon::parse($request->date_of_purchase)->format('Y-m-d'),
-                'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d')
+                'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d'),
+                'next_service_date' => ($request->next_service_date != NULL)?(Carbon::parse($request->next_service_date)->format('Y-m-d')):(Carbon::parse($request->date_of_purchase)->addMonth(3))
             ];
             Sale::create($purchaseData);
             
@@ -142,7 +144,7 @@ class SaleController extends Controller
                 $userData['email_verified_at'] = now();
                 $userData['password'] = bcrypt($request->email);
                 $user = User::create($userData);
-                $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId]);
+                $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId, 'customer_type_id' => $request->customer_type_id]);
                 $customer_id = $customer->id;
             }
             if($product_id == NULL && $product_id == ''){
@@ -162,7 +164,8 @@ class SaleController extends Controller
                 'price' => $request->purchase_price,
                 'purchase_from' => $request->purchase_from,
                 'date_of_purchase' => Carbon::parse($request->date_of_purchase)->format('Y-m-d'),
-                'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d')
+                'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d'),
+                'next_service_date' => ($request->next_service_date != NULL)?(Carbon::parse($request->next_service_date)->format('Y-m-d')):(Carbon::parse($request->date_of_purchase)->addMonth(3))
             ];
             $sale->update($purchaseData);
             
