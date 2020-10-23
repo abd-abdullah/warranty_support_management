@@ -5,10 +5,10 @@ Vue.use(VueRouter)
 
 import dashboard from '../components/Dashboard';
 import login from '../components/layouts/auth/login';
-import product from '../components/products/index';
-import product_form from '../components/products/form';
-import admin_user from '../components/admin_users/index';
-import admin_user_form from '../components/admin_users/form';
+import product from '../components/settings/products/index';
+import product_form from '../components/settings/products/form';
+import admin_user from '../components/settings/admin_users/index';
+import admin_user_form from '../components/settings/admin_users/form';
 import technician from '../components/technicians/index';
 import technician_form from '../components/technicians/form';
 import customer from '../components/customers/index';

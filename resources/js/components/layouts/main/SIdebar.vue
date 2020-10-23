@@ -22,12 +22,6 @@ Tip 2: you can also add an image using data-image tag
                     >
                 </li>
                 <li class="nav-item">
-                    <router-link to="/products" class="nav-link"
-                        ><i class="material-icons">Product</i>
-                        <p>Product</p></router-link
-                    >
-                </li>
-                <li class="nav-item">
                     <router-link to="/sales" class="nav-link"
                         ><i class="material-icons">Purchase</i>
                         <p>Purchase</p></router-link
@@ -51,12 +45,6 @@ Tip 2: you can also add an image using data-image tag
                         <p>Customers</p></router-link
                     >
                 </li>
-                <li class="nav-item">
-                    <router-link to="/admin-users" class="nav-link"
-                        ><i class="material-icons">Moderator</i>
-                        <p>Moderator</p></router-link
-                    >
-                </li>
                 <li class="nav-item ">
                     <a class="nav-link" data-toggle="collapse" href="#setting">
                         <i class="material-icons">power_settings_new</i>
@@ -71,6 +59,18 @@ Tip 2: you can also add an image using data-image tag
                                     ><i class="material-icons">CT</i>
                                     <p>Customer Type</p>
                                 </router-link>
+                            </li>
+                             <li class="nav-item">
+                                <router-link to="/products" class="nav-link"
+                                    ><i class="material-icons">Product</i>
+                                    <p>Product</p></router-link
+                                >
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/admin-users" class="nav-link"
+                                    ><i class="material-icons">Moderator</i>
+                                    <p>Moderator</p></router-link
+                                >
                             </li>
                         </ul>
                     </div>
