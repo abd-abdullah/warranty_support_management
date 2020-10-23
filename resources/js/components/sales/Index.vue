@@ -21,7 +21,7 @@
                                 >
                                     <router-link
                                         to="/sales/form"
-                                        class="btn btn-sm btn-rose mt-2"
+                                        class="btn btn-sm btn-primary mt-2"
                                         >Add
                                         <div class="ripple-container"></div>
                                     </router-link>

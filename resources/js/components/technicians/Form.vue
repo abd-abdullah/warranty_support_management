@@ -24,7 +24,7 @@
                                 >
                                     <router-link
                                         to="/technicians"
-                                        class="btn btn-sm btn-rose"
+                                        class="btn btn-sm btn-primary"
                                         >Back to list</router-link
                                     >
                                 </div>
@@ -300,7 +300,7 @@
                                 v-if="isEdit"
                                 type="submit"
                                 @click.prevent="update"
-                                class="btn btn-rose"
+                                class="btn btn-primary"
                             >
                                 Update
                             </button>
@@ -308,7 +308,7 @@
                                 v-else
                                 type="submit"
                                 @click.prevent="add"
-                                class="btn btn-rose"
+                                class="btn btn-primary"
                             >
                                 Add
                             </button>

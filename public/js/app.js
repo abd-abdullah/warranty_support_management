@@ -24685,7 +24685,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "/* them custom css\r\n@author Md. Abdullah\r\n@email: abdullah001rti@gmail.com\r\n*/\r\n\r\n.main-panel>.content {\r\n    margin-top: 35px !important;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.sorting {\r\n    cursor: pointer;\r\n    position: relative;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after {\r\n    content: \"\\2191\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 1em;\r\n    top: 11px; \r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before {\r\n    content: \"\\2193\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 0.5em;\r\n    top: 11px;\r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:after {\r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:before {\r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.desc:after {  \r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";  \r\n    opacity: 1;\r\n}\r\n\r\n.table-sortable > thead > tr > th.desc:before {    \r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n}\r\n\r\n/*Datatable css done*/\r\n\r\n/*sidebar active css*/\r\n\r\n.sidebar[data-color=azure] li>a.router-link-active {\r\n    background-color: #00bcd4;\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4);\r\n}\r\n\r\ntextarea.form-control{\r\n    border-radius: 5px !important;\r\n    border: 1px solid #aaa !important;\r\n    background: none !important;\r\n}\r\n\r\n.select2-container--default .select2-selection--single .select2-selection__arrow{\r\n    top:7px!important;\r\n}\r\n.select2-container .select2-selection--single .select2-selection__rendered {\r\n    padding-top: 3px!important;\r\n}\r\n.select2-container .select2-selection--single{\r\n    height: 37px!important;\r\n    border: 1px solid #d2d2d2 !important;\r\n}\r\n.select2-form-group{\r\n    position: absolute;\r\n    z-index: 9;\r\n    font-size: .6875rem;\r\n    margin: -7px 2px;\r\n    background: #fff;\r\n    padding: 1px;\r\n}\r\n\r\n.w76{\r\n    width: 76px;\r\n}\r\n\r\n.card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text) {\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px #9179dd;\r\n}\r\n\r\n.card.bg-city, .card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text), .card.card-rotate.bg-city .back, .card.card-rotate.bg-city .front {\r\n    background: linear-gradient(142deg,#cd30e8,#69abe1);\r\n}\r\n\r\nfieldset.border {\r\n    /*border: 1px groove #ddd !important;*/\r\n    padding: 0 1.4em 1.4em 1.4em !important;\r\n    box-shadow:  0px 0px 0px 0px #000;\r\n}\r\n\r\nlegend.border {\r\n    font-size: 1em !important;\r\n    font-weight: 400 !important;\r\n    text-align: left !important;\r\n    width:auto;\r\n    padding:0 10px;\r\n    border-bottom:none;\r\n}\r\n\r\n.nr{\r\n    white-space: nowrap;\r\n}\r\n\r\n.mw-80{\r\n    min-width: 80px;\r\n}\r\n.mw-85{\r\n    min-width: 85px;\r\n}\r\n.mw-90{\r\n    min-width: 90px;\r\n}\r\n.mw-95{\r\n    min-width: 95px;\r\n}\r\n.mw-100{\r\n    min-width: 100px;\r\n}\r\n.mw-105{\r\n    min-width: 105px;\r\n}\r\n.mw-110{\r\n    min-width: 110px;\r\n}\r\n.mw-115{\r\n    min-width: 115px;\r\n}\r\n.mw-120{\r\n    min-width: 120px;\r\n}\r\n.mw-125{\r\n    min-width: 125px;\r\n}\r\n.mw-130{\r\n    min-width: 130px;\r\n}\r\n.mw-135{\r\n    min-width: 135px;\r\n}\r\n.mw-140{\r\n    min-width: 140px;\r\n}\r\n.mw-145{\r\n    min-width: 145px;\r\n}\r\n.mw-150{\r\n    min-width: 150px;\r\n}\r\n.mw-155{\r\n    min-width: 155px;\r\n}\r\n.mw-160{\r\n    min-width: 160px;\r\n}\r\n.mw-165{\r\n    min-width: 165px;\r\n}\r\n.mw-170{\r\n    min-width: 170px;\r\n}\r\n.mw-175{\r\n    min-width: 175px;\r\n}\r\n.mw-180{\r\n    min-width: 180px;\r\n}\r\n.mw-185{\r\n    min-width: 185px;\r\n}\r\n.mw-190{\r\n    min-width: 190px;\r\n}\r\n.mw-195{\r\n    min-width: 195px;\r\n}\r\n.mw-200{\r\n    min-width: 200px;\r\n}\r\n\r\n.select2{\r\n    width: 100% !important;\r\n}\r\n\r\n.btn-group-xs .btn, .btn-group-xs>.btn, .btn.btn-xs {\r\n    padding: .30625rem 1.0rem;\r\n    font-size: .5875rem;\r\n    line-height: 1;\r\n    border-radius: .1rem;\r\n}\r\n\r\n.ws-pre{\r\n    white-space: pre;\r\n}\r\n\r\n.sidebar .sidebar-wrapper {\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}", ""]);
+exports.push([module.i, "/* them custom css\r\n@author Md. Abdullah\r\n@email: abdullah001rti@gmail.com\r\n*/\r\n\r\n.main-panel>.content {\r\n    margin-top: 35px !important;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.sorting {\r\n    cursor: pointer;\r\n    position: relative;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after,\r\n.table-sortable > thead > tr > th.sorting:after {\r\n    content: \"\\2191\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 1em;\r\n    top: 11px; \r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before,\r\n.table-sortable > thead > tr > th.sorting:before {\r\n    content: \"\\2193\";\r\n    height: 0;\r\n    width: 0;\r\n    right: 0.5em;\r\n    top: 11px;\r\n    position: absolute;\r\n    bottom: 0.9em;\r\n    display: block;\r\n    opacity: 0.3;\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:after {\r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";\r\n}\r\n\r\n.table-sortable > thead > tr > th.asc:before {\r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.table-sortable > thead > tr > th.desc:after {  \r\n    top: 11px;\r\n    right: 0.5em;\r\n    content: \"\\2193\";  \r\n    opacity: 1;\r\n}\r\n\r\n.table-sortable > thead > tr > th.desc:before {    \r\n    top: 11px;\r\n    right: 1em;\r\n    content: \"\\2191\";\r\n}\r\n\r\n/*Datatable css done*/\r\n\r\n/*sidebar active css*/\r\n\r\n.sidebar[data-color=azure] li>a.router-link-active {\r\n    background-color: #00bcd4;\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4);\r\n}\r\n\r\ntextarea.form-control{\r\n    border-radius: 5px !important;\r\n    border: 1px solid #aaa !important;\r\n    background: none !important;\r\n}\r\n\r\n.select2-container--default .select2-selection--single .select2-selection__arrow{\r\n    top:7px!important;\r\n}\r\n.select2-container .select2-selection--single .select2-selection__rendered {\r\n    padding-top: 3px!important;\r\n}\r\n.select2-container .select2-selection--single{\r\n    height: 37px!important;\r\n    border: 1px solid #d2d2d2 !important;\r\n}\r\n.select2-form-group{\r\n    position: absolute;\r\n    z-index: 9;\r\n    font-size: .6875rem;\r\n    margin: -7px 2px;\r\n    background: #fff;\r\n    padding: 1px;\r\n}\r\n\r\n.w76{\r\n    width: 76px;\r\n}\r\n\r\n.card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text) {\r\n    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px #9179dd;\r\n}\r\n\r\n.card.bg-city, .card .card-header-city .card-icon, .card .card-header-city .card-text, .card .card-header-city:not(.card-header-icon):not(.card-header-text), .card.card-rotate.bg-city .back, .card.card-rotate.bg-city .front {\r\n    background: linear-gradient(142deg,#cd30e8,#69abe1);\r\n}\r\n\r\nfieldset.border {\r\n    /*border: 1px groove #ddd !important;*/\r\n    padding: 0 1.4em 1.4em 1.4em !important;\r\n    box-shadow:  0px 0px 0px 0px #000;\r\n}\r\n\r\nlegend.border {\r\n    font-size: 1em !important;\r\n    font-weight: 400 !important;\r\n    text-align: left !important;\r\n    width:auto;\r\n    padding:0 10px;\r\n    border-bottom:none;\r\n}\r\n\r\n.nr{\r\n    white-space: nowrap;\r\n}\r\n\r\n.mw-80{\r\n    min-width: 80px;\r\n}\r\n.mw-85{\r\n    min-width: 85px;\r\n}\r\n.mw-90{\r\n    min-width: 90px;\r\n}\r\n.mw-95{\r\n    min-width: 95px;\r\n}\r\n.mw-100{\r\n    min-width: 100px;\r\n}\r\n.mw-105{\r\n    min-width: 105px;\r\n}\r\n.mw-110{\r\n    min-width: 110px;\r\n}\r\n.mw-115{\r\n    min-width: 115px;\r\n}\r\n.mw-120{\r\n    min-width: 120px;\r\n}\r\n.mw-125{\r\n    min-width: 125px;\r\n}\r\n.mw-130{\r\n    min-width: 130px;\r\n}\r\n.mw-135{\r\n    min-width: 135px;\r\n}\r\n.mw-140{\r\n    min-width: 140px;\r\n}\r\n.mw-145{\r\n    min-width: 145px;\r\n}\r\n.mw-150{\r\n    min-width: 150px;\r\n}\r\n.mw-155{\r\n    min-width: 155px;\r\n}\r\n.mw-160{\r\n    min-width: 160px;\r\n}\r\n.mw-165{\r\n    min-width: 165px;\r\n}\r\n.mw-170{\r\n    min-width: 170px;\r\n}\r\n.mw-175{\r\n    min-width: 175px;\r\n}\r\n.mw-180{\r\n    min-width: 180px;\r\n}\r\n.mw-185{\r\n    min-width: 185px;\r\n}\r\n.mw-190{\r\n    min-width: 190px;\r\n}\r\n.mw-195{\r\n    min-width: 195px;\r\n}\r\n.mw-200{\r\n    min-width: 200px;\r\n}\r\n\r\n.select2{\r\n    width: 100% !important;\r\n}\r\n\r\n.btn-group-xs .btn, .btn-group-xs>.btn, .btn.btn-xs {\r\n    padding: .30625rem 1.0rem;\r\n    font-size: .5875rem;\r\n    line-height: 1;\r\n    border-radius: .1rem;\r\n}\r\n\r\n.ws-pre{\r\n    white-space: pre;\r\n}\r\n\r\n.sidebar .sidebar-wrapper {\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.card-icon{\r\n    background: #9c27b0 !important;\r\n}", ""]);
 
 // exports
 
@@ -70563,7 +70563,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose",
+                          staticClass: "btn btn-sm btn-primary",
                           attrs: { to: "/customers" }
                         },
                         [_vm._v("Back to list")]
@@ -71078,7 +71078,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -71096,7 +71096,7 @@ var render = function() {
                 : _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -71249,7 +71249,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose mt-2",
+                          staticClass: "btn btn-sm btn-primary mt-2",
                           attrs: { to: "/customers/form" }
                         },
                         [
@@ -74334,7 +74334,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose",
+                          staticClass: "btn btn-sm btn-primary",
                           attrs: { to: "/sales" }
                         },
                         [_vm._v("Back to list")]
@@ -75495,7 +75495,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -75513,7 +75513,7 @@ var render = function() {
                 : _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -75767,7 +75767,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose mt-2",
+                          staticClass: "btn btn-sm btn-primary mt-2",
                           attrs: { to: "/sales/form" }
                         },
                         [
@@ -77071,7 +77071,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose",
+                          staticClass: "btn btn-sm btn-primary",
                           attrs: { to: "/admin-users" }
                         },
                         [_vm._v("Back to list")]
@@ -77542,7 +77542,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -77560,7 +77560,7 @@ var render = function() {
                 : _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -77686,7 +77686,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose mt-2",
+                          staticClass: "btn btn-sm btn-primary mt-2",
                           attrs: { to: "/admin-users/form" }
                         },
                         [
@@ -77959,7 +77959,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose",
+                          staticClass: "btn btn-sm btn-primary",
                           attrs: { to: "/customer-types" }
                         },
                         [_vm._v("Back to list")]
@@ -78023,7 +78023,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -78041,7 +78041,7 @@ var render = function() {
                 : _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -78128,7 +78128,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose mt-2",
+                          staticClass: "btn btn-sm btn-primary mt-2",
                           attrs: { to: "/customer-types/form" }
                         },
                         [
@@ -78361,7 +78361,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose",
+                          staticClass: "btn btn-sm btn-primary",
                           attrs: { to: "/products" }
                         },
                         [_vm._v("Back to list")]
@@ -78466,7 +78466,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -78484,7 +78484,7 @@ var render = function() {
                 : _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -78584,7 +78584,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose mt-2",
+                          staticClass: "btn btn-sm btn-primary mt-2",
                           attrs: { to: "/products/form" }
                         },
                         [
@@ -78830,7 +78830,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose",
+                          staticClass: "btn btn-sm btn-primary",
                           attrs: { to: "/technicians" }
                         },
                         [_vm._v("Back to list")]
@@ -79346,7 +79346,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -79364,7 +79364,7 @@ var render = function() {
                 : _c(
                     "button",
                     {
-                      staticClass: "btn btn-rose",
+                      staticClass: "btn btn-primary",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -79530,7 +79530,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-sm btn-rose mt-2",
+                          staticClass: "btn btn-sm btn-primary mt-2",
                           attrs: { to: "/technicians/form" }
                         },
                         [

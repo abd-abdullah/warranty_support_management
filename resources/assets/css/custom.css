@@ -229,3 +229,7 @@ legend.border {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+.card-icon{
+    background: #9c27b0 !important;
+}

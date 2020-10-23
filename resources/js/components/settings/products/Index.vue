@@ -13,7 +13,7 @@
                                     <h4 class="card-title">Product List</h4>
                                 </div>
                                 <div class="col-6 text-right pr-md-0">
-                                    <router-link to="/products/form" class="btn btn-sm btn-rose mt-2">Add
+                                    <router-link to="/products/form" class="btn btn-sm btn-primary mt-2">Add
                                         <div class="ripple-container"></div>
                                     </router-link>
                                 </div> 
