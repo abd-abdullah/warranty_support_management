@@ -5,16 +5,52 @@
                 class="card-header card-header-rose card-header-icon"
             >
                 <div class="row">
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-3">
                         <h4 class="card-title">
                             Upcoming Service List
                         </h4>
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="float-left float-md-right mt-2">
-                            <button v-on:click="searchUpcoming('todays')" :class="filter.today?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Today</button>
-                            <button v-on:click="searchUpcoming('next_7_days')" :class="filter.next_7_day?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Next 7 Days</button>
-                            <button v-on:click="searchUpcoming('next_30_days')" :class="filter.next_30_day?'btn-primary p-2':'btn-outline'" class="btn btn-xs">Next 30 Days</button>
+                    <div class="col-sm-12 col-md-9">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="float-left float-md-right mt-2">
+                                    <div class="row">
+                                        <label class="col-form-label">From <span class="d-sm-none d-md-inline">Date</span></label>
+                                        <div class="col-sm-8 pr-0">
+                                            <v-date-picker v-model="filter.from_date" :popover ="{ visibility: 'click'}">
+                                                <template v-slot="{ inputValue, inputEvents }">
+                                                    <input
+                                                    class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                    :value="inputValue"
+                                                    v-on="inputEvents"
+                                                    />
+                                                </template>
+                                            </v-date-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="float-left float-md-right mt-2">
+                                    <div class="row">
+                                        <label class="col-form-label">To <span class="d-sm-none d-md-inline">Date</span></label>
+                                        <div class="col-sm-8 pr-0">
+                                             <v-date-picker v-model="filter.to_date" :popover ="{ visibility: 'click'}">
+                                                <template v-slot="{ inputValue, inputEvents }">
+                                                    <input
+                                                    class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                    :value="inputValue"
+                                                    v-on="inputEvents"
+                                                    />
+                                                </template>
+                                            </v-date-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button @click="getData" class="btn btn-sm btn-primary mt-2 float-right">Filter</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -239,26 +275,21 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <div
-                                                            class="form-group bmd-form-group is-filled"
-                                                        >
+                                                        <div>
                                                             <label
                                                                 for="service_time"
-                                                                class="bmd-label-floating"
+                                                                class="fs11 mb-0"
                                                                 >Service Date<strong class="text-danger"> *</strong></label
                                                             >
-                                                            <v-date-picker
-                                                                :masks="{
-                                                                    input: [
-                                                                        'YYYY-MM-DD'
-                                                                    ],
-                                                                    date: ['YYYY-MM-DD']
-                                                                }"
-                                                                v-model="
-                                                                    form.service_time
-                                                                "
-                                                                :popover="{ visibility: 'click', placement: 'bottom' }"
-                                                            />
+                                                            <v-date-picker v-model="form.service_time" :popover ="{ visibility: 'click'}">
+                                                                <template v-slot="{ inputValue, inputEvents }">
+                                                                    <input
+                                                                    class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                                    :value="inputValue"
+                                                                    v-on="inputEvents"
+                                                                    />
+                                                                </template>
+                                                            </v-date-picker>
                                                             <span
                                                                 class="text-danger"
                                                                 v-if="
@@ -272,26 +303,22 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <div
-                                                            class="form-group bmd-form-group is-filled"
-                                                        >
+                                                        <div>
                                                             <label
                                                                 for="next_service_time"
-                                                                class="bmd-label-floating"
+                                                                class="fs11 mb-0"
                                                                 >Next Service Date</label
                                                             >
-                                                            <v-date-picker
-                                                                :masks="{
-                                                                    input: [
-                                                                        'YYYY-MM-DD'
-                                                                    ],
-                                                                    date: ['YYYY-MM-DD']
-                                                                }"
-                                                                v-model="
-                                                                    form.next_service_time
-                                                                "
-                                                                :popover="{ visibility: 'click', placement: 'bottom' }"
-                                                            />
+                                                            <v-date-picker v-model="form.next_service_time" :popover ="{ visibility: 'click'}">
+                                                                <template v-slot="{ inputValue, inputEvents }">
+                                                                    <input
+                                                                    class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                                    :value="inputValue"
+                                                                    v-on="inputEvents"
+                                                                    />
+                                                                </template>
+                                                            </v-date-picker>
+                                                            
                                                             <span
                                                                 class="text-danger"
                                                                 v-if="
@@ -569,26 +596,21 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
-                                        <div
-                                            class="form-group bmd-form-group is-filled"
-                                        >
+                                        <div>
                                             <label
                                                 for="next_service_time"
-                                                class="bmd-label-floating"
+                                                class="fs11 mb-0"
                                                 >Next Service Date</label
                                             >
-                                            <v-date-picker
-                                                :masks="{
-                                                    input: [
-                                                        'YYYY-MM-DD'
-                                                    ],
-                                                    date: ['YYYY-MM-DD']
-                                                }"
-                                                v-model="
-                                                    form.next_service_time
-                                                "
-                                                :popover="{ visibility: 'click', placement: 'bottom' }"
-                                            />
+                                            <v-date-picker v-model="form.next_service_time" :popover ="{ visibility: 'click'}">
+                                                <template v-slot="{ inputValue, inputEvents }">
+                                                    <input
+                                                    class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                    :value="inputValue"
+                                                    v-on="inputEvents"
+                                                    />
+                                                </template>
+                                            </v-date-picker>
                                             <span
                                                 class="text-danger"
                                                 v-if="
@@ -675,9 +697,8 @@ export default {
                 per_page: 10
             },
             filter:{
-                today:1,
-                next_7_day:0,
-                next_30_day:0
+                from_date: new Date(),
+                to_date: this.toDate(),
             },
             form:{
                 customer : null,
@@ -711,11 +732,17 @@ export default {
         });
     },
     methods: {
+        toDate(){
+            let date = new Date();
+            return new Date(date.setDate(date.getDate() + 7));
+        },
         getData() {
+            let fromDate = (this.filter.from_date != null)? this.filter.from_date.toISOString().split('T')[0]:null;
+            let toDate = (this.filter.to_date != null)? this.filter.to_date.toISOString().split('T')[0]:null;
             this.$Progress.start();
             this.$jsHelper
                 .get(
-                    "api/v1/sales?page=" +
+                    "api/v1/sales-dashboard?page=" +
                         this.pagination.current_page +
                         "&per_page=" +
                         this.pagination.per_page +
@@ -724,7 +751,11 @@ export default {
                         "&sort_by=" +
                         this.param.sort.column +
                         "&sort_order=" +
-                        this.param.sort.sort_order
+                        this.param.sort.sort_order +
+                        "&from_date=" +
+                        fromDate +
+                        "&to_date=" +
+                        toDate
                 )
                 .then(response => {
                     this.$Progress.finish();
@@ -815,23 +846,6 @@ export default {
                     }
                 });
         },
-        searchUpcoming(srcType){
-            if(srcType === 'todays'){
-                this.filter.today = 1;
-                this.filter.next_7_day = 0;
-                this.filter.next_30_day = 0;
-            }
-            else if(srcType === 'next_7_days'){
-                this.filter.next_7_day = 1;
-                this.filter.next_30_day = 0;
-                this.filter.today = 0;
-            }
-            else{
-                this.filter.next_7_day = 0;
-                this.filter.next_30_day = 1;
-                this.filter.today = 0;
-            }
-        }
     }
 };
 </script>

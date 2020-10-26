@@ -22,6 +22,8 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::ApiResource('sales', 'SaleController');
     Route::ApiResource('customer-services', 'CustomerServiceController');
     Route::post('customer-services/change', 'CustomerServiceController@changeDate')->name('customer-services.change');
+    Route::put('customer-services/change/{customerService}', 'CustomerServiceController@changeDateUpdate')->name('customer-services.change-update');
+    Route::get('sales-dashboard', 'SaleController@indexDashboard')->name('sales.indexDashboard');
 
     Route::get('dashboard', 'DashboardController')->name('dashboard');
     Route::get('technicians-all', 'ServiceMenController@getTechnician')->name('technicians.technicians-all');

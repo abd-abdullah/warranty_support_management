@@ -624,25 +624,22 @@
                                             </div>
                                             <div class="col-12">
                                                 <div
-                                                    class="form-group bmd-form-group is-filled"
+                                                    class="form-group mt-0 pb-0"
                                                 >
                                                     <label
                                                         for="date_of_purchase"
-                                                        class="bmd-label-floating"
+                                                        class="mb-0 fs11"
                                                         >Purchase Date<strong class="text-danger"> *</strong></label
                                                     >
-                                                    <v-date-picker
-                                                        :masks="{
-                                                            input: [
-                                                                'YYYY-MM-DD'
-                                                            ],
-                                                            date: ['YYYY-MM-DD']
-                                                        }"
-                                                        v-model="
-                                                            form.date_of_purchase
-                                                        "
-                                                        :popover="{ visibility: 'click', placement: 'bottom' }"
-                                                    />
+                                                    <v-date-picker v-model="form.date_of_purchase" :popover ="{ visibility: 'click'}">
+                                                        <template v-slot="{ inputValue, inputEvents }">
+                                                            <input
+                                                            class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                            :value="inputValue"
+                                                            v-on="inputEvents"
+                                                            />
+                                                        </template>
+                                                    </v-date-picker>
                                                     <span
                                                         class="text-danger"
                                                         v-if="
@@ -657,26 +654,23 @@
                                             </div>
                                              <div class="col-12">
                                                 <div
-                                                    class="form-group bmd-form-group is-filled"
+                                                    class="form-group mt-0 pb-0"
                                                 >
                                                     <label
                                                         for="last_date_of_warranty"
-                                                        class="bmd-label-floating"
+                                                        class="fs11 mb-0"
                                                         >Last Date of
                                                         Warranty<strong class="text-danger"> *</strong></label
                                                     >
-                                                    <v-date-picker
-                                                        :masks="{
-                                                            input: [
-                                                                'YYYY-MM-DD'
-                                                            ],
-                                                            date: ['YYYY-MM-DD']
-                                                        }"
-                                                        v-model="
-                                                            form.last_date_of_warranty
-                                                        "
-                                                        :popover="{ visibility: 'click',  placement: 'bottom'  }"
-                                                    />
+                                                    <v-date-picker v-model="form.last_date_of_warranty" :popover ="{ visibility: 'click'}">
+                                                        <template v-slot="{ inputValue, inputEvents }">
+                                                            <input
+                                                            class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                            :value="inputValue"
+                                                            v-on="inputEvents"
+                                                            />
+                                                        </template>
+                                                    </v-date-picker>
                                                     <span
                                                         class="text-danger"
                                                         v-if="
@@ -690,26 +684,23 @@
                                                 </div>
                                             </div>
                                              <div class="col-12">
-                                                <div
-                                                    class="form-group bmd-form-group is-filled"
+                                                <div v-bind:class={disabled:isEdit}
+                                                    class="form-group mt-0 pb-0"
                                                 >
                                                     <label
-                                                        for="last_date_of_warranty"
-                                                        class="bmd-label-floating"
+                                                        for="next_service_date"
+                                                        class="fs11 mb-0"
                                                         >Next Service Date</label
                                                     >
-                                                    <v-date-picker
-                                                        :masks="{
-                                                            input: [
-                                                                'YYYY-MM-DD'
-                                                            ],
-                                                            date: ['YYYY-MM-DD']
-                                                        }"
-                                                        v-model="
-                                                            form.next_service_date
-                                                        "
-                                                        :popover="{ visibility: 'click',  placement: 'bottom'  }"
-                                                    />
+                                                    <v-date-picker v-model="form.next_service_date" :popover ="{ visibility: 'click'}">
+                                                        <template v-slot="{ inputValue, inputEvents }">
+                                                            <input
+                                                            class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                            :value="inputValue"
+                                                            v-on="inputEvents"
+                                                            />
+                                                        </template>
+                                                    </v-date-picker>
                                                     <span
                                                         class="text-danger"
                                                         v-if="
@@ -755,6 +746,7 @@
 export default {
     data() {
         return {
+            timezone:'asia/Dhaka',
             isEdit:
                 typeof this.$route.params.id != "undefined" &&
                 this.$route.params.id != null

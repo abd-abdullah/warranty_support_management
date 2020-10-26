@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomerServiceCollection;
 use App\Models\CustomerService;
+use App\Models\Sale;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
@@ -25,8 +26,8 @@ class CustomerServiceController extends Controller
         $customerService->join('users', 'users.id', '=', 'customers.user_id');
         $customerService->join('sales', 'sales.id', '=', 'customer_services.sale_id');
         $customerService->join('products', 'products.id', '=', 'sales.product_id');
-        $customerService->join('service_men', 'service_men.id', '=', 'customer_services.done_by');
-        $customerService->join('users as technicians', 'technicians.id', '=', 'service_men.user_id');
+        $customerService->leftjoin('service_men', 'service_men.id', '=', 'customer_services.done_by');
+        $customerService->leftjoin('users as technicians', 'technicians.id', '=', 'service_men.user_id');
          
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $customerService->orderBy($request->input('sort_by'), $request->input('sort_order'));
@@ -38,7 +39,7 @@ class CustomerServiceController extends Controller
             $customerService->where('users.name', 'like', "%{$request->input('query')}%");
             $customerService->orWhere('users.email', 'like', "%{$request->input('query')}%");
             $customerService->orWhere('users.phone', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
+            $customerService->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
             $customerService->orWhere('products.name', 'like', "%{$request->input('query')}%");
             $customerService->orWhere('products.code', 'like', "%{$request->input('query')}%");
         }
@@ -75,13 +76,14 @@ class CustomerServiceController extends Controller
         $data['created_by'] = auth()->id();
         $data['is_dicontinue'] = ($request->is_continue === true)?0:1;
         $data['status'] = 1;
-        $data['service_time'] = Carbon::parse($request->service_time)->format('Y-m-d');
-        $data['next_service_time'] = ($request->next_service_time != NULL)?Carbon::parse($request->next_service_time)->format('Y-m-d'):NULL;
+        $data['service_time'] = dateFormat($request->service_time);
+        $data['next_service_time'] = ($request->next_service_time != NULL)?dateFormat($request->next_service_time):(Carbon::parse($request->service_time)->addMonth(3));
         $data['due'] = (int)$request->service_charge - (int)$request->total_paid;
 
         try{
             \DB::beginTransaction();
             CustomerService::create($data);
+            Sale::whereId($request->sale_id)->update(['next_service_date' => $data['next_service_time']]);
             \DB::commit();
         }
         catch(Exception $e){
@@ -124,13 +126,14 @@ class CustomerServiceController extends Controller
         ]);
         $data = $request->all();
         $data['is_dicontinue'] = ($request->is_continue === true)?0:1;
-        $data['service_time'] = Carbon::parse($request->service_time)->format('Y-m-d');
-        $data['next_service_time'] = ($request->next_service_time != NULL)?Carbon::parse($request->next_service_time)->format('Y-m-d'):NULL;
+        $data['service_time'] = dateFormat($request->service_time);
+        $data['next_service_time'] = ($request->next_service_time != NULL)?dateFormat($request->next_service_time):(Carbon::parse($request->service_time)->addMonth(3));
         $data['due'] = (int)$request->service_charge - (int)$request->total_paid;
 
         try{
             \DB::beginTransaction();
             $customerService->update($data);
+            Sale::whereId($request->sale_id)->update(['next_service_date' => $data['next_service_time']]);
             \DB::commit();
         }
         catch(Exception $e){
@@ -164,15 +167,44 @@ class CustomerServiceController extends Controller
             'next_service_time' => 'bail|nullable|date|after:today',
             'remarks' => 'required|string|min:10',
         ]);
-        $data = $request->all();
+        $data = $request->only(['customer_id', 'sale_id', 'remarks']);
         $data['created_by'] = auth()->id();
         $data['is_dicontinue'] = ($request->is_continue === true)?0:1;
         $data['status'] = 2;
-        $data['next_service_time'] = ($request->next_service_time != NULL)?(Carbon::parse($request->next_service_time)->format('Y-m-d')):(Carbon::now()->addMonth(3));
-
+        $data['next_service_time'] = ($request->next_service_time != NULL)?(dateFormat($request->next_service_time)):(Carbon::now()->addMonth(3));
         try{
             \DB::beginTransaction();
             CustomerService::create($data);
+            Sale::whereId($request->sale_id)->update(['next_service_date' => $data['next_service_time']]);
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
+    }
+
+    /**
+     * Update a change data.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeDateUpdate(Request $request, CustomerService $customerService)
+    {
+        $request->validate([
+            'next_service_time' => 'bail|nullable|date|after:today',
+            'remarks' => 'required|string|min:10',
+        ]);
+        $data = $request->only(['customer_id', 'sale_id', 'remarks']);
+        $data['is_dicontinue'] = ($request->is_continue === true)?0:1;
+        $data['next_service_time'] = ($request->next_service_time != NULL)?(dateFormat($request->next_service_time)):(Carbon::now()->addMonth(3));
+        try{
+            \DB::beginTransaction();
+            $customerService->update($data);
+            Sale::whereId($request->sale_id)->update(['next_service_date' => $data['next_service_time']]);
             \DB::commit();
         }
         catch(Exception $e){

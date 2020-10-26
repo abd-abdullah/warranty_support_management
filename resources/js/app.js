@@ -11,6 +11,8 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import Select2 from 'v-select2-component';
 import VCalendar from 'v-calendar';
+import vueMoment from 'vue-moment';
+
 
 const SwalOptions = {
     title: 'Are you sure?',
@@ -37,11 +39,15 @@ const VueProgressBaroptions = {
 }
 
 Vue.use(Loading);
+Vue.use(vueMoment);
 Vue.use(Swal, SwalOptions);
 Vue.use(Toaster, {timeout: 2000})
 Vue.use(VueProgressBar, VueProgressBaroptions)
 Vue.component('Select2', Select2);
-Vue.use(VCalendar);
+Vue.use(VCalendar, {
+    timezone : 'asia/dhaka',
+    masks : {input:'DD/MM/YYYY', data: 'YYYY-MM-DD'},
+});
 
 import appLogin from './components/layouts/auth/app';
 import appMain from './components/layouts/main/app';

@@ -48,10 +48,13 @@
                                                 Technician
                                             </th>
                                             <th class="mw-120">
-                                                Service Time
+                                                Service Date
                                             </th>
-                                            <th class="mw-155">
-                                                Next Service Date
+                                            <th class="mw-120">
+                                                Change Date
+                                            </th>
+                                            <th class="mw-120">
+                                                Next Service
                                             </th>
                                             <th>
                                                 Continue
@@ -109,7 +112,10 @@
                                                 }}
                                             </td>
                                             <td>
-                                                {{ service_history.service_time }}
+                                                {{ (service_history.status == 1)?service_history.service_time:'' }}
+                                            </td>
+                                            <td>
+                                                {{ (service_history.status == 2)?service_history.service_time:'' }}
                                             </td>
                                             <td>
                                                 {{ service_history.next_service_time }}
@@ -118,6 +124,7 @@
                                                 {{ (service_history.is_discontinue === 0)?'Yes':'No' }}
                                             </td>
                                             <td class="td-actions text-right">
+                                                
                                                 <button
                                                     @click.prevent="
                                                         service(service_history)
@@ -160,7 +167,8 @@
                 </div>
             </div>
         </div>
-        <!-- Modal -->
+
+        <!-- Modal for edit service -->
         <div
             class="modal fade"
             id="exampleModal"
@@ -252,25 +260,21 @@
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <div
-                                                            class="form-group bmd-form-group is-filled"
+                                                            class="mt-0 mb-2"
                                                         >
                                                             <label
-                                                                for="service_time"
-                                                                class="bmd-label-floating"
+                                                                for="service_time" class="fs11 mb-0"
                                                                 >Service Date<strong class="text-danger"> *</strong></label
                                                             >
-                                                            <v-date-picker
-                                                                :masks="{
-                                                                    input: [
-                                                                        'YYYY-MM-DD'
-                                                                    ],
-                                                                    date: ['YYYY-MM-DD']
-                                                                }"
-                                                                v-model="
-                                                                    form.service_time
-                                                                "
-                                                                :popover="{ visibility: 'click', placement: 'bottom' }"
-                                                            />
+                                                            <v-date-picker v-model="form.service_time" :popover ="{ visibility: 'click'}">
+                                                                <template v-slot="{ inputValue, inputEvents }">
+                                                                    <input
+                                                                    class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                                    :value="inputValue"
+                                                                    v-on="inputEvents"
+                                                                    />
+                                                                </template>
+                                                            </v-date-picker>
                                                             <span
                                                                 class="text-danger"
                                                                 v-if="
@@ -285,25 +289,22 @@
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <div
-                                                            class="form-group bmd-form-group is-filled"
+                                                            class="mt-0 mb-2"
                                                         >
                                                             <label
                                                                 for="next_service_time"
-                                                                class="bmd-label-floating"
+                                                                class="fs11 mb-0"
                                                                 >Next Service Date</label
                                                             >
-                                                            <v-date-picker
-                                                                :masks="{
-                                                                    input: [
-                                                                        'YYYY-MM-DD'
-                                                                    ],
-                                                                    date: ['YYYY-MM-DD']
-                                                                }"
-                                                                v-model="
-                                                                    form.next_service_time
-                                                                "
-                                                                :popover="{ visibility: 'click', placement: 'bottom' }"
-                                                            />
+                                                            <v-date-picker v-model="form.next_service_time" :popover ="{ visibility: 'click'}">
+                                                                <template v-slot="{ inputValue, inputEvents }">
+                                                                    <input
+                                                                    class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                                    :value="inputValue"
+                                                                    v-on="inputEvents"
+                                                                    />
+                                                                </template>
+                                                            </v-date-picker>
                                                             <span
                                                                 class="text-danger"
                                                                 v-if="
@@ -466,7 +467,6 @@
                                                             <textarea
                                                                 type="text"
                                                                 class="form-control"
-                                                                id="remarks"
                                                                 v-model="form.remarks"
                                                             />
                                                             <span
@@ -503,6 +503,161 @@
                         </button>
                         <button type="button" @click.prevent="update" class="btn btn-primary">
                             Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <!-- Modal service time change -->
+        <div
+            class="modal fade"
+            id="timeChangeModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="timeChangeModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="font-weight-bold modal-title text-primary" id="timeChangeModalLabel">
+                            Change Customer Service
+                        </h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled':
+                                                    form.customer !== null
+                                            }"
+                                        >
+                                            <label
+                                                class="bmd-label-floating"
+                                                    for="customer"
+                                                >Customer<strong class="text-danger"> *</strong></label
+                                            >
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                readonly
+                                                v-model="form.customer"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div
+                                            class="form-group bmd-form-group"
+                                            v-bind:class="{
+                                                'is-filled':
+                                                    form.product !== null
+                                            }"
+                                        >
+                                            <label
+                                                class="bmd-label-floating"
+                                                for="product"
+                                                >Product<strong class="text-danger"> *</strong></label
+                                            >
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                readonly
+                                                v-model="form.product"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="mb-2">
+                                            <label
+                                                for="next_service_time"
+                                                class="fs11 mb-0"
+                                                >Next Service Date</label
+                                            >
+                                            <v-date-picker v-model="form.next_service_time" :popover ="{ visibility: 'click'}">
+                                                <template v-slot="{ inputValue, inputEvents }">
+                                                    <input
+                                                    class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                    :value="inputValue"
+                                                    v-on="inputEvents"
+                                                    />
+                                                </template>
+                                            </v-date-picker>
+                                            <span
+                                                class="text-danger"
+                                                v-if="
+                                                    errors.next_service_time
+                                                "
+                                                >{{
+                                                    errors
+                                                        .next_service_time[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div
+                                            class="form-group bmd-form-group "
+                                            v-bind:class="{
+                                                'is-filled':
+                                                    form.remarks !== null
+                                            }"
+                                        >
+                                            <label
+                                                for="remarks"
+                                                class="bmd-label-floating"
+                                                >Remarks<strong class="text-danger"> *</strong></label
+                                            >
+                                            <textarea
+                                                type="text"
+                                                class="form-control"
+                                                id="remarks"
+                                                v-model="form.remarks"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.remarks"
+                                                >{{ errors.remarks[0] }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="togglebutton">
+                                            <label>
+                                                <input type="checkbox" v-model="form.is_continue">
+                                                <span class="toggle"></span>
+                                                Service Continue
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button type="button" @click.prevent="changeUpdate" class="btn btn-primary">
+                            Change Service Time
                         </button>
                     </div>
                 </div>
@@ -612,6 +767,9 @@ export default {
             });
         },
         service(service) {
+            if(service.status == 2){
+                return this.serviceChange(service)
+            }
             this.errors = [];
             this.form.customer = service.name+'-'+service.customerId;
             this.form.product = service.product_name+'-'+service.product_code;
@@ -629,6 +787,18 @@ export default {
             this.form.is_continue = (service.is_discontinue === 0)?1:0;
             this.form.id = service.id;
             $("#exampleModal").modal("show");
+        },
+        serviceChange(service) {
+            this.errors = [];
+            this.form.id = service.id;
+            this.form.customer = service.name+'-'+service.customerId;
+            this.form.product = service.product_name+'-'+service.product_code;
+            this.form.service_id = service.id;
+            this.form.customer_id = service.customer_id;
+            this.form.next_service_time = new Date(service.next_service_time);;
+            this.form.remarks = service.remarks;
+            this.form.is_continue = (service.is_discontinue === 0)?1:0;
+            $("#timeChangeModal").modal("show");
         },
         update() {
             this.$Progress.start();
@@ -649,7 +819,27 @@ export default {
                         this.$toaster.error("Something went wrong");
                     }
                 });
-        }
+        },
+        changeUpdate() {
+            this.$Progress.start();
+            this.$jsHelper
+                .put("api/v1/customer-services/change/"+this.form.id, this.form)
+                .then(data => {
+                    this.$Progress.finish();
+                    this.$toaster.success("Successfully Changed");
+                    this.getData();
+                    $("#timeChangeModal").modal("hide");
+                })
+                .catch(error => {
+                    this.$Progress.fail();
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                    else{
+                        this.$toaster.error("Something went wrong");
+                    }
+                });
+        },
     }
 };
 </script>

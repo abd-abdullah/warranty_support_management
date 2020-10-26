@@ -98,7 +98,6 @@
                                                 class="form-control"
                                                 id="password"
                                                 v-model="form.password"
-                                                placeholder="*******"
                                             />
                                             <span
                                                 class="text-danger"
@@ -106,13 +105,21 @@
                                                 >{{ errors.password[0] }}</span
                                             >
                                         </div>
-                                        <div class="form-group bmd-form-group is-filled">
+                                        <div>
                                         <label
                                                 for="joining_date"
-                                                class="bmd-label-floating"
+                                                class="mb-0 fs11"
                                                 >Date of Joining<strong class="text-danger"> *</strong></label
                                             >
-                                       <v-date-picker :masks="{ input: ['YYYY-MM-DD'], date:['YYYY-MM-DD']}" v-model='form.joining_date' />
+                                        <v-date-picker v-model="form.joining_date" :popover ="{ visibility: 'click'}">
+                                            <template v-slot="{ inputValue, inputEvents }">
+                                                <input
+                                                class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                :value="inputValue"
+                                                v-on="inputEvents"
+                                                />
+                                            </template>
+                                        </v-date-picker>
                                          <span
                                                 class="text-danger"
                                                 v-if="errors.joining_date"

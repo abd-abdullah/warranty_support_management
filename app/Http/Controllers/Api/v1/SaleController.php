@@ -55,6 +55,55 @@ class SaleController extends Controller
         $sales->select($select);
         return new SaleCollection($sales->paginate($limit));
     }
+    
+    /**
+     * Display a listing of the resource for dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexDashboard(Request $request)
+    {
+        $limit = (($request->per_page != NULL) ? $request->per_page : 10);
+        $limit = (($limit == -1) ? 9999999 : $limit);
+        $sales = Sale::query();
+        $sales->join('customers', 'customers.id', '=', 'sales.customer_id');
+        $sales->join('users', 'users.id', '=', 'customers.user_id');
+        $sales->join('products', 'products.id', '=', 'sales.product_id');
+         
+        if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
+            $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
+        } else {
+            $sales->orderBy('id', 'DESC');
+        }
+
+        if ($request->input('query') && $request->input('query') != "") {
+            $sales->where('users.name', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('users.email', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('users.phone', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('products.name', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('products.code', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('purchase_from', 'like', "%{$request->input('query')}%");
+        }
+        
+        if($request->from_date != null){
+            $sales->whereDate('sales.next_service_date', '>=', Carbon::parse($request->from_date));
+        }
+        
+        if($request->to_date != null){
+            $sales->whereDate('sales.next_service_date', '<=', Carbon::parse($request->to_date));
+        }
+
+
+        $sales->with('customer');
+        $select = [
+            'products.name as product_name',
+            'products.code as product_code',
+            'sales.*',
+        ];
+        $sales->select($select);
+        return new SaleCollection($sales->paginate($limit));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -96,9 +145,9 @@ class SaleController extends Controller
                 'capacity' => $request->purchase_capacity,
                 'price' => $request->purchase_price,
                 'purchase_from' => $request->purchase_from,
-                'date_of_purchase' => Carbon::parse($request->date_of_purchase)->format('Y-m-d'),
-                'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d'),
-                'next_service_date' => ($request->next_service_date != NULL)?(Carbon::parse($request->next_service_date)->format('Y-m-d')):(Carbon::parse($request->date_of_purchase)->addMonth(3))
+                'date_of_purchase' => dateFormat($request->date_of_purchase),
+                'last_date_of_warranty' => dateFormat($request->last_date_of_warranty),
+                'next_service_date' => ($request->next_service_date != NULL)?(dateFormat($request->next_service_date)):(Carbon::parse($request->date_of_purchase)->addMonth(3))
             ];
             Sale::create($purchaseData);
             
@@ -134,7 +183,7 @@ class SaleController extends Controller
     {
         $product_id = $request->old_product_id;
         $customer_id = $request->old_customer_id;
-        
+
         try{
             \DB::beginTransaction();
             if($customer_id == NULL && $customer_id == ''){
