@@ -119,7 +119,7 @@ class SaleController extends Controller
         try{
             \DB::beginTransaction();
             if($customer_id == NULL && $customer_id == ''){
-                $userData = $request->only( 'name','customerId','email','password','phone','other_contact_numbers','country_','division_id','district_id','upazila_id','address');
+                $userData = $request->only( 'name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id','address');
                 $userData['user_type'] = 'customer';
                 $userData['created_by'] = auth()->id();
                 $userData['status'] = 0;
@@ -187,7 +187,7 @@ class SaleController extends Controller
         try{
             \DB::beginTransaction();
             if($customer_id == NULL && $customer_id == ''){
-                $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_','division_id','district_id','upazila_id','address');
+                $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id','address');
                 $userData['user_type'] = 'customer';
                 $userData['created_by'] = auth()->id();
                 $userData['email_verified_at'] = now();
