@@ -48,7 +48,7 @@
                                             :key="customer.id"
                                         >
                                             <td>{{ pagination.from + index }}</td>
-                                            <td>{{ customer.name }}</td>
+                                            <td><router-link :to="{ name: 'customer_view', params:{'id':customer.id}}" target="_blank">{{ customer.name }}</router-link></td>
                                             <td>{{ customer.email }}</td>
                                             <td>{{ customer.phone }}</td>
                                             <td>{{ customer.customerId }}</td>

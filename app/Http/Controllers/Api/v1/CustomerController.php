@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomerCollection;
 use App\Http\Resources\CustomerResource;
+use App\Http\Resources\CustomerViewResource;
 use App\Models\Customer;
 use App\Models\User;
 use Exception;
@@ -155,5 +156,17 @@ class CustomerController extends Controller
         $customers = Customer::get();
         
         return new CustomerCollection($customers);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function SingleView($id)
+    {
+        $customer = Customer::where('customers.id', $id)->with('user')->with('purchase.product')->with('purchase.customer_services')->first();
+        return new CustomerViewResource($customer);
     }
 }

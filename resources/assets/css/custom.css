@@ -237,3 +237,8 @@ legend.border {
 .fs11{
     font-size: 11px;
 }
+
+.view-header-icon{
+    margin-left: -25px;
+    margin-right: 3px;
+}

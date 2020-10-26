@@ -39,7 +39,7 @@ class Sale extends Model
     }
    
     public function customer_services(){
-    	return $this->hasMany(CustomerService::class);
+    	return $this->hasMany(CustomerService::class)->orderBy('id', 'DESC');
     }
 
     public function customer_service()

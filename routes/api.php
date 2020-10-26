@@ -18,6 +18,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::ApiResource('admin-users', 'AdminUserController');
     Route::ApiResource('technicians', 'ServiceMenController');
     Route::ApiResource('customers', 'CustomerController');
+    Route::get('customers/view/{id}', 'CustomerController@SingleView')->name('customers.singe-view');
     Route::ApiResource('customer-types', 'CustomerTypeController');
     Route::ApiResource('sales', 'SaleController');
     Route::ApiResource('customer-services', 'CustomerServiceController');

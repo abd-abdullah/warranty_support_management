@@ -38,7 +38,7 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
+                    <!-- <li class="nav-item dropdown">
                         <a
                             class="nav-link"
                             href="http://example.com"
@@ -62,7 +62,7 @@
                                 >Mike John responded to your email</a
                             >
                         </div>
-                    </li>
+                    </li> -->
                     <li class="nav-item dropdown">
                         <a
                             class="nav-link"

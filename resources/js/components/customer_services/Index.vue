@@ -72,11 +72,11 @@
                                             <td>
                                                 {{ pagination.from + index }}
                                             </td>
-                                            <td class="ws-pre">{{ 
+                                            <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':service_history.customer_id}}" target="_blank">{{ 
                                                     service_history.name+'\n'+
                                                     service_history.customerId+'\n'+
                                                     service_history.phone 
-                                                }}</td>
+                                                }}</router-link></td>
                                             <td>
                                                 {{
                                                     (service_history.address != "" &&

@@ -31,6 +31,10 @@ class Customer extends Model
     public function customer_type(){
     	return $this->belongsTo(CustomerType::class);
     }
+   
+    public function purchase(){
+    	return $this->hasMany(Sale::class, 'customer_id');
+    }
     
     public function createdBy(){
     	return $this->belongsTo(User::class, 'created_by');
