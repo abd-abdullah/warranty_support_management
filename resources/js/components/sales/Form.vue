@@ -725,7 +725,7 @@
                                 @click.prevent="update"
                                 class="btn btn-primary"
                             >
-                                Update
+                                Update<span class="spinner"></span>
                             </button>
                             <button
                                 v-else
@@ -733,7 +733,7 @@
                                 @click.prevent="add"
                                 class="btn btn-primary"
                             >
-                                Add
+                                Add<span class="spinner"></span>
                             </button>
                         </div>
                     </div>
@@ -824,12 +824,14 @@ export default {
     },
 
     methods: {
-        add() {
+        add(e) {
+            this.$buttonLoader(e);
             this.$Progress.start();
             this.$jsHelper
                 .post("api/v1/sales", this.form)
                 .then(data => {
                     this.$Progress.finish();
+                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Added");
                     setTimeout(
                         () => this.$router.push({ name: "sale" }),
@@ -838,6 +840,7 @@ export default {
                 })
                 .catch(error => {
                     this.$Progress.fail();
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }
@@ -847,12 +850,14 @@ export default {
                 });
         },
 
-        update() {
+        update(e) {
             this.$Progress.start();
+            this.$buttonLoader(e);
             this.$jsHelper
                 .put("api/v1/sales/" + this.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
+                    this.$buttonLoader(e);
                     this.$toaster.info("Successfully Updated");
                     setTimeout(
                         () => this.$router.push({ name: "sale" }),
@@ -861,6 +866,7 @@ export default {
                 })
                 .catch(error => {
                     this.$Progress.fail();
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }

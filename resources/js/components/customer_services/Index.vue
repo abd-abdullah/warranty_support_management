@@ -502,7 +502,7 @@
                             Close
                         </button>
                         <button type="button" @click.prevent="update" class="btn btn-primary">
-                            Update
+                            Update<span class="spinner"></span>
                         </button>
                     </div>
                 </div>
@@ -657,7 +657,7 @@
                             Close
                         </button>
                         <button type="button" @click.prevent="changeUpdate" class="btn btn-primary">
-                            Change Service Time
+                            Change Service Time<span class="spinner"></span>
                         </button>
                     </div>
                 </div>
@@ -800,18 +800,21 @@ export default {
             this.form.is_continue = (service.is_discontinue === 0)?1:0;
             $("#timeChangeModal").modal("show");
         },
-        update() {
+        update(e) {
+            this.$buttonLoader(e);
             this.$Progress.start();
             this.$jsHelper
                 .put("api/v1/customer-services/"+this.form.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
+                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Updated");
                     this.getData();
                     $("#exampleModal").modal("hide");
                 })
                 .catch(error => {
                     this.$Progress.fail();
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }
@@ -820,18 +823,21 @@ export default {
                     }
                 });
         },
-        changeUpdate() {
+        changeUpdate(e) {
+            this.$buttonLoader(e);
             this.$Progress.start();
             this.$jsHelper
                 .put("api/v1/customer-services/change/"+this.form.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
+                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Changed");
                     this.getData();
                     $("#timeChangeModal").modal("hide");
                 })
                 .catch(error => {
                     this.$Progress.fail();
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }

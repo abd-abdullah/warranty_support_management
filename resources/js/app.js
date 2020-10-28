@@ -72,6 +72,17 @@ Vue.component("defaultlayout", appMain);
 Vue.component("pagination", pagination);
 Vue.component("search", search);
 
+Vue.prototype.$buttonLoader = function (e) {
+    if(e.toElement.classList.contains('spin')){
+        e.toElement.classList.remove('spin');
+        e.toElement.disabled = false;
+    }
+    else{
+        e.currentTarget.classList.add('spin');
+        e.currentTarget.disabled = true;
+    }
+};
+
 new Vue({
     el: '#app',
     router,

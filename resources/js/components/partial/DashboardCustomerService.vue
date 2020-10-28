@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="col-2">
-                                <button @click="getData" class="btn btn-sm btn-primary mt-2 float-right">Filter</button>
+                                <button @click="getData" class="btn btn-sm btn-primary mt-2 float-right">Filter<span class="spinner"></span></button>
                             </div>
                         </div>
                     </div>
@@ -517,7 +517,7 @@
                             Close
                         </button>
                         <button type="button" @click.prevent="add" class="btn btn-primary">
-                            Save changes
+                            Submit<span class="spinner"></span>
                         </button>
                     </div>
                 </div>
@@ -672,7 +672,7 @@
                             Close
                         </button>
                         <button type="button" @click.prevent="changeAdd" class="btn btn-primary">
-                            Change Service Time
+                            Change Service Time<span class="spinner"></span>
                         </button>
                     </div>
                 </div>
@@ -806,18 +806,21 @@ export default {
             this.form.is_continue = true;
             $("#timeChangeModal").modal("show");
         },
-        add() {
+        add(e) {
+            this.$buttonLoader(e);
             this.$Progress.start();
             this.$jsHelper
                 .post("api/v1/customer-services", this.form)
                 .then(data => {
                     this.$Progress.finish();
+                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Added");
                     this.getData();
                     $("#exampleModal").modal("hide");
                 })
                 .catch(error => {
                     this.$Progress.fail();
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }
@@ -826,18 +829,21 @@ export default {
                     }
                 });
         },
-        changeAdd() {
+        changeAdd(e) {
+            this.$buttonLoader(e);
             this.$Progress.start();
             this.$jsHelper
                 .post("api/v1/customer-services/change", this.form)
                 .then(data => {
                     this.$Progress.finish();
+                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Changed");
                     this.getData();
                     $("#timeChangeModal").modal("hide");
                 })
                 .catch(error => {
                     this.$Progress.fail();
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }

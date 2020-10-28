@@ -83,7 +83,7 @@
                                 @click.prevent="update"
                                 class="btn btn-primary"
                             >
-                                Update
+                                Update<span class="spinner"></span>
                             </button>
                             <button
                                 v-else
@@ -91,7 +91,7 @@
                                 @click.prevent="add"
                                 class="btn btn-primary"
                             >
-                                Add
+                                Add<span class="spinner"></span>
                             </button>
                         </div>
                     </div>
@@ -136,17 +136,20 @@ export default {
     },
 
     methods: {
-        add() {
+        add(e) {
+            this.$buttonLoader(e);
             this.$Progress.start();
             this.$jsHelper
                 .post("api/v1/products", this.form)
                 .then(data => {
                     this.$Progress.finish();
+                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Added");
                     setTimeout( () => this.$router.push({ name: "product"}), 1000);
                 })
                 .catch(error => {
                     this.$Progress.fail();
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }
