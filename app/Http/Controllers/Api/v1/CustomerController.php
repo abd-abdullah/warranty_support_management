@@ -23,7 +23,7 @@ class CustomerController extends Controller
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
         $customers = Customer::query();
-        $customers->join('users', 'users.id', '=', 'customers.id');
+        $customers->join('users', 'users.id', '=', 'customers.user_id');
         $customers->join('customer_types', 'customer_types.id', '=', 'customers.customer_type_id');
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $customers->orderBy($request->input('sort_by'), $request->input('sort_order'));
