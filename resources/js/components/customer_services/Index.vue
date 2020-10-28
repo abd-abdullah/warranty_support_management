@@ -807,7 +807,6 @@ export default {
                 .put("api/v1/customer-services/"+this.form.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Updated");
                     this.getData();
                     $("#exampleModal").modal("hide");
@@ -830,7 +829,6 @@ export default {
                 .put("api/v1/customer-services/change/"+this.form.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Changed");
                     this.getData();
                     $("#timeChangeModal").modal("hide");

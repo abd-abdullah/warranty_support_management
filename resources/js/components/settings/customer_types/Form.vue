@@ -121,7 +121,6 @@ export default {
                 .post("api/v1/customer-types", this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Added");
                     setTimeout( () => this.$router.push({ name: "customer_type"}), 1000);
                 })
@@ -144,7 +143,6 @@ export default {
                 .put("api/v1/customer-types/"+this.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.info("Successfully Updated");
                     setTimeout( () => this.$router.push({ name: "customer_type"}), 1000);
                 })

@@ -401,7 +401,6 @@ export default {
                 .post("api/v1/customers", this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Added");
                     setTimeout(
                         () => this.$router.push({ name: "customer" }),
@@ -427,7 +426,6 @@ export default {
                 .put("api/v1/customers/" + this.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.info("Successfully Updated");
                     setTimeout(
                         () => this.$router.push({ name: "customer" }),
@@ -436,7 +434,7 @@ export default {
                 })
                 .catch(error => {
                     this.$Progress.fail();
-                    this.$buttonLoader(e.to);
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }

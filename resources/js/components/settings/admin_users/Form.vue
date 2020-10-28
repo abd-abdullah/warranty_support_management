@@ -374,7 +374,6 @@ export default {
                 .post("api/v1/admin-users", this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Added");
                     setTimeout(
                         () => this.$router.push({ name: "admin_user" }),
@@ -400,7 +399,6 @@ export default {
                 .put("api/v1/admin-users/" + this.id, this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.info("Successfully Updated");
                     setTimeout(
                         () => this.$router.push({ name: "admin_user" }),

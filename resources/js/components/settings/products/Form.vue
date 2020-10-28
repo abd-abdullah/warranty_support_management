@@ -143,7 +143,6 @@ export default {
                 .post("api/v1/products", this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Added");
                     setTimeout( () => this.$router.push({ name: "product"}), 1000);
                 })

@@ -843,7 +843,6 @@ export default {
                 .post("api/v1/customer-services", this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Added");
                     this.getData();
                     $("#exampleModal").modal("hide");
@@ -866,7 +865,6 @@ export default {
                 .post("api/v1/customer-services/change", this.form)
                 .then(data => {
                     this.$Progress.finish();
-                    this.$buttonLoader(e);
                     this.$toaster.success("Successfully Changed");
                     this.getData();
                     $("#timeChangeModal").modal("hide");
