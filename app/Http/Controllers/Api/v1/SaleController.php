@@ -118,7 +118,7 @@ class SaleController extends Controller
         
         try{
             \DB::beginTransaction();
-            if($customer_id == NULL && $customer_id == ''){
+            if($customer_id == NULL || $customer_id == ''){
                 $userData = $request->only( 'name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id','address');
                 $userData['user_type'] = 'customer';
                 $userData['created_by'] = auth()->id();
@@ -129,7 +129,7 @@ class SaleController extends Controller
                 $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId, 'customer_type_id' => $request->customer_type_id]);
                 $customer_id = $customer->id;
             }
-            if($product_id == NULL && $product_id == ''){
+            if($product_id == NULL || $product_id == ''){
                 $productData = [
                     'name' => $request->product_name,
                     'code' => $request->product_code,
@@ -186,7 +186,7 @@ class SaleController extends Controller
 
         try{
             \DB::beginTransaction();
-            if($customer_id == NULL && $customer_id == ''){
+            if($customer_id == NULL || $customer_id == ''){
                 $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id','address');
                 $userData['user_type'] = 'customer';
                 $userData['created_by'] = auth()->id();
@@ -196,7 +196,7 @@ class SaleController extends Controller
                 $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId, 'customer_type_id' => $request->customer_type_id]);
                 $customer_id = $customer->id;
             }
-            if($product_id == NULL && $product_id == ''){
+            if($product_id == NULL || $product_id == ''){
                 $productData = [
                     'name' => $request->product_name,
                     'code' => $request->product_code,
