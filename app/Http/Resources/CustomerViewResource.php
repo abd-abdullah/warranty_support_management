@@ -28,7 +28,7 @@ class CustomerViewResource extends JsonResource
             'upazila' => $this->user->upazila->name,
             'address' => $this->user->address,
             'purchase' => new SaleViewCollection($this->purchase),
-            'services' => new CustomerServiceViewCollection($this->purchase->pluck('customer_services')->first()),
+            'services' => new CustomerServiceViewCollection($this->purchase->pluck('customer_services')->flatten()),
         ];
     }
 }
