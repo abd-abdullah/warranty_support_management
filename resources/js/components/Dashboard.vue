@@ -96,7 +96,11 @@
                             </h4>
                         </div>
                         <div class="card-body">
-                           <service-bar-chart :styles="barchartStyles" :data=chart.Bar.data :options=chart.Bar.options />
+                           <service-bar-chart
+                                v-if="loaded"
+                                :styles="barchartStyles"
+                                :chartdata="chart.Bar"
+                                :options="options" />
                         </div>
                     </div>
                 </div>
@@ -108,7 +112,11 @@
                             </h4>
                         </div>
                         <div class="card-body">
-                           <service-line-chart :styles="barchartStyles" :data=chart.Line.data :options=chart.Line.options />
+                           <service-line-chart
+                                v-if="loaded"
+                                :styles="barchartStyles"
+                                :chartdata="chart.Line"
+                                :options="options" />
                         </div>
                     </div>
                 </div>
@@ -126,77 +134,40 @@ import DashboardCustomerService from './partial/DashboardCustomerService';
 export default {
     components: { ServiceBarChart,ServiceLineChart, DashboardCustomerService },
     name: "Dashboard",
-    data() {
-        return {
-            name: "",
-            section_title: "Dashboard",
-            dashboardData:{
-                product:0,
-                customer:0,
-                purchase:0,
-                service:0,
-                product_monthly:0,
-                customer_monthly:0,
-                purchase_monthly:0,
-                service_monthly:0,
-                month: '',
-            },
-            chart:{
-                Bar:{
-                    data: {
-                        labels: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
-                        datasets: [
-                            {
-                                label: "Sale",
-                                backgroundColor: "blue",
-                                data: [3,7,4,45,50,24]
-                            },
-                            {
-                                label: "Service",
-                                backgroundColor: "red",
-                                data: [4,3,5,45,4,3]
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                },
-                Line:{
-                    data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mar', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                        datasets: [
-                            {
-                                label: "Sale",
-                                data: [3,7,4,45,234,24],
-                                borderColor:'blue',
-                            },
-                            {
-                                label: "Service",
-                                data: [4,3,5,234,4,3],
-                                borderColor:'red',
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        fill:false,
-                    }
-                }
-            }
-        };
-    },
-    mounted() {
-        
+    data : () => ({
+        name: "",
+        section_title: "Dashboard",
+        dashboardData:{
+            product:0,
+            customer:0,
+            purchase:0,
+            service:0,
+            product_monthly:0,
+            customer_monthly:0,
+            purchase_monthly:0,
+            service_monthly:0,
+            month: '',
+        },
+        chart:{
+            Bar:null,
+            Line:null,
+        },
+        loaded: false,
+        options:{
+            responsive: true,
+            maintainAspectRatio: false,
+            fill:false,
+        }
+    }),
+    async mounted() {
+        this.loaded = false
         this.$Progress.start();
-        this.$jsHelper
+        await this.$jsHelper
             .get("api/v1/dashboard")
             .then(response => {
                 this.dashboardData = response.data;
-                this.$Progress.finish();
-               
+                this.fillChartData(response.data);
+                this.$Progress.finish(); 
             })
             .catch(error => {
                 this.$Progress.fail();
@@ -209,6 +180,42 @@ export default {
                 height: '250px',
                 position: 'relative'
             }
+        }
+    },
+    methods:{
+        fillChartData(data){
+            this.chart.Bar = {
+                labels: data.bar_labels,
+                datasets: [
+                    {
+                        label: "Sale",
+                        backgroundColor: "blue",
+                        data: data.bar_sale_data
+                    },
+                    {
+                        label: "Service",
+                        backgroundColor: "red",
+                        data: data.bar_service_data
+                    }
+                ]
+            }
+            
+            this.chart.Line = {
+                labels: data.line_labels,
+                datasets: [
+                    {
+                        label: "Sale",
+                        data: data.line_sale_data,
+                        borderColor:'blue',
+                    },
+                    {
+                        label: "Service",
+                        data: data.line_service_data,
+                        borderColor:'red',
+                    }
+                ]
+            }
+            this.loaded = true;
         }
     }
 };

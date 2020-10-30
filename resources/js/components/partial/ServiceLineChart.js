@@ -1,9 +1,18 @@
-import { Line } from 'vue-chartjs'
+import { Line } from "vue-chartjs";
 
 export default {
-  extends: Line,
-  props: ['data', 'options'],
-  mounted () {
-      this.renderChart(this.data, this.options);
-  }
-}
+    extends: Line,
+    props: {
+        chartdata: {
+            type: Object,
+            default: null
+        },
+        options: {
+            type: Object,
+            default: null
+        }
+    },
+    mounted() {
+        this.renderChart(this.chartdata, this.options);
+    }
+};
