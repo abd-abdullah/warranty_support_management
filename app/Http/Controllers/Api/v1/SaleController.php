@@ -33,7 +33,7 @@ class SaleController extends Controller
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $sales->orderBy('id', 'DESC');
+            $sales->orderBy('date_of_purchase', 'DESC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
@@ -73,7 +73,7 @@ class SaleController extends Controller
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $sales->orderBy('id', 'DESC');
+            $sales->orderBy('next_service_date', 'ASC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {

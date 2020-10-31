@@ -19,6 +19,7 @@ import customer_type_form from '../components/settings/customer_types/form';
 import sale from '../components/sales/index';
 import sale_form from '../components/sales/form';
 import customer_service from '../components/customer_services/index';
+import update_profile from '../components/settings/Profile';
 
 const routes = [
     {
@@ -122,6 +123,13 @@ const routes = [
         name: "customer_service",
         component: customer_service,
         meta: { authOnly: true, title: 'Service History', props: true }
+    },
+   
+    {
+        path: "/update-profile",
+        name: "update_profile",
+        component: update_profile,
+        meta: { authOnly: true, title: 'Update Profile', props: true }
     },
 ];
 

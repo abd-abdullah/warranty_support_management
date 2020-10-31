@@ -81,7 +81,7 @@
                             class="dropdown-menu dropdown-menu-right"
                             aria-labelledby="navbarDropdownProfile"
                         >
-                            <a class="dropdown-item" href="#">Profile</a>
+                            <router-link to="/update-profile" class="dropdown-item">Profile</router-link>
                             <div class="dropdown-divider"></div>
                             <a
                                 class="dropdown-item"

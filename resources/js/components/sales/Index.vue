@@ -101,8 +101,7 @@
                                             <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.customer_id}}" target="_blank">{{
                                                     sale.name+'\n'+
                                                     sale.customerId+'\n'+
-                                                    sale.phone+'\n'+
-                                                    sale.email 
+                                                    sale.phone
                                                 }}</router-link></td>
                                             <td>
                                                 {{

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::ApiResource('products', 'ProductController');
@@ -36,4 +40,5 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::get('districts/{division_id}', 'AddressController@getDistrict')->name('districts.index');
     Route::get('upazilas/{district_id}', 'AddressController@getUpazila')->name('upazilas.index');
     Route::get('post-offices/{upazila_id}', 'AddressController@getPostOffice')->name('post-offices.index');
+    Route::put('update-profile', 'AdminUserController@updateProfile')->name('updateProfile');
 });

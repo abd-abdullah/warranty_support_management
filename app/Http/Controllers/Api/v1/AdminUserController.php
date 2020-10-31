@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AdminUserCollection;
 use App\Http\Resources\AdminUserResource;
 use App\Models\User;
+use App\Rules\MatchOldPassword;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
@@ -131,4 +133,59 @@ class AdminUserController extends Controller
         }
         $admin_user->delete();
     }
+    
+    /**
+     * change profile & password
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        //chcek if request is for password change
+        if($request->has('new_password')){
+            $rules = [
+                'current_password' => ['required', new MatchOldPassword],
+                'new_password' => ['required','string','min:8', 'different:old_password'],
+                'new_confirm_password' => ['same:new_password'],
+            ];
+        }
+        //else
+        else{
+            $rules = [
+                'name' => 'required|min:3',
+                'phone' => 'required|numeric|digits:11|unique:users,phone,'.$user->id,
+                'country_id' => 'required',
+                'division_id' => 'required',
+                'district_id' => 'required',
+                'address' => 'required|string|min:4',
+            ];
+        }
+
+        $request->validate($rules);
+        
+        try{
+            \DB::beginTransaction();
+            //update password if
+            if($request->has('new_password')){
+                $user->update(['password'=> Hash::make($request->new_password)]);
+            }
+            //else
+            else{
+                $profileData = $request->only('name', 'phone', 'other_contact_numbers', 'country_id','division_id', 'district_id', 'upazila_id', 'address');
+                $user->update($profileData);
+            }
+            \DB::commit();
+        }
+        catch(Exception $e){
+            \DB::rollback();
+            return response()->json( [
+                'error' => ['db_error' => $e->getMessage()]
+            ], 501);
+        }
+       
+    }
+
+    
 }
