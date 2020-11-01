@@ -33,11 +33,23 @@ class CustomerController extends Controller
 
         if ($request->input('query') && $request->input('query') != "") {
             $query = $request->input('query');
-            $customers->where('users.name', 'like', "%{$query}%");
-            $customers->orWhere('customer_types.name', 'like', "%{$query}%");
-            $customers->orWhere('email', 'like', "%{$query}%");
-            $customers->orWhere('phone', 'like', "%{$query}%");
-            $customers->orWhere('customerId', 'like', "%{$query}%");
+            $customers->where(function($q) use ($query) {
+                $q->where('users.name', 'like', "%{$query}%");
+                $q->orWhere('customer_types.name', 'like', "%{$query}%");
+                $q->orWhere('email', 'like', "%{$query}%");
+                $q->orWhere('phone', 'like', "%{$query}%");
+                $q->orWhere('customerId', 'like', "%{$query}%");
+            });
+        }
+
+        if($request->input('division_id') && $request->input('division_id') != "null"){
+            $customers->where('users.division_id', $request->division_id);
+        }
+        if($request->input('district_id') && $request->input('district_id') != "null"){
+            $customers->where('users.district_id', $request->district_id);
+        }
+        if($request->input('upazila_id') && $request->input('upazila_id') != "null"){
+            $customers->where('users.upazila_id', $request->upazila_id);
         }
 
         $customers->with('user');
@@ -126,6 +138,7 @@ class CustomerController extends Controller
             \DB::beginTransaction();
             $customer->user()->update($data);
             $customer->update(['customerId' => $request->customerId, 'customer_type_id'=> $request->customer_type_id]);
+            \DB::commit();
         }
         catch(Exception $e){
             \DB::rollback();

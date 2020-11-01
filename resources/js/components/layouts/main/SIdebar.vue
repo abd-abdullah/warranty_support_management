@@ -45,6 +45,12 @@ Tip 2: you can also add an image using data-image tag
                         <p>Customers</p></router-link
                     >
                 </li>
+                <li class="nav-item">
+                    <router-link to="/send-sms" class="nav-link"
+                        ><i class="material-icons">mail_outline</i>
+                        <p>Send SMS</p></router-link
+                    >
+                </li>
                 <li class="nav-item ">
                     <a class="nav-link" data-toggle="collapse" href="#setting">
                         <i class="material-icons">power_settings_new</i>
@@ -70,6 +76,12 @@ Tip 2: you can also add an image using data-image tag
                                 <router-link to="/admin-users" class="nav-link"
                                     ><i class="material-icons">Moderator</i>
                                     <p>Moderator</p></router-link
+                                >
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/sms-settings/form/1" class="nav-link"
+                                    ><i class="material-icons">SMS</i>
+                                    <p>SMS Setting</p></router-link
                                 >
                             </li>
                         </ul>

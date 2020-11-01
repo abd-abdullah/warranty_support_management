@@ -72,7 +72,6 @@
                                                 type="email"
                                                 class="form-control"
                                                 id="email"
-                                                :readonly="isEdit === true"
                                                 v-model="form.email"
                                             />
                                             <span

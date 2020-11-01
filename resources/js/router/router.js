@@ -20,6 +20,8 @@ import sale from '../components/sales/index';
 import sale_form from '../components/sales/form';
 import customer_service from '../components/customer_services/index';
 import update_profile from '../components/settings/Profile';
+import sms_setting_form from '../components/settings/sms/form';
+import sms_send_form from '../components/settings/sms/SendForm';
 
 const routes = [
     {
@@ -130,6 +132,18 @@ const routes = [
         name: "update_profile",
         component: update_profile,
         meta: { authOnly: true, title: 'Update Profile', props: true }
+    },
+    {
+        path: "/sms-settings/form/:id?",
+        name: "sms_setting_form",
+        component: sms_setting_form,
+        meta: { authOnly: true, title: 'Sms Setting', props: true }
+    },
+    {
+        path: "/send-sms",
+        name: "sms_send_form",
+        component: sms_send_form,
+        meta: { authOnly: true, title: 'Sms Send', props: true }
     },
 ];
 

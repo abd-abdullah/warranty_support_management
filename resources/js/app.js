@@ -45,7 +45,7 @@ Vue.use(Toaster, {timeout: 2000})
 Vue.use(VueProgressBar, VueProgressBaroptions)
 Vue.component('Select2', Select2);
 Vue.use(VCalendar, {
-    timezone : 'asia/dhaka',
+    timezone : 'Asia/Dhaka',
     masks : {input:'DD/MM/YYYY', data: 'YYYY-MM-DD'},
 });
 
