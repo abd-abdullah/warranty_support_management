@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Sale;
+use App\Models\SmsSetting;
 use Carbon\Carbon;
 
 if(!function_exists('look')){
@@ -26,6 +28,26 @@ if(!function_exists('dateFormat')){
         catch(\Exception $e){
             return NULL;
         }
+	}
+}
+
+if(!function_exists('scheduleSMS')){
+	function scheduleSMS(){
+		$sms = new \App\Helpers\SmsAPI;
+		$getMessage = SmsSetting::find(1);
+		$type = ($getMessage->type == 1)?'text':'unicode';
+
+		//getting customers
+		$sales = Sale::query();
+        $sales->join('customers', 'customers.id', '=', 'sales.customer_id');
+        $sales->join('users', 'users.id', '=', 'customers.user_id');
+		$from = Carbon::now()->addDay();
+		$to = $from->copy()->addDays(6);
+		
+        $sales->whereDate('sales.next_service_date', '>=', Carbon::parse($from));
+		$sales->whereDate('sales.next_service_date', '<=', Carbon::parse($to));
+		$phones = $sales->get('phone')->pluck('phone')->toArray();
+		$sms->send($phones, $getMessage->message, $type);
 	}
 }
 

@@ -24,12 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
         $schedule->call(function () {
-            $sms = new \App\Helpers\SmsAPI;
-            $sms->send(['01738868597'], 'Test SMS', 'text');
-        })->everyMinute();
-
+            scheduleSMS();
+        });
     }
 
     /**
