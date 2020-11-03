@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('division_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('upazila_id')->nullable();
+            $table->unsignedBigInteger('zone_id')->nullable();
             $table->text('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -34,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->foreign('division_id')->references('id')->on('divisions');
             $table->foreign('district_id')->references('id')->on('districts');
             $table->foreign('upazila_id')->references('id')->on('upazilas');
+            $table->foreign('zone_id')->references('id')->on('zones');
             $table->foreign('created_by')->references('id')->on('users');
             $table->rememberToken();
             $table->softDeletes();

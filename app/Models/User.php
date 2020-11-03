@@ -30,6 +30,7 @@ class User extends Authenticatable
         'division_id',
         'district_id',
         'upazila_id',
+        'zone_id',
         'address',
         'password',
         'created_by',

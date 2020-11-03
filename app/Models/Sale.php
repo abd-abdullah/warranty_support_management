@@ -24,6 +24,7 @@ class Sale extends Model
         'price',
         'capacity',
         'purchase_from',
+        'date_of_installation',
         'last_date_of_warranty',
         'next_service_date',
         'created_at',

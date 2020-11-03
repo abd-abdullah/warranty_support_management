@@ -53,7 +53,7 @@ Tip 2: you can also add an image using data-image tag
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" data-toggle="collapse" href="#setting">
-                        <i class="material-icons">power_settings_new</i>
+                        <i class="material-icons">settings</i>
                         <p> Settings
                             <b class="caret"></b>
                         </p>
@@ -64,6 +64,12 @@ Tip 2: you can also add an image using data-image tag
                                 <router-link to="/customer-types" class="nav-link"
                                     ><i class="material-icons">CT</i>
                                     <p>Customer Type</p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item ">
+                                <router-link to="/zones" class="nav-link"
+                                    ><i class="material-icons">Z</i>
+                                    <p>Zone</p>
                                 </router-link>
                             </li>
                              <li class="nav-item">
@@ -86,6 +92,18 @@ Tip 2: you can also add an image using data-image tag
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item hideBig">
+                    <router-link to="/update-profile" class="nav-link"
+                        ><i class="material-icons">support_agent</i>
+                        <p>Profile</p></router-link
+                    >
+                </li>
+                <li class="nav-item hideBig">
+                    <a @click.prevent="logout" class="nav-link"
+                        ><i class="material-icons">power_settings_new</i>
+                        <p>Log Out</p>
+                    </a>
                 </li>
             </ul>
         </div>

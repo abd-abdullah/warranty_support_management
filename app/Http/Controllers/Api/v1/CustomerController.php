@@ -8,6 +8,7 @@ use App\Http\Resources\CustomerResource;
 use App\Http\Resources\CustomerViewResource;
 use App\Models\Customer;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -50,6 +51,17 @@ class CustomerController extends Controller
         }
         if($request->input('upazila_id') && $request->input('upazila_id') != "null"){
             $customers->where('users.upazila_id', $request->upazila_id);
+        }
+
+        if($request->input('from_date') && $request->input('to_date') && $request->from_date != 'null' && $request->to_date != 'null'){
+            $customers->join('sales', 'sales.customer_id', '=', 'customers.id');
+        }
+        if($request->input('from_date') && $request->from_date != 'null'){
+            $customers->whereDate('sales.next_service_date', '>=', Carbon::parse($request->from_date));
+        }
+        
+        if($request->input('to_date') && $request->to_date != 'null'){
+            $customers->whereDate('sales.next_service_date', '<=', Carbon::parse($request->to_date));
         }
 
         $customers->with('user');

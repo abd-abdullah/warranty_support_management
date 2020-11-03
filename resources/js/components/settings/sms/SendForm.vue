@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="row m-0 mt-3">
-                            <div class="col-md-3 col-sm-6">
+                            <div class="col-md-2 col-sm-4">
                                 <div class="form-group">
                                     <label
                                         class="select2-form-group"
@@ -31,7 +31,7 @@
                                     />
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-6">
+                            <div class="col-md-2 col-sm-4">
                                 <div class="form-group">
                                     <label
                                         class="select2-form-group"
@@ -47,7 +47,7 @@
                                     />
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-6">
+                            <div class="col-md-2 col-sm-4">
                                 <div class="form-group">
                                     <label
                                         class="select2-form-group"
@@ -62,9 +62,33 @@
                                     />
                                 </div>
                             </div>  
-                            <div class="col-md-3 col-sm-6">
-                                <button @click="getData" class="btn btn-sm btn-primary mt-2">Filter<span class="spinner"></span></button>
-                                <button @click="resetFilter" class="btn btn-sm btn-danger mt-2">Reset<span class="spinner"></span></button>
+                            <div class="col-md-2 col-sm-4 pt-2">
+                                <label class="select2-form-group">From Date</label>
+                                <v-date-picker v-model="filter.from_date" :popover ="{ visibility: 'click'}">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <input
+                                        class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                        :value="inputValue"
+                                        v-on="inputEvents"
+                                        />
+                                    </template>
+                                </v-date-picker>
+                            </div>
+                            <div class="col-md-2 col-sm-4 pt-2">
+                                <label class="select2-form-group">To Date</label>
+                                <v-date-picker v-model="filter.to_date" :popover ="{ visibility: 'click'}">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <input
+                                        class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                        :value="inputValue"
+                                        v-on="inputEvents"
+                                        />
+                                    </template>
+                                </v-date-picker>
+                            </div>
+                            <div class="col-md-2 col-sm-4 pl-0 pr-0">
+                                <button @click="getData" class="btn btn-sm pl-md-2 pl-lg-3 pr-md-2 pr-lg-3 btn-primary mt-2">Filter<span class="spinner"></span></button>
+                                <button @click="resetFilter" class="btn btn-sm pl-md-2 pl-lg-3 pr-md-2 pr-lg-3 btn-danger mt-2">Reset<span class="spinner"></span></button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -198,7 +222,9 @@ export default {
             filter:{
                 division_id:null,
                 district_id:null,
-                upazila_id:null
+                upazila_id:null,
+                from_date: new Date(),
+                to_date: this.toDate()
             },
             param: {
                 query: "",
@@ -226,6 +252,8 @@ export default {
     },
     methods: {
         getData() {
+            let fromDate = (this.filter.from_date != null)? this.filter.from_date.toISOString().split('T')[0]:null;
+            let toDate = (this.filter.to_date != null)? this.filter.to_date.toISOString().split('T')[0]:null;
             this.$Progress.start();
             this.$jsHelper.get(
                     "api/v1/customers?page=" +
@@ -243,7 +271,11 @@ export default {
                         "&district_id=" +
                         this.filter.district_id+
                         "&upazila_id=" +
-                        this.filter.upazila_id
+                        this.filter.upazila_id+
+                        "&from_date=" +
+                        fromDate +
+                        "&to_date=" +
+                        toDate
 
                 )
                 .then(response => {
@@ -260,6 +292,8 @@ export default {
             this.filter.division_id = null;
             this.filter.district_id = null;
             this.filter.upazila_id = null;
+            this.filter.from_date = null;
+            this.filter.to_date = null;
             this.getData();
         },
         sort(event){
@@ -345,7 +379,11 @@ export default {
         },
         countWord(){
             this.wordCount = $("#text").val().length;
-        }
+        },
+        toDate(){
+            let date = new Date();
+            return new Date(date.setDate(date.getDate() + 7));
+        },
     }
 };
 

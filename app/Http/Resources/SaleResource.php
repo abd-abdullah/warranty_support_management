@@ -22,6 +22,7 @@ class SaleResource extends JsonResource
             'date_of_purchase' => Carbon::parse($this->date_of_purchase)->format('Y-m-d'),
             'last_date_of_warranty' => Carbon::parse($this->last_date_of_warranty)->format('Y-m-d'),
             'next_service_date' => Carbon::parse($this->next_service_date)->format('Y-m-d'),
+            'date_of_installation' => Carbon::parse($this->date_of_installation)->format('Y-m-d'),
             'purchase_from' => $this->purchase_from,
             'product_id' => $this->product_id,
             'customer_id' => $this->customer_id,

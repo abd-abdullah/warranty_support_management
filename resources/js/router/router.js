@@ -16,6 +16,8 @@ import customer_form from '../components/customers/form';
 import customer_view from '../components/customers/view';
 import customer_type from '../components/settings/customer_types/index';
 import customer_type_form from '../components/settings/customer_types/form';
+import zone from '../components/settings/zones/index';
+import zone_form from '../components/settings/zones/form';
 import sale from '../components/sales/index';
 import sale_form from '../components/sales/form';
 import customer_service from '../components/customer_services/index';
@@ -89,6 +91,18 @@ const routes = [
         name: "customer_type_form",
         component: customer_type_form,
         meta: { authOnly: true, title: 'Customer Type', props: true }
+    },
+    {
+        path: "/zones",
+        name: "zone",
+        component: zone,
+        meta: { authOnly: true, title: 'Zone' }
+    },
+    {
+        path: "/zones/form/:id?",
+        name: "zone_form",
+        component: zone_form,
+        meta: { authOnly: true, title: 'Zone', props: true }
     },
     {
         path: "/customers",

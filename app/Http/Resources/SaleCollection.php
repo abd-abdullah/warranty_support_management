@@ -34,6 +34,7 @@ class SaleCollection extends ResourceCollection
                     'product_code' => $sale->product_code,
                     'price' => $sale->price,
                     'date_of_purchase' => Carbon::parse($sale->date_of_purchase)->format('Y-m-d'),
+                    'date_of_installation' => Carbon::parse($sale->date_of_installation)->format('Y-m-d'),
                     'last_date_of_warranty' => Carbon::parse($sale->last_date_of_warranty)->format('Y-m-d'),
                     'purchase_from' => $sale->purchase_from,
                     'next_service_time' => Carbon::parse($sale->next_service_date)->format('Y-m-d'),

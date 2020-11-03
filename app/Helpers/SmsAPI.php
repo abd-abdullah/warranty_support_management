@@ -44,6 +44,7 @@ class SmsAPI
 	}
 
 	public function send($to, $message, $type = 'flash', $scheduledDateTime = NULL){
+		dd($message);
 		if(env("SEND_SMS",false)){
 			return $this->sendSMSFlash(implode('+', $to), $message, $type, $scheduledDateTime);
 		}
