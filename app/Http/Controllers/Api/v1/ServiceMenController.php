@@ -58,6 +58,7 @@ class ServiceMenController extends Controller
             'country_id' => 'required',
             'division_id' => 'required',
             'district_id' => 'required',
+            'zone_id' => 'required',
             'address' => 'required|string|min:4',
         ]);
 
@@ -118,6 +119,7 @@ class ServiceMenController extends Controller
             'country_id' => 'required',
             'division_id' => 'required',
             'district_id' => 'required',
+            'zone_id' => 'required',
             'address' => 'required|string|min:4',
         ]);
    

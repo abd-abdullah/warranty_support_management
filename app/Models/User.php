@@ -78,6 +78,10 @@ class User extends Authenticatable
     public function upazila(){
     	return $this->belongsTo(Upazila::class);
     }
+   
+    public function zone(){
+    	return $this->belongsTo(Zone::class);
+    }
     
     public function createdBy(){
     	return $this->belongsTo(User::class, 'created_by');

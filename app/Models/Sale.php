@@ -21,6 +21,7 @@ class Sale extends Model
         'product_id',
         'product_capacity',
         'date_of_purchase',
+        'date_of_installation',
         'price',
         'capacity',
         'purchase_from',

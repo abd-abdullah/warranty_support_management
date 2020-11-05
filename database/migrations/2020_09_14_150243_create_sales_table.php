@@ -19,6 +19,7 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->string('capacity');
             $table->dateTime('date_of_purchase');
+            $table->dateTime('date_of_installation');
             $table->decimal('price',8,2)->nullable();
             $table->string('purchase_from');
             $table->dateTime('last_date_of_warranty')->nullable();

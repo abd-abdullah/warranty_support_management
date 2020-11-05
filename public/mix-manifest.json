@@ -1,4 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/vuejs_code_split//js/app.js": "/js/vuejs_code_split//js/app.js?id=b98bc4ff7714a8a0c78b",
+    "/css/app.css": "/css/app.css?id=20350b6546fcb69ed910",
+    "/js/manifest.js": "/js/manifest.js?id=bccd1ce35920d7ab99ef",
+    "/js/vuejs_code_split//js/vendor.js": "/js/vuejs_code_split//js/vendor.js?id=901b0efed001c9d447a5"
 }

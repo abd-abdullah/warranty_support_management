@@ -43,6 +43,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::get('divisions/{country_id}', 'AddressController@getDivision')->name('divisions.index');
     Route::get('districts/{division_id}', 'AddressController@getDistrict')->name('districts.index');
     Route::get('upazilas/{district_id}', 'AddressController@getUpazila')->name('upazilas.index');
+    Route::get('zones-all', 'ZoneController@getZone')->name('zones-all.getAll');
     Route::get('post-offices/{upazila_id}', 'AddressController@getPostOffice')->name('post-offices.index');
     Route::put('update-profile', 'AdminUserController@updateProfile')->name('updateProfile');
 });

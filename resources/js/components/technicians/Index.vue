@@ -35,6 +35,7 @@
                                             <th v-on:click = "sort($event)" data-column="users.email" class="sorting mw-80">Email</th>
                                             <th v-on:click = "sort($event)" data-column="users.phone" class="sorting mw-80">Mobile</th>
                                             <th>Address</th>
+                                            <th>Zone</th>
                                             <th v-on:click = "sort($event)" data-column="joining_date" class="sorting mw-120">Date of Join</th>
                                             <th class="text-right mw-80">
                                                 Actions
@@ -57,6 +58,7 @@
                                                     ((technician.division != '')?technician.division+', ':'')+
                                                     ((technician.country != '')?technician.country:'')
                                                 }}</td>
+                                            <td>{{technician.zone}}</td>
                                             <td>{{ technician.date_of_join }}</td>
                                             <td class="td-actions w76 text-right">
                                                 <router-link

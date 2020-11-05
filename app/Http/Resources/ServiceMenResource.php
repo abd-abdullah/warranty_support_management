@@ -27,6 +27,7 @@ class ServiceMenResource extends JsonResource
             'division_id' => $this->division_id,
             'district_id' => $this->district_id,
             'upazila_id' => $this->upazila_id,
+            'zone_id' => $this->zone_id,
             'address' => $this->address,
             'photo' => $this->photo,
             'photo_path' => url('/'.$this->photo),

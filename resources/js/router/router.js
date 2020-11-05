@@ -3,27 +3,27 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter)
 
-import dashboard from '../components/Dashboard';
-import login from '../components/layouts/auth/login';
-import product from '../components/settings/products/index';
-import product_form from '../components/settings/products/form';
-import admin_user from '../components/settings/admin_users/index';
-import admin_user_form from '../components/settings/admin_users/form';
-import technician from '../components/technicians/index';
-import technician_form from '../components/technicians/form';
-import customer from '../components/customers/index';
-import customer_form from '../components/customers/form';
-import customer_view from '../components/customers/view';
-import customer_type from '../components/settings/customer_types/index';
-import customer_type_form from '../components/settings/customer_types/form';
-import zone from '../components/settings/zones/index';
-import zone_form from '../components/settings/zones/form';
-import sale from '../components/sales/index';
-import sale_form from '../components/sales/form';
-import customer_service from '../components/customer_services/index';
-import update_profile from '../components/settings/Profile';
-import sms_setting_form from '../components/settings/sms/form';
-import sms_send_form from '../components/settings/sms/SendForm';
+const dashboard = () => import('../components/Dashboard');
+const login = () => import('../components/layouts/auth/login');
+const product = () => import('../components/settings/products/index');
+const product_form = () => import('../components/settings/products/form');
+const admin_user = () => import('../components/settings/admin_users/index');
+const admin_user_form = () => import('../components/settings/admin_users/form');
+const technician = () => import('../components/technicians/index');
+const technician_form = () => import('../components/technicians/form');
+const customer = () => import('../components/customers/index');
+const customer_form = () => import('../components/customers/form');
+const customer_view = () => import('../components/customers/view');
+const customer_type = () => import('../components/settings/customer_types/index');
+const customer_type_form = () => import('../components/settings/customer_types/form');
+const zone = () => import('../components/settings/zones/index');
+const zone_form = () => import('../components/settings/zones/form');
+const sale = () => import('../components/sales/index');
+const sale_form = () => import('../components/sales/form');
+const customer_service = () => import('../components/customer_services/index');
+const update_profile = () => import('../components/settings/Profile');
+const sms_setting_form = () => import('../components/settings/sms/form');
+const sms_send_form = () => import('../components/settings/sms/SendForm');
 
 const routes = [
     {

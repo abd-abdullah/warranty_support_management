@@ -29,6 +29,7 @@ class ServiceMenCollection extends ResourceCollection
                     'division' => ($technician->user->division != NULL)?$technician->user->division->name:'',
                     'district' => ($technician->user->district != NULL)?$technician->user->district->name:'',
                     'upazila' => ($technician->user->upazila != NULL)?$technician->user->upazila->name:'',
+                    'zone' => ($technician->user->zone != NULL)?$technician->user->zone->name:'',
                     'status' => $technician->status,
                 ];
             }),
