@@ -52,13 +52,13 @@ Tip 2: you can also add an image using data-image tag
                     >
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" data-toggle="collapse" href="#setting">
+                    <a class="nav-link" data-toggle="collapse" href="#reports">
                         <i class="material-icons">reports</i>
                         <p> Reports
                             <b class="caret"></b>
                         </p>
                     </a>
-                    <div class="collapse" id="setting">
+                    <div class="collapse" id="reports">
                         <ul class="nav">
                             <li class="nav-item ">
                                 <router-link to="/advanced-search" class="nav-link"
