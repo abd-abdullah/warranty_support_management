@@ -381,6 +381,28 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="select2-form-group"
+                                                        >Zone<strong class="text-danger"> *</strong></label
+                                                    >
+                                                    <Select2
+                                                        :options="optionsZone"
+                                                        v-model="form.zone_id"
+                                                        name="zone_id"
+                                                        placeholder="Select Zone"
+                                                        :disabled="form.old_customer_id != null"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.zone_id"
+                                                        >{{
+                                                            errors.zone_id[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
                                                 <div
                                                     class="form-group bmd-form-group "
                                                     v-bind:class="{
@@ -624,7 +646,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div
-                                                    class="form-group mt-0 pb-0"
+                                                    class="form-group mt-3 pb-0"
                                                 >
                                                     <label
                                                         for="date_of_purchase"
@@ -652,9 +674,38 @@
                                                     >
                                                 </div>
                                             </div>
+                                            <div class="col-12">
+                                                <div
+                                                    class="form-group mt-3 pb-0"
+                                                >
+                                                    <label
+                                                        class="mb-0 fs11"
+                                                        >Installation Date<strong class="text-danger"> *</strong></label
+                                                    >
+                                                    <v-date-picker v-model="form.date_of_installation" :popover ="{ visibility: 'click'}">
+                                                        <template v-slot="{ inputValue, inputEvents }">
+                                                            <input
+                                                            class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
+                                                            :value="inputValue"
+                                                            v-on="inputEvents"
+                                                            />
+                                                        </template>
+                                                    </v-date-picker>
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="
+                                                            errors.date_of_installation
+                                                        "
+                                                        >{{
+                                                            errors
+                                                                .date_of_installation[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
                                              <div class="col-12">
                                                 <div
-                                                    class="form-group mt-0 pb-0"
+                                                    class="form-group mt-3 pb-0"
                                                 >
                                                     <label
                                                         for="last_date_of_warranty"
@@ -685,7 +736,7 @@
                                             </div>
                                              <div class="col-12">
                                                 <div v-bind:class={disabled:isEdit}
-                                                    class="form-group mt-0 pb-0"
+                                                    class="form-group mt-3 pb-0"
                                                 >
                                                     <label
                                                         for="next_service_date"
@@ -764,6 +815,7 @@ export default {
                 division_id: null,
                 district_id: null,
                 upazila_id: null,
+                zone_id: null,
                 address: null,
                 product_name:null,
                 product_code:null,
@@ -771,6 +823,7 @@ export default {
                 purchase_price:null,
                 purchase_from:'evaly',
                 date_of_purchase: null,
+                date_of_installation: null,
                 last_date_of_warranty: null, 
                 next_service_date: null, 
                 old_customer_id: null,
@@ -784,7 +837,8 @@ export default {
             optionsDivision: [],
             optionsDistrict: [],
             optionsUpazila: [],
-            optionsCustomerType: []
+            optionsCustomerType: [],
+            optionsZone: []
         };
     },
 
@@ -800,8 +854,10 @@ export default {
                     this.form.purchase_price = response.data.data.purchase_price;
                     this.form.purchase_from = response.data.data.purchase_from;
                     this.form.date_of_purchase = new Date(response.data.data.date_of_purchase);
+                    this.form.date_of_installation = new Date(response.data.data.date_of_installation);
                     this.form.last_date_of_warranty = new Date(response.data.data.last_date_of_warranty);
                     this.form.next_service_date = new Date(response.data.data.next_service_date);
+                    this.getDropdownCustomer('api/v1/zones-all', 'optionsZone');
                     this.getDropdownCustomer('api/v1/customer-types-all', 'optionsCustomerType');
                     this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
                     this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
@@ -815,6 +871,7 @@ export default {
                 });
         }
         else{
+            this.getDropdown('api/v1/zones-all', 'optionsZone');
             this.getDropdown('api/v1/customer-types-all', 'optionsCustomerType');
             this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
             this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
@@ -907,6 +964,7 @@ export default {
             });
         },
         selectOption(){
+            this.getDropdown('api/v1/zones-all', 'optionsZone');
             this.getDropdown('api/v1/countries', 'optionsCountry');
             this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
             this.getDropdown('api/v1/districts/'+this.form.division_id, 'optionsDistrict');
@@ -927,6 +985,7 @@ export default {
                 this.form.division_id = response.data.data.division_id;
                 this.form.district_id = response.data.data.district_id;
                 this.form.upazila_id = response.data.data.upazila_id;
+                this.form.zone_id = response.data.data.zone_id;
                 this.form.address = response.data.data.address;
                 this.selectOption();
                 this.$Progress.finish();
@@ -959,6 +1018,7 @@ export default {
             this.form.division_id = null;
             this.form.district_id = null;
             this.form.upazila_id = null;
+            this.form.zone_id = null;
             this.form.address = null;
             this.selectOption(); 
         },

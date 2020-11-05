@@ -22,7 +22,7 @@ class CustomerCollection extends ResourceCollection
                     'customer_type' => $customer->customer_type->name,
                     'customerId' => $customer->customerId,
                     'name' => $customer->user->name,
-                    'email' => $customer->user->email,
+                    'email' => ($customer->user->email != NULL)?$customer->user->email:'',
                     'phone' => $customer->user->phone,
                     'other_contact_numbers' => $customer->user->other_contact_numbers,
                     'address' => $customer->user->address,
@@ -30,6 +30,7 @@ class CustomerCollection extends ResourceCollection
                     'division' => ($customer->user->division != NULL)?$customer->user->division->name:'',
                     'district' => ($customer->user->district != NULL)?$customer->user->district->name:'',
                     'upazila' => ($customer->user->upazila != NULL)?$customer->user->upazila->name:'',
+                    'zone' => ($customer->user->zone != NULL)?$customer->user->zone->name:'',
                     'status' => $customer->status,
                 ];
             }),

@@ -24,6 +24,8 @@ import customer_service from '../components/customer_services/index';
 import update_profile from '../components/settings/Profile';
 import sms_setting_form from '../components/settings/sms/form';
 import sms_send_form from '../components/settings/sms/SendForm';
+import advanced_search from '../components/reports/advancedSearch';
+import technician_report from '../components/reports/TechnicianReport';
 
 const routes = [
     {
@@ -158,6 +160,24 @@ const routes = [
         name: "sms_send_form",
         component: sms_send_form,
         meta: { authOnly: true, title: 'Sms Send', props: true }
+    },
+    {
+        path: "/advanced-search",
+        name: "advanced_search",
+        component: advanced_search,
+        meta: { authOnly: true, title: 'Advanced Search', props: true }
+    },
+    {
+        path: "/technician-report",
+        name: "technician_report",
+        component: technician_report,
+        meta: { authOnly: true, title: 'Technician Reports', props: true }
+    },
+    {
+        path: "/advanced-search",
+        name: "advanced_search",
+        component: advanced_search,
+        meta: { authOnly: true, title: 'Advanced Search', props: true }
     },
 ];
 

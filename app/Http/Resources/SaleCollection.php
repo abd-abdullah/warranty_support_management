@@ -28,6 +28,7 @@ class SaleCollection extends ResourceCollection
                     'division' => ($sale->customer->user->division != NULL)?$sale->customer->user->division->name:'',
                     'district' => ($sale->customer->user->district != NULL)?$sale->customer->user->district->name:'',
                     'upazila' => ($sale->customer->user->upazila != NULL)?$sale->customer->user->upazila->name:'',
+                    'zone' => ($sale->customer->user->zone != NULL)?$sale->customer->user->zone->name:'',
 
                     'customerId' => $sale->customer->customerId,
                     'product_name' => $sale->product_name,

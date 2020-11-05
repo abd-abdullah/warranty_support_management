@@ -36,6 +36,9 @@
                                                         (customer.country != ""
                                                             ? customer.country
                                                             : "")}}</td></tr>
+                                                <tr>
+                                                    <td>Zone :</td><td>{{customer.zone}}</td>
+                                                </tr>
                                     </table>
                                 </div>
                             </div>

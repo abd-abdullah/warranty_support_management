@@ -6,11 +6,11 @@
                     <div class="card">
                         <div class="card-header card-header-rose card-header-icon">
                             <div class="card-icon d-md-block d-none">
-                                <i class="material-icons">youtube_searched_for</i>
+                                <i class="material-icons">find_replace</i>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <h4 class="card-title">Search Customer</h4>
+                                    <h4 class="card-title">Advanced Customer Purchase Search</h4>
                                 </div>
                             </div>
                         </div>
@@ -117,46 +117,86 @@
                                     <thead>
                                         <tr>
                                             <th>SL#</th>
-                                            <th v-on:click = "sort($event)" data-column="users.name" class="sorting mw-80">Name</th>
-                                            <th v-on:click = "sort($event)" data-column="users.phone" class="sorting mw-80">Mobile</th>
-                                            <th v-on:click = "sort($event)" data-column="customerId" class="sorting mw-120">Customer ID</th>
-                                            <th v-on:click = "sort($event)" data-column="customer_types.name" class="sorting mw-80">Type</th>
-                                            <th class="mw-100">Address</th>
-                                            <th>
-                                                <div class="togglebutton">
-                                                    <label>
-                                                        <input @change="checkAll" v-model="check_all" id="checkAll" type="checkbox">
-                                                        <span class="toggle"></span>
-                                                        Select All
-                                                    </label>
-                                                </div>
+                                            <th
+                                                v-on:click="sort($event)"
+                                                data-column="users.name"
+                                                class="sorting mw-120"
+                                            >
+                                                Customer
+                                            </th>
+                                            
+                                            <th
+                                                v-on:click="sort($event)"
+                                                data-column="users.phone"
+                                                class="sorting"
+                                            >
+                                                Phone
+                                            </th>
+                                            
+                                            <th class="mw-180">Address</th>
+                                            <th 
+                                                v-on:click="sort($event)"
+                                                data-column="users.zone_id"
+                                                class="sorting mw-80"
+                                                >Zone</th>
+                                            <th
+                                                v-on:click="sort($event)"
+                                                data-column="products.name"
+                                                class="sorting mw-180"
+                                            >
+                                                Product Name
+                                            </th>
+                                            <th class="mw-155">
+                                                Next Service Date
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr
-                                            v-for="(customer, index) in customers"
-                                            :key="customer.id"
+                                            v-for="(sale, index) in sales"
+                                            :key="sale.id"
                                         >
-                                            <td>{{ pagination.from + index }}</td>
-                                            <td><router-link :to="{ name: 'customer_view', params:{'id':customer.id}}" target="_blank">{{ customer.name }}</router-link></td>
-                                            <td>{{ customer.phone }}</td>
-                                            <td>{{ customer.customerId }}</td>
-                                            <td>{{ customer.customer_type }}</td>
-                                            <td>{{ 
-                                                    ((customer.address != '' && customer.address != null)?customer.address+', ':'')+
-                                                    ((customer.upazila != '')?customer.upazila+', ':'')+
-                                                    ((customer.district != '')?customer.district+', ':'')+
-                                                    ((customer.division != '')?customer.division+', ':'')+
-                                                    ((customer.country != '')?customer.country:'')
-                                                }}</td>
                                             <td>
-                                                <div class="togglebutton">
-                                                    <label>
-                                                        <input class="sms_send" :value="customer.phone" type="checkbox">
-                                                        <span class="toggle"></span>
-                                                    </label>
-                                                </div>
+                                                {{ pagination.from + index }}
+                                            </td>
+                                            <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.customer_id}}" target="_blank">{{
+                                                sale.name+'\n'+
+                                                sale.customerId+'\n'+
+                                                sale.phone
+                                            }}</router-link></td>
+                                            <td>{{sale.phone}}</td>
+                                            <td>
+                                                {{
+                                                    (sale.address != "" &&
+                                                    sale.address != null
+                                                        ? sale.address + ", "
+                                                        : "") +
+                                                        (sale.upazila != ""
+                                                            ? sale.upazila +
+                                                                ", "
+                                                            : "") +
+                                                        (sale.district != ""
+                                                            ? sale.district +
+                                                                ", "
+                                                            : "") +
+                                                        (sale.division != ""
+                                                            ? sale.division +
+                                                                ", "
+                                                            : "") +
+                                                        (sale.country != ""
+                                                            ? sale.country
+                                                            : "")
+                                                }}
+                                            </td>
+                                            <td>{{sale.zone}}</td>
+                                            <td>
+                                                {{ 
+                                                    sale.product_name+' >> '+
+                                                    sale.product_code
+                                                    }}
+                                            </td>
+                                            <td>
+                                                {{ sale.next_service_time }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -167,56 +207,6 @@
                                 :offset="5"
                                 @paginate="getData()"
                             ></pagination>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="row m-0 mt-3">
-                            <div class="col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label
-                                        class="select2-form-group"
-                                        >Message Language Type<strong class="text-danger"> *</strong></label
-                                    >
-                                    <Select2
-                                        :options="optionsMessageType"
-                                        v-model="form.type"
-                                        placeholder="Select Message Language"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div
-                                    class="form-group bmd-form-group "
-                                    v-bind:class="{
-                                        'is-filled':
-                                            form.text !== null
-                                    }"
-                                >
-                                    <label
-                                        for="text"
-                                        class="bmd-label-floating"
-                                        >Message<strong class="text-danger"> *</strong> <span class="font-weight-bolder text-info">Characters:(<span>{{wordCount}}</span>)</span></label
-                                    >
-                                    <textarea
-                                        type="text"
-                                        class="form-control"
-                                        id="text"
-                                        rows="5"
-                                        @keyup="countWord"
-                                        v-model="form.text"
-                                    />
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer ml-auto">
-                            <button
-                                type="submit"
-                                @click.prevent="sendMessage"
-                                class="btn btn-primary"
-                            >
-                                Send<span class="spinner"></span>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -248,7 +238,7 @@ export default {
                     sort_order:""
                 }
             },
-            customers: [],
+            sales: [],
             pagination: {
                 current_page: 1,
                 per_page: 10
@@ -272,34 +262,26 @@ export default {
             let fromDate = (this.filter.from_date != null)? this.filter.from_date.toISOString().split('T')[0]:null;
             let toDate = (this.filter.to_date != null)? this.filter.to_date.toISOString().split('T')[0]:null;
             this.$Progress.start();
-            this.$jsHelper.get(
-                    "api/v1/customers?page=" +
+            this.$jsHelper
+                .get(
+                    "api/v1/sales-dashboard?page=" +
                         this.pagination.current_page +
                         "&per_page=" +
                         this.pagination.per_page +
                         "&query=" +
-                        this.param.query+
+                        this.param.query +
                         "&sort_by=" +
-                        this.param.sort.column+
+                        this.param.sort.column +
                         "&sort_order=" +
-                        this.param.sort.sort_order+
-                        "&division_id=" +
-                        this.filter.division_id+
-                        "&district_id=" +
-                        this.filter.district_id+
-                        "&upazila_id=" +
-                        this.filter.upazila_id+
-                        "&zone_id=" +
-                        this.filter.zone_id+
+                        this.param.sort.sort_order +
                         "&from_date=" +
                         fromDate +
                         "&to_date=" +
                         toDate
-
                 )
                 .then(response => {
                     this.$Progress.finish();
-                    this.customers = response.data.data;
+                    this.sales = response.data.data;
                     this.pagination = response.data.meta;
                 })
                 .catch(e => {
@@ -312,6 +294,7 @@ export default {
             this.filter.district_id = null;
             this.filter.upazila_id = null;
             this.filter.from_date = null;
+            this.filter.zone_id = null;
             this.filter.to_date = null;
             this.getData();
         },

@@ -83,6 +83,11 @@
                                 </th>
                                 
                                 <th class="mw-180">Address</th>
+                                <th 
+                                    v-on:click="sort($event)"
+                                    data-column="users.zone_id"
+                                    class="sorting mw-80"
+                                    >Zone</th>
                                 <th
                                     v-on:click="sort($event)"
                                     data-column="products.name"
@@ -135,6 +140,7 @@
                                                 : "")
                                     }}
                                 </td>
+                                <td>{{sale.zone}}</td>
                                 <td>
                                     {{ 
                                         sale.product_name+' >> '+

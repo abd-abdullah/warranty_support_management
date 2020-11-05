@@ -138,7 +138,7 @@
                                                 >Mobile<strong class="text-danger"> *</strong></label
                                             >
                                             <input
-                                                type="number"
+                                                type="text"
                                                 class="form-control"
                                                 id="phone"
                                                 v-model="form.phone"
@@ -272,7 +272,28 @@
                                                 }}</span
                                             >
                                         </div>
-                                    </div>                                 
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label
+                                                class="select2-form-group"
+                                                >Zone<strong class="text-danger"> *</strong></label
+                                            >
+                                            <Select2
+                                                :options="optionsZone"
+                                                v-model="form.zone_id"
+                                                name="zone_id"
+                                                placeholder="Select Zone"
+                                            />
+                                            <span
+                                                class="text-danger"
+                                                v-if="errors.zone_id"
+                                                >{{
+                                                    errors.zone_id[0]
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>                                   
                                     <div class="col-12">
                                         <div
                                             class="form-group bmd-form-group "
@@ -349,6 +370,7 @@ export default {
                 division_id: null,
                 district_id: null,
                 upazila_id: null,
+                zone_id: null,
                 address: null
             },
             errors: [],
@@ -356,7 +378,8 @@ export default {
             optionsDivision: [],
             optionsDistrict: [],
             optionsUpazila: [],
-            optionsCustomerType: []
+            optionsCustomerType: [],
+            optionsZone: []
         };
     },
 
@@ -377,6 +400,7 @@ export default {
                     this.form.division_id = response.data.data.division_id;
                     this.form.district_id = response.data.data.district_id;
                     this.form.upazila_id = response.data.data.upazila_id;
+                    this.form.zone_id = response.data.data.zone_id;
                     this.form.address = response.data.data.address;
                     this.selectOption();
                 })
@@ -386,6 +410,7 @@ export default {
                 });
         }
         else{
+            this.getDropdown('api/v1/zones-all', 'optionsZone');
             this.getDropdown('api/v1/customer-types-all', 'optionsCustomerType');
             this.getDropdown('api/v1/countries', 'optionsCountry');
             this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
@@ -454,6 +479,7 @@ export default {
             });
         },
         selectOption(){
+            this.getDropdown('api/v1/zones-all', 'optionsZone');
             this.getDropdown('api/v1/customer-types-all', 'optionsCustomerType');
             this.getDropdown('api/v1/countries', 'optionsCountry');
             this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');

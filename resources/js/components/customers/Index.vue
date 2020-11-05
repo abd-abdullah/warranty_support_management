@@ -32,11 +32,11 @@
                                         <tr>
                                             <th>SL#</th>
                                             <th v-on:click = "sort($event)" data-column="users.name" class="sorting mw-80">Name</th>
-                                            <th v-on:click = "sort($event)" data-column="users.email" class="sorting mw-80">Email</th>
-                                            <th v-on:click = "sort($event)" data-column="users.phone" class="sorting mw-80">Mobile</th>
+                                            <th v-on:click = "sort($event)" data-column="users.email" class="sorting mw-80">Contact</th>
                                             <th v-on:click = "sort($event)" data-column="customerId" class="sorting mw-120">Customer ID</th>
                                             <th v-on:click = "sort($event)" data-column="customer_types.name" class="sorting mw-80">Type</th>
                                             <th class="mw-100">Address</th>
+                                            <th class="mw-80">Zone</th>
                                             <th class="text-right mw-80">
                                                 Actions
                                             </th>
@@ -49,8 +49,7 @@
                                         >
                                             <td>{{ pagination.from + index }}</td>
                                             <td><router-link :to="{ name: 'customer_view', params:{'id':customer.id}}" target="_blank">{{ customer.name }}</router-link></td>
-                                            <td>{{ customer.email }}</td>
-                                            <td>{{ customer.phone }}</td>
+                                            <td class="ws-pre">{{ customer.phone+'\n'+customer.email }}</td>
                                             <td>{{ customer.customerId }}</td>
                                             <td>{{ customer.customer_type }}</td>
                                             <td>{{ 
@@ -60,6 +59,7 @@
                                                     ((customer.division != '')?customer.division+', ':'')+
                                                     ((customer.country != '')?customer.country:'')
                                                 }}</td>
+                                            <td>{{customer.zone}}</td>
                                             <td class="td-actions w76 text-right">
                                                 <router-link
                                                     :to="{ name: 'customer_form', params:{'id':customer.id}}"

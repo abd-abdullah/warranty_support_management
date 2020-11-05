@@ -73,7 +73,7 @@ class SaleController extends Controller
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $sales->orderBy('next_service_date', 'ASC');
+            $sales->orderBy('sales.next_service_date', 'ASC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
@@ -86,14 +86,28 @@ class SaleController extends Controller
             $sales->orWhere('purchase_from', 'like', "%{$request->input('query')}%");
         }
         
-        if($request->from_date != null){
+        if($request->input('division_id') && $request->input('division_id') != "null"){
+            $sales->where('users.division_id', $request->division_id);
+        }
+        if($request->input('district_id') && $request->input('district_id') != "null"){
+            $sales->where('users.district_id', $request->district_id);
+        }
+        
+        if($request->input('upazila_id') && $request->input('upazila_id') != "null"){
+            $sales->where('users.upazila_id', $request->upazila_id);
+        }
+       
+        if($request->input('zone_id') && $request->input('zone_id') != "null"){
+            $sales->where('users.zone_id', $request->zone_id);
+        }
+
+        if($request->input('from_date') && $request->from_date != 'null'){
             $sales->whereDate('sales.next_service_date', '>=', Carbon::parse($request->from_date));
         }
         
-        if($request->to_date != null){
+        if($request->input('to_date') && $request->to_date != 'null'){
             $sales->whereDate('sales.next_service_date', '<=', Carbon::parse($request->to_date));
         }
-
 
         $sales->with('customer');
         $select = [
@@ -119,7 +133,7 @@ class SaleController extends Controller
         try{
             \DB::beginTransaction();
             if($customer_id == NULL || $customer_id == ''){
-                $userData = $request->only( 'name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id','address');
+                $userData = $request->only( 'name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id', 'zone_id','address');
                 $userData['user_type'] = 'customer';
                 $userData['created_by'] = auth()->id();
                 $userData['status'] = 0;
@@ -146,6 +160,7 @@ class SaleController extends Controller
                 'price' => $request->purchase_price,
                 'purchase_from' => $request->purchase_from,
                 'date_of_purchase' => dateFormat($request->date_of_purchase),
+                'date_of_installation' => dateFormat($request->date_of_installation),
                 'last_date_of_warranty' => dateFormat($request->last_date_of_warranty),
                 'next_service_date' => ($request->next_service_date != NULL)?(dateFormat($request->next_service_date)):(Carbon::parse($request->date_of_purchase)->addMonth(3))
             ];
@@ -187,7 +202,7 @@ class SaleController extends Controller
         try{
             \DB::beginTransaction();
             if($customer_id == NULL || $customer_id == ''){
-                $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id','address');
+                $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id', 'zone_id','address');
                 $userData['user_type'] = 'customer';
                 $userData['created_by'] = auth()->id();
                 $userData['email_verified_at'] = now();
@@ -212,7 +227,8 @@ class SaleController extends Controller
                 'capacity' => $request->purchase_capacity,
                 'price' => $request->purchase_price,
                 'purchase_from' => $request->purchase_from,
-                'date_of_purchase' => Carbon::parse($request->date_of_purchase)->format('Y-m-d'),
+                'date_of_purchase' => dateFormat($request->date_of_purchase),
+                'date_of_installation' => dateFormat($request->date_of_installation),
                 'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d'),
                 'next_service_date' => ($request->next_service_date != NULL)?(Carbon::parse($request->next_service_date)->format('Y-m-d')):(Carbon::parse($request->date_of_purchase)->addMonth(3))
             ];

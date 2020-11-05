@@ -28,6 +28,7 @@ class CustomerServiceCollection extends ResourceCollection
                     'division' => ($customerService->customer->user->division != NULL)?$customerService->customer->user->division->name:'',
                     'district' => ($customerService->customer->user->district != NULL)?$customerService->customer->user->district->name:'',
                     'upazila' => ($customerService->customer->user->upazila != NULL)?$customerService->customer->user->upazila->name:'',
+                    'zone' => ($customerService->customer->user->zone != NULL)?$customerService->customer->user->zone->name:'',
 
                     'customerId' => $customerService->customer->customerId,
                     'product_name' => $customerService->product_name,

@@ -49,8 +49,13 @@ class CustomerController extends Controller
         if($request->input('district_id') && $request->input('district_id') != "null"){
             $customers->where('users.district_id', $request->district_id);
         }
+        
         if($request->input('upazila_id') && $request->input('upazila_id') != "null"){
             $customers->where('users.upazila_id', $request->upazila_id);
+        }
+       
+        if($request->input('zone_id') && $request->input('zone_id') != "null"){
+            $customers->where('users.zone_id', $request->zone_id);
         }
 
         if($request->input('from_date') && $request->input('to_date') && $request->from_date != 'null' && $request->to_date != 'null'){
@@ -86,6 +91,7 @@ class CustomerController extends Controller
             'country_id' => 'required',
             'division_id' => 'required',
             'district_id' => 'required',
+            'zone_id' => 'required',
             'password' => 'nullable|string|min:8',
             'address' => 'required|string|min:4',
         ]);
@@ -141,6 +147,7 @@ class CustomerController extends Controller
             'country_id' => 'required',
             'division_id' => 'required',
             'district_id' => 'required',
+            'zone_id' => 'required',
             'password' => 'nullable|string|min:8',
             'address' => 'required|string|min:4',
         ]);
