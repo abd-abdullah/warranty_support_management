@@ -1,6 +1,6 @@
 
 try {
-    require('../assets/scss/material-dashboard.scss');
+    require('../assets/css/material-dashboard.min.css');
     require('../assets/css/custom.css');
 
     window.$ = window.jQuery = require('jquery');
