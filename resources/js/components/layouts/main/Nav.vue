@@ -81,7 +81,7 @@
                             class="dropdown-menu dropdown-menu-right"
                             aria-labelledby="navbarDropdownProfile"
                         >
-                            <router-link to="/update-profile" class="dropdown-item">Profile</router-link>
+                            <router-link to="/update-profile" class="dropdown-item">{{userName}}</router-link>
                             <div class="dropdown-divider"></div>
                             <a
                                 class="dropdown-item"
@@ -98,6 +98,11 @@
 </template>
 <script>
 export default {
+    data() {
+        return {
+            userName:localStorage.getItem('name')
+        }
+    },
     methods: {
         logout() {
             this.$user
@@ -105,6 +110,10 @@ export default {
                 .then(() => {
                     this.$root.$emit("login", false);
                     localStorage.removeItem("auth");
+                    localStorage.removeItem("id");
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("email");
+                    localStorage.removeItem("user_type");
                     this.$router.push({ name: "login" });
                 })
                 .catch(error => {

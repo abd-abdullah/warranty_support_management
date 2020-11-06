@@ -36,6 +36,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
 
     Route::get('dashboard', 'DashboardController')->name('dashboard');
     Route::get('technicians-all', 'ServiceMenController@getTechnician')->name('technicians.technicians-all');
+    Route::get('technician/service-reports', 'ServiceMenController@serviceListReport')->name('tecnicians.service-reports');
     Route::get('products-all', 'ProductController@getProduct')->name('products.products-all');
     Route::get('customer-types-all', 'CustomerTypeController@getCustomerType')->name('customer-types.customer-type-all');
     Route::get('customers-all', 'CustomerController@getCustomer')->name('customer.customer-all');

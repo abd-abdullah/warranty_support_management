@@ -9,6 +9,7 @@ use App\Models\ServiceMan;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ServiceMenController extends Controller
@@ -23,7 +24,7 @@ class ServiceMenController extends Controller
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
         $technicians = ServiceMan::query();
-        $technicians->join('users', 'users.id', '=', 'service_men.id');
+        $technicians->join('users', 'users.id', '=', 'service_men.user_id');
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $technicians->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
@@ -39,6 +40,33 @@ class ServiceMenController extends Controller
         $technicians->with('user');
         $technicians->select('service_men.*');
         return new ServiceMenCollection($technicians->paginate($limit));
+    }
+    
+    /**
+     * Display a listing of filter resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function serviceListReport(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+        ]);
+
+        $technicians = ServiceMan::query();
+        $technicians->join('users', 'users.id', '=', 'service_men.user_id')->select('users.*');
+
+        if($request->input('from_date') && $request->from_date != 'null'){
+            $technicians->withCount(['customer_services' => function($q) use ($request){
+                $q->whereDate('service_time', '>=', Carbon::parse($request->from_date));
+                if($request->input('to_date') && $request->to_date != 'null'){
+                    $q->whereDate('service_time', '<=', Carbon::parse($request->to_date));
+                }
+            }]);
+        }
+        
+        $technicians = $technicians->get();
+        return $technicians;
     }
 
     /**

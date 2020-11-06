@@ -58,6 +58,7 @@
                                             <th class="border-top-0">Price</th>
                                             <th class="border-top-0">Purchase from</th>
                                             <th class="border-top-0">Purchase Date</th>
+                                            <th class="border-top-0">Installation Date</th>
                                             <th class="border-top-0">Last Date of Warranty</th>
                                         </tr>
                                         <tr  v-for="(purchase, index) in customer.purchase.data"
@@ -68,6 +69,7 @@
                                             <td>{{purchase.price}}</td>
                                             <td>{{purchase.purchase_from}}</td>
                                             <td>{{purchase.date_of_purchase}}</td>
+                                            <td>{{purchase.date_of_installation}}</td>
                                             <td>{{purchase.last_date_of_warranty}}</td>
                                         </tr>
                                     </table>

@@ -24,6 +24,7 @@ class SaleViewCollection extends ResourceCollection
                     'product_code' => $sale->product->code,
                     'price' => $sale->price,
                     'date_of_purchase' => dateFormat($sale->date_of_purchase),
+                    'date_of_installation' => dateFormat($sale->date_of_installation),
                     'last_date_of_warranty' => dateFormat($sale->last_date_of_warranty),
                     'purchase_from' => $sale->purchase_from,
                     'next_service_time' => dateFormat($sale->next_service_date),

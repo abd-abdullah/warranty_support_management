@@ -36,6 +36,10 @@ class ServiceMan extends Model
         $this->attributes['joining_date'] = Carbon::parse($value)->format('Y-m-d');
     }
 
+    public function customer_services(){
+    	return $this->hasMany(CustomerService::class, 'done_by');
+    }
+    
     public function user(){
     	return $this->belongsTo(User::class);
     }

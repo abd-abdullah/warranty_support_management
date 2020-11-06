@@ -289,7 +289,6 @@ button:disabled {
 /* This is the space for the spinner to appear, applied to the button */
 .spin {
     padding-left: 2.5em;
-    display: block;
 }
 
 /* position of the spinner when it appears, you might have to change these values */

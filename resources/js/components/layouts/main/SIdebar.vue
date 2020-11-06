@@ -120,7 +120,7 @@ Tip 2: you can also add an image using data-image tag
                 <li class="nav-item hideBig">
                     <router-link to="/update-profile" class="nav-link"
                         ><i class="material-icons">support_agent</i>
-                        <p>Profile</p></router-link
+                        <p>{{userName}}</p></router-link
                     >
                 </li>
                 <li class="nav-item hideBig">
@@ -133,3 +133,12 @@ Tip 2: you can also add an image using data-image tag
         </div>
     </div>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            userName:localStorage.getItem('name')
+        }
+    }
+}
+</script>

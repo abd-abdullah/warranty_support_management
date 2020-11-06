@@ -70,7 +70,8 @@ export default {
         return {
             form: {
                 email: "",
-                password: ""
+                password: "",
+                remember: true
             },
             errors: []
         };
@@ -80,9 +81,13 @@ export default {
         login() {
             this.$user
                 .login(this.form)
-                .then(() => {
+                .then(resData => {
                     this.$root.$emit("login", true);
                     localStorage.setItem("auth", "true");
+                    localStorage.setItem("id", resData.data.id);
+                    localStorage.setItem("name", resData.data.name);
+                    localStorage.setItem("email", resData.data.email);
+                    localStorage.setItem("user_type", resData.data.user_type);
                     this.$router.push({ name: "dashboard" });
                 })
                 .catch(error => {
