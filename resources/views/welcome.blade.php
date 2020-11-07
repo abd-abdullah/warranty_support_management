@@ -24,9 +24,9 @@
             return "<?php echo url('');?>/"+addr;
         };
   </script>
-  <script src="{{asset('js/manifest.js')}}"></script>
-  <script src="{{asset('js/vendor.js')}}"></script>
-  <script src="{{asset('js/app.js')}}"></script>
+  <script src="{{asset('js/manifest.js?v='.env('PJVER',1))}}"></script>
+  <script src="{{asset('js/vendor.js?v='.env('PJVER',1))}}"></script>
+  <script src="{{asset('js/app.js?v='.env('PJVER',1))}}"></script>
 </body>
 
 </html>
