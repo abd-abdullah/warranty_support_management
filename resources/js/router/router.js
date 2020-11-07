@@ -14,6 +14,7 @@ import technician_form from '../components/technicians/form';
 import customer from '../components/customers/index';
 import customer_form from '../components/customers/form';
 import customer_view from '../components/customers/view';
+import customer_warranty from '../components/customers/warranty';
 import customer_type from '../components/settings/customer_types/index';
 import customer_type_form from '../components/settings/customer_types/form';
 import zone from '../components/settings/zones/index';
@@ -123,6 +124,12 @@ const routes = [
         name: "customer_view",
         component: customer_view,
         meta: { authOnly: true, title: 'Customer Profile', props: true }
+    },
+    {
+        path: "/customers/warranty/:id",
+        name: "customer_warranty",
+        component: customer_warranty,
+        meta: { authOnly: true, title: 'Customer Warranty Paper', props: true }
     },
     {
         path: "/sales",

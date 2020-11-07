@@ -1,6 +1,7 @@
 <template>
     <div class="content">
         <div class="container-fluid">
+  
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -62,7 +63,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12" v-if="technicians.length > 0">
+                <div class="col-12"  v-if="technicians.length > 0">
+                    <button style="z-index:99" class="btn btn-sm position-absolute" @click="print"><span class="material-icons">print</span></button>
+                </div>
+                <div class="col-12" id="print" v-if="technicians.length > 0">
                     <div class="card mt-0 p-5">
                         <div class="card-header card-header-rose card-header-icon">
                             <h4 class="border-bottom d-inline card-title text-center text-monospace">Technicians Service Report from {{formatDate(filter.from_date)}} to {{formatDate(filter.to_date)}}</h4>
@@ -159,7 +163,11 @@ export default {
             if (day.length < 2) day = '0' + day;
 
             return [year, month, day].join('-');
-        }
+        },
+        
+        print(){
+            this.$htmlToPaper('print');
+        },
     }
 };
 

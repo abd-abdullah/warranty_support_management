@@ -274,6 +274,10 @@ legend.border {
     font-size: 11px;
 }
 
+.fs20 {
+    font-size: 20px;
+}
+
 .view-header-icon {
     margin-left: -25px;
     margin-right: 3px;
@@ -343,8 +347,31 @@ button:disabled {
     display: none;
 }
 
+.tdu{
+    text-decoration: underline !important;
+}
+
+.mt-125{
+    margin-top: 125px !important;
+}
+
+.signatureDes{
+    font-size: 16px;
+    font-style: italic;
+    display: block;
+}
+
+
 @media (max-width: 991px) {
     .hideBig {
         display: block;
+    }
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
     }
 }

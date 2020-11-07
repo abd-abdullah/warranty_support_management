@@ -85,7 +85,7 @@
                                             <th class="mw-160">
                                                 Next Service Date
                                             </th>
-                                            <th class="text-right mw-140">
+                                            <th class="text-right mw-170">
                                                 Actions
                                             </th>
                                         </tr>
@@ -180,6 +180,13 @@
                                                         >published_with_changes</span
                                                     >
                                                 </button>
+                                                <router-link :to="{ name: 'customer_warranty', params:{'id':sale.id}}"
+                                                    class="btn btn-danger btn-round"
+                                                >
+                                                <span class="material-icons">
+                                                    print
+                                                </span>
+                                                </router-link>
                                                 <button
                                                     @click.prevent="
                                                         remove(sale)

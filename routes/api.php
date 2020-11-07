@@ -47,4 +47,5 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::get('zones-all', 'ZoneController@getZone')->name('zones-all.getAll');
     Route::get('post-offices/{upazila_id}', 'AddressController@getPostOffice')->name('post-offices.index');
     Route::put('update-profile', 'AdminUserController@updateProfile')->name('updateProfile');
+    Route::get('showWarranty/{id}', 'SaleController@showWarranty')->name('showWarranty');
 });

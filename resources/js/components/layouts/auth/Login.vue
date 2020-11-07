@@ -55,7 +55,7 @@
                             <a
                                 @click.prevent="login"
                                 class="btn btn-info btn-link btn-lg"
-                                >Login</a
+                                >Login<span class="spinner"></span></a
                             >
                         </div>
                     </div>
@@ -79,6 +79,7 @@ export default {
 
     methods: {
         login() {
+            this.$buttonLoader(e);
             this.$user
                 .login(this.form)
                 .then(resData => {
@@ -91,6 +92,7 @@ export default {
                     this.$router.push({ name: "dashboard" });
                 })
                 .catch(error => {
+                    this.$buttonLoader(e);
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }

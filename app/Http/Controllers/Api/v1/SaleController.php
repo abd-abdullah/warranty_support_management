@@ -188,6 +188,17 @@ class SaleController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Sale  $sale
+     * @return \Illuminate\Http\Response
+     */
+    public function showWarranty($id)
+    {
+        return Sale::whereId($id)->with(['customer.user.country', 'customer.user.district', 'customer.user.division', 'customer.user.upazila', 'product'])->first();
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

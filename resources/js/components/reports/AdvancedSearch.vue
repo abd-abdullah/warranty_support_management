@@ -12,6 +12,9 @@
                                 <div class="col-6">
                                     <h4 class="card-title">Advanced Customer Purchase Search</h4>
                                 </div>
+                                <div class="col-6">
+                                    <button class="btn btn-sm float-right" @click="print"><span class="material-icons">print</span></button>
+                                </div>
                             </div>
                         </div>
                         <div class="row m-0 mt-3">
@@ -112,7 +115,7 @@
                                 @limit="getData()"
                             ></search>
                             
-                            <div class="table-responsive">
+                            <div class="table-responsive" id="print">
                                 <table class="table table-sortable">
                                     <thead>
                                         <tr>
@@ -386,6 +389,9 @@ export default {
         toDate(){
             let date = new Date();
             return new Date(date.setDate(date.getDate() + 7));
+        },
+        print(){
+            this.$htmlToPaper('print');
         },
     }
 };

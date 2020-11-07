@@ -2,10 +2,13 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+                <button style="z-index:99" class="btn btn-sm ml-3 mt-5 position-absolute" @click="print"><span class="material-icons">print</span></button>
+            </div>
+            <div class="row" id="print">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row mt-5">
                                 <div class="col-12 mb-2">
                                     <h4 class="border-bottom m-0 mb-0 ml-4">
                                         <i class="view-header-icon material-icons">assignment</i>
@@ -143,6 +146,9 @@ export default {
                     this.$Progress.fail();
                     this.$toaster.error("Something went wrong");
                 });
+        },
+        print(){
+            this.$htmlToPaper('print');
         },
     }
 };

@@ -12,7 +12,21 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import Select2 from 'v-select2-component';
 import VCalendar from 'v-calendar';
 import vueMoment from 'vue-moment';
+import VueHtmlToPaper from 'vue-html-to-paper';
 
+const HtmlToPaperOptions = {
+    name: '_blank',
+    specs: [
+      'fullscreen=yes',
+      "titlebar=yes",
+      "scrollbars=yes"
+    ],
+    styles: [
+        jsUtlt.siteUrl('css/app.css'),
+    ]
+}
+
+Vue.use(VueHtmlToPaper, HtmlToPaperOptions);
 
 const SwalOptions = {
     title: 'Are you sure?',
