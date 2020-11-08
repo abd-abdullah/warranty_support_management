@@ -78,7 +78,7 @@ export default {
     },
 
     methods: {
-        login() {
+        login(e) {
             this.$buttonLoader(e);
             this.$user
                 .login(this.form)
