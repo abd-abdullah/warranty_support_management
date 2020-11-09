@@ -162,7 +162,7 @@ export default {
 
         },
         remove(customer){
-            this.$swal("Are you sure to delete this admin user?").then((result) => {
+            this.$swal("Are you sure to delete this customer?").then((result) => {
                 if(result.isConfirmed === true){
                     this.$jsHelper.delete('api/v1/customers/'+customer.id).then(response =>{
                         this.$Progress.finish();

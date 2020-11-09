@@ -750,7 +750,7 @@ export default {
             }
         },
         remove(sale) {
-            this.$swal("Are you sure to delete this sale?").then(result => {
+            this.$swal("Are you sure to delete this?").then(result => {
                 if (result.isConfirmed === true) {
                     this.$jsHelper
                         .delete("api/v1/customer-services/" + sale.id)

@@ -148,7 +148,7 @@ export default {
 
         },
         remove(customer_type){
-            this.$swal("Are you sure to delete this customer_type?").then((result) => {
+            this.$swal("Are you sure to delete this customer type?").then((result) => {
                 if(result.isConfirmed === true){
                     this.$jsHelper.delete('api/v1/customer-types/'+customer_type.id).then(response =>{
                         this.$Progress.finish();
