@@ -28,6 +28,8 @@ class Sale extends Model
         'date_of_installation',
         'last_date_of_warranty',
         'next_service_date',
+        'created_by',
+        'updated_by',
         'created_at',
         'updated_at'
     ];
@@ -47,5 +49,10 @@ class Sale extends Model
     public function customer_service()
     {
        return $this->hasOne(CustomerService::class)->latest();
+    }
+
+    public function createdBy()
+    {
+       return $this->belongsTo(User::class, 'created_by');
     }
 }

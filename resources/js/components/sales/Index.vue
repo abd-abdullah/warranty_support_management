@@ -85,6 +85,9 @@
                                             <th class="mw-160">
                                                 Next Service Date
                                             </th>
+                                            <th class="mw-140">
+                                                Created By
+                                            </th>
                                             <th class="text-right mw-170">
                                                 Actions
                                             </th>
@@ -138,6 +141,9 @@
                                             </td>
                                             <td>
                                                 {{ sale.next_service_time }}
+                                            </td>
+                                            <td>
+                                                {{ sale.createdBy }}
                                             </td>
                                             <td class="td-actions text-right">
                                                 <button

@@ -30,6 +30,7 @@ class SaleCollection extends ResourceCollection
                     'upazila' => ($sale->customer->user->upazila != NULL)?$sale->customer->user->upazila->name:'',
                     'zone' => ($sale->customer->user->zone != NULL)?$sale->customer->user->zone->name:'',
 
+                    'createdBy' => $sale->createdBy->name,
                     'customerId' => $sale->customer->customerId,
                     'product_name' => $sale->product_name,
                     'product_code' => $sale->product_code,
