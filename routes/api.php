@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::ApiResource('products', 'ProductController');
     Route::ApiResource('admin-users', 'AdminUserController');
@@ -48,4 +44,5 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::get('post-offices/{upazila_id}', 'AddressController@getPostOffice')->name('post-offices.index');
     Route::put('update-profile', 'AdminUserController@updateProfile')->name('updateProfile');
     Route::get('showWarranty/{id}', 'SaleController@showWarranty')->name('showWarranty');
+    Route::get('user', 'AdminUserController@profile')->name('show-profile');
 });

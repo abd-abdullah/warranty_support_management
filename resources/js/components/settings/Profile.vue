@@ -392,7 +392,7 @@ export default {
 
     mounted() {
         this.$Progress.start();
-        this.$jsHelper.get('api/user')
+        this.$jsHelper.get('api/v1/user')
         .then(response => {
             this.$Progress.finish();
             this.form.id = response.data.id;

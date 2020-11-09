@@ -134,6 +134,17 @@ class AdminUserController extends Controller
         $admin_user->delete();
     }
     
+      /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $admin_user
+     * @return \Illuminate\Http\Response
+     */
+    public function profile(Request $request)
+    {
+        return $request->user();
+    }
+    
     /**
      * change profile & password
      *
