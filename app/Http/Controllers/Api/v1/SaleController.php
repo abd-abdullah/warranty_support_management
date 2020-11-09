@@ -52,6 +52,7 @@ class SaleController extends Controller
             'products.code as product_code',
             'sales.*',
         ];
+        $sales->groupBy('sales.id');
         $sales->select($select);
         return new SaleCollection($sales->paginate($limit));
     }
@@ -115,6 +116,8 @@ class SaleController extends Controller
             'products.code as product_code',
             'sales.*',
         ];
+        
+        $sales->groupBy('sales.id');
         $sales->select($select);
         return new SaleCollection($sales->paginate($limit));
     }
