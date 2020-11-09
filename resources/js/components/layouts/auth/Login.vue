@@ -52,10 +52,10 @@
                             </span>
                         </div>
                         <div class="card-footer justify-content-center">
-                            <a
+                            <button
                                 @click.prevent="login"
-                                class="btn btn-info btn-link btn-lg"
-                                >Login<span class="spinner"></span></a
+                                class="btn btn-lg btn-link btn-primary p-2"
+                                >Login <span class="spinner"></span></button
                             >
                         </div>
                     </div>

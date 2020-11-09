@@ -162,7 +162,7 @@ class SaleController extends Controller
                 'date_of_purchase' => dateFormat($request->date_of_purchase),
                 'date_of_installation' => dateFormat($request->date_of_installation),
                 'last_date_of_warranty' => dateFormat($request->last_date_of_warranty),
-                'next_service_date' => ($request->next_service_date != NULL)?(dateFormat($request->next_service_date)):(Carbon::parse($request->date_of_purchase)->addMonth(3))
+                'next_service_date' => ($request->next_service_date != NULL)?(dateFormat($request->next_service_date)):(Carbon::parse($request->date_of_installation)->addMonth(3))
             ];
             Sale::create($purchaseData);
             
@@ -241,7 +241,7 @@ class SaleController extends Controller
                 'date_of_purchase' => dateFormat($request->date_of_purchase),
                 'date_of_installation' => dateFormat($request->date_of_installation),
                 'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d'),
-                'next_service_date' => ($request->next_service_date != NULL)?(Carbon::parse($request->next_service_date)->format('Y-m-d')):(Carbon::parse($request->date_of_purchase)->addMonth(3))
+                'next_service_date' => ($request->next_service_date != NULL)?(Carbon::parse($request->next_service_date)->format('Y-m-d')):(Carbon::parse($request->date_of_installation)->addMonth(3))
             ];
             $sale->update($purchaseData);
             

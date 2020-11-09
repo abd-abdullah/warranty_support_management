@@ -29,6 +29,7 @@ class ProductController extends Controller
 
         if ($request->input('query') && $request->input('query') != "") {
             $products->where('name', 'like', "%{$request->input('query')}%");
+            $products->orWhere('code', 'like', "%{$request->input('query')}%");
         }
 
         return new ProductCollection($products->paginate($limit));
