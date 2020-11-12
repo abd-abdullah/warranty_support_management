@@ -40,6 +40,7 @@ class SaleCollection extends ResourceCollection
                     'last_date_of_warranty' => Carbon::parse($sale->last_date_of_warranty)->format('Y-m-d'),
                     'purchase_from' => $sale->purchase_from,
                     'next_service_time' => Carbon::parse($sale->next_service_date)->format('Y-m-d'),
+                    'invoice' => $sale->invoice,
                 ];
             }),
         ];

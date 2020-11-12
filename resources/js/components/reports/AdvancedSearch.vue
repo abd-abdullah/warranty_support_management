@@ -127,7 +127,7 @@
                                             >
                                                 Customer
                                             </th>
-                                            
+
                                             <th
                                                 v-on:click="sort($event)"
                                                 data-column="users.phone"
@@ -136,6 +136,7 @@
                                                 Phone
                                             </th>
                                             
+                                            <th>Invoivce</th>
                                             <th class="mw-180">Address</th>
                                             <th 
                                                 v-on:click="sort($event)"
@@ -168,6 +169,7 @@
                                                 sale.phone
                                             }}</router-link></td>
                                             <td>{{sale.phone}}</td>
+                                            <td>{{sale.invoice}}</td>
                                             <td>
                                                 {{
                                                     (sale.address != "" &&

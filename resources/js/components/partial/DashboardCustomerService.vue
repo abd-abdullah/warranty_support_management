@@ -83,6 +83,7 @@
                                 </th>
                                 
                                 <th class="mw-180">Address</th>
+                                <th>Invoice</th>
                                 <th 
                                     v-on:click="sort($event)"
                                     data-column="users.zone_id"
@@ -140,6 +141,7 @@
                                                 : "")
                                     }}
                                 </td>
+                                <td>{{sale.invoice}}</td>
                                 <td>{{sale.zone}}</td>
                                 <td>
                                     {{ 

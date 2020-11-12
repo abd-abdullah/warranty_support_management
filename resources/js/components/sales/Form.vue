@@ -646,6 +646,34 @@
                                             </div>
                                             <div class="col-12">
                                                 <div
+                                                    class="form-group bmd-form-group"
+                                                    v-bind:class="{
+                                                        'is-filled':
+                                                            form.invoice !== null
+                                                    }"
+                                                >
+                                                    <label
+                                                        for="invoice"
+                                                        class="bmd-label-floating"
+                                                        >Invoice</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="invoice"
+                                                        v-model="form.invoice"
+                                                    />
+                                                    <span
+                                                        class="text-danger"
+                                                        v-if="errors.invoice"
+                                                        >{{
+                                                            errors.invoice[0]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div
                                                     class="form-group mt-3 pb-0"
                                                 >
                                                     <label
@@ -825,6 +853,7 @@ export default {
                 date_of_purchase: null,
                 date_of_installation: null,
                 last_date_of_warranty: null, 
+                invoice: null, 
                 next_service_date: null, 
                 old_customer_id: null,
                 old_product_id: null,
@@ -853,6 +882,7 @@ export default {
                     this.form.purchase_capacity = response.data.data.purchase_capacity;
                     this.form.purchase_price = response.data.data.purchase_price;
                     this.form.purchase_from = response.data.data.purchase_from;
+                    this.form.invoice = response.data.data.invoice;
                     this.form.date_of_purchase = new Date(response.data.data.date_of_purchase);
                     this.form.date_of_installation = new Date(response.data.data.date_of_installation);
                     this.form.last_date_of_warranty = new Date(response.data.data.last_date_of_warranty);

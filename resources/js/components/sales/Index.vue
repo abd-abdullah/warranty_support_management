@@ -47,6 +47,7 @@
                                                 Customer
                                             </th>
                                             <th class="mw-180">Address</th>
+                                            <th>Invoioce</th>
                                             <th
                                                 v-on:click="sort($event)"
                                                 data-column="products.name"
@@ -85,10 +86,10 @@
                                             <th class="mw-160">
                                                 Next Service Date
                                             </th>
-                                            <th class="mw-140">
+                                            <th class="mw-110">
                                                 Created By
                                             </th>
-                                            <th class="text-right mw-170">
+                                            <th class="text-right">
                                                 Actions
                                             </th>
                                         </tr>
@@ -129,6 +130,7 @@
                                                             : "")
                                                 }}
                                             </td>
+                                            <td>{{sale.invoice}}</td>
                                             <td>{{ 
                                                 sale.product_name+' >> '+
                                                 sale.product_code
@@ -146,67 +148,20 @@
                                                 {{ sale.createdBy }}
                                             </td>
                                             <td class="td-actions text-right">
-                                                <button
-                                                    @click.prevent="
-                                                        service(sale)
-                                                    "
-                                                    type="button"
-                                                    rel="tooltip"
-                                                    class="btn btn-facebook btn-round"
-                                                    title="Add Service"
-                                                >
-                                                    <span class="material-icons"
-                                                        >add_box</span
-                                                    >
-                                                </button>
-                                                <router-link
-                                                    :to="{
-                                                        name: 'sale_form',
-                                                        params: { id: sale.id }
-                                                    }"
-                                                    type="button"
-                                                    rel="tooltip"
-                                                    class="btn btn-success btn-round"
-                                                    title="Edit"
-                                                >
-                                                    <i class="material-icons"
-                                                        >edit</i
-                                                    >
-                                                </router-link>
-                                                <button
-                                                    @click.prevent="
-                                                        serviceChange(sale)
-                                                    "
-                                                    type="button"
-                                                    rel="tooltip"
-                                                    class="btn btn-linkedin btn-round"
-                                                    title="Change Time"
-                                                >
-                                                    <span class="material-icons"
-                                                        >published_with_changes</span
-                                                    >
-                                                </button>
-                                                <router-link :to="{ name: 'customer_warranty', params:{'id':sale.id}}"
-                                                    class="btn btn-danger btn-round"
-                                                >
-                                                <span class="material-icons">
-                                                    print
-                                                </span>
-                                                </router-link>
-                                                <button
-                                                    @click.prevent="
-                                                        remove(sale)
-                                                    "
-                                                    type="button"
-                                                    rel="tooltip"
-                                                    class="btn btn-danger btn-round"
-                                                    data-original-title
-                                                    title="Delete"
-                                                >
-                                                    <i class="material-icons"
-                                                        >close</i
-                                                    >
-                                                </button>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-sm btn-primary text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                       <span class="material-icons">
+                                                            more_vert
+                                                        </span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                        <router-link :to="{name: 'sale_form', params: { id: sale.id }}" class="dropdown-item m-0 w-100" >Edit</router-link>
+                                                        <button @click.prevent="remove(sale)" type="button" class="dropdown-item m-0 w-100">Delete</button>
+                                                        <button @click.prevent="service(sale)" type="button" class="dropdown-item m-0 w-100">Add Service</button>
+                                                        <button @click.prevent="serviceChange(sale)" type="button" class="dropdown-item m-0 w-100">Change Service</button>
+                                                        <router-link :to="{ name: 'customer_warranty', params:{'id':sale.id}}" class="dropdown-item m-0 w-100">Warranty Paper</router-link>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>

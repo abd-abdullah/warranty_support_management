@@ -375,3 +375,9 @@ button:disabled {
         display: none !important;
     }
 }
+
+.dropdown .dropdown-menu, .dropup:not(.bootstrap-select) .dropdown-menu, .bootstrap-select .dropdown-menu:not(.inner), .dropdown-menu.bootstrap-datetimepicker-widget.bottom{
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+}

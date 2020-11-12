@@ -26,6 +26,7 @@ class SaleResource extends JsonResource
             'purchase_from' => $this->purchase_from,
             'product_id' => $this->product_id,
             'customer_id' => $this->customer_id,
+            'invoice' => $this->invoice,
         ];
     }
 }

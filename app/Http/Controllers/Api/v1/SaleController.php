@@ -44,6 +44,7 @@ class SaleController extends Controller
             $sales->orWhere('products.name', 'like', "%{$request->input('query')}%");
             $sales->orWhere('products.code', 'like', "%{$request->input('query')}%");
             $sales->orWhere('purchase_from', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('invoice', 'like', "%{$request->input('query')}%");
         }
 
         $sales->with('customer');
@@ -85,6 +86,7 @@ class SaleController extends Controller
             $sales->orWhere('products.name', 'like', "%{$request->input('query')}%");
             $sales->orWhere('products.code', 'like', "%{$request->input('query')}%");
             $sales->orWhere('purchase_from', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('invoice', 'like', "%{$request->input('query')}%");
         }
         
         if($request->input('division_id') && $request->input('division_id') != "null"){
@@ -166,6 +168,7 @@ class SaleController extends Controller
                 'date_of_installation' => dateFormat($request->date_of_installation),
                 'last_date_of_warranty' => dateFormat($request->last_date_of_warranty),
                 'next_service_date' => ($request->next_service_date != NULL)?(dateFormat($request->next_service_date)):(Carbon::parse($request->date_of_installation)->addMonth(3)),
+                'invoice' => $request->invoice,
                 'created_by' => auth()->id()
             ];
             Sale::create($purchaseData);
@@ -246,6 +249,7 @@ class SaleController extends Controller
                 'date_of_installation' => dateFormat($request->date_of_installation),
                 'last_date_of_warranty' => Carbon::parse($request->last_date_of_warranty)->format('Y-m-d'),
                 'next_service_date' => ($request->next_service_date != NULL)?(Carbon::parse($request->next_service_date)->format('Y-m-d')):(Carbon::parse($request->date_of_installation)->addMonth(3)),
+                'invoice' => $request->invoice,
                 'updated_by' => auth()->id()
             ];
             $sale->update($purchaseData);

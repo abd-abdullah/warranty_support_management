@@ -28,6 +28,7 @@ class Sale extends Model
         'date_of_installation',
         'last_date_of_warranty',
         'next_service_date',
+        'invoice',
         'created_by',
         'updated_by',
         'created_at',
