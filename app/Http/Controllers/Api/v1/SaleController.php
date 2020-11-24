@@ -33,7 +33,7 @@ class SaleController extends Controller
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $sales->orderBy('customers.customerId', 'DESC');
+            $sales->orderByRaw('CONVERT(customers.customerId, SIGNED) desc');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
