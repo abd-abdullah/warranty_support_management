@@ -29,7 +29,7 @@ class CustomerController extends Controller
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $customers->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $customers->orderByRaw('CONVERT(customers.customerId, SIGNED) desc');
+            $customers->orderByRaw("CONVERT(SUBSTRING_INDEX(customers.customerId,'-',-1),SIGNED) desc");
         }
 
         if ($request->input('query') && $request->input('query') != "") {
