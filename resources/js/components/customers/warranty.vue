@@ -19,7 +19,7 @@
                                     </p>
                                     <table class="table table-borderless table-responsive table-sm" style="font-size:22px;">
                                         <tr>
-                                            <td><h3 class="font-weight-normal" style="text-decoration: underline">Customer Information :</h3></td>
+                                            <td><h3 class="font-weight-normal" style="text-decoration: underline; min-width:270px;">Customer Information :</h3></td>
                                             <td></td>
                                         </tr>	
                                         <tr>

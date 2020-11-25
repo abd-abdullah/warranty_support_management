@@ -13,7 +13,6 @@ import Select2 from 'v-select2-component';
 import VCalendar from 'v-calendar';
 import vueMoment from 'vue-moment';
 import VueHtmlToPaper from 'vue-html-to-paper';
-import store from "./store/store";
 
 const HtmlToPaperOptions = {
     name: '_blank',
@@ -101,6 +100,5 @@ Vue.prototype.$buttonLoader = function (e) {
 new Vue({
     el: '#app',
     router,
-    store: store,
     render: h => h(Layout)
 });
