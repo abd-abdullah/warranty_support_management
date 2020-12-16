@@ -52,8 +52,6 @@ class SmsSettingController extends Controller
             $data['phone'] = array_merge($data['phone'], $worksheetData);
         }
         
-        dd($data);
-        
         $sms = new \App\Helpers\SmsAPI;
         $type = ($data['type'] == 1)?'text':'unicode';
         $sendSms = $sms->send($data['phone'], $data['text'], $type);
