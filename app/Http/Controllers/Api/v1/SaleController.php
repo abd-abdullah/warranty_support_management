@@ -38,12 +38,8 @@ class SaleController extends Controller
 
         if ($request->input('query') && $request->input('query') != "") {
             $sales->where('users.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('users.email', 'like', "%{$request->input('query')}%");
             $sales->orWhere('users.phone', 'like', "%{$request->input('query')}%");
             $sales->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('products.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('products.code', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('purchase_from', 'like', "%{$request->input('query')}%");
             $sales->orWhere('invoice', 'like', "%{$request->input('query')}%");
         }
 
@@ -80,12 +76,8 @@ class SaleController extends Controller
 
         if ($request->input('query') && $request->input('query') != "") {
             $sales->where('users.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('users.email', 'like', "%{$request->input('query')}%");
             $sales->orWhere('users.phone', 'like', "%{$request->input('query')}%");
             $sales->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('products.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('products.code', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('purchase_from', 'like', "%{$request->input('query')}%");
             $sales->orWhere('invoice', 'like', "%{$request->input('query')}%");
         }
         

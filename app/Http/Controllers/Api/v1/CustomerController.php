@@ -37,7 +37,6 @@ class CustomerController extends Controller
             $customers->where(function($q) use ($query) {
                 $q->where('users.name', 'like', "%{$query}%");
                 $q->orWhere('customer_types.name', 'like', "%{$query}%");
-                $q->orWhere('email', 'like', "%{$query}%");
                 $q->orWhere('phone', 'like', "%{$query}%");
                 $q->orWhere('customerId', 'like', "%{$query}%");
             });
