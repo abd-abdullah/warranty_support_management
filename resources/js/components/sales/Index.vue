@@ -761,6 +761,7 @@ export default {
         remove(sale) {
             this.$swal("Are you sure to delete this sale?").then(result => {
                 if (result.isConfirmed === true) {
+                    this.$Progress.start();
                     this.$jsHelper
                         .delete("api/v1/sales/" + sale.id)
                         .then(response => {
@@ -809,6 +810,7 @@ export default {
             this.$jsHelper
                 .post("api/v1/customer-services", this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
                     this.getData();
@@ -831,6 +833,7 @@ export default {
             this.$jsHelper
                 .post("api/v1/customer-services/change", this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Changed");
                     this.getData();

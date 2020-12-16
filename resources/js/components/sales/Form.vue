@@ -917,6 +917,7 @@ export default {
             this.$jsHelper
                 .post("api/v1/sales", this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
                     setTimeout(
@@ -942,6 +943,7 @@ export default {
             this.$jsHelper
                 .put("api/v1/sales/" + this.id, this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.info("Successfully Updated");
                     setTimeout(

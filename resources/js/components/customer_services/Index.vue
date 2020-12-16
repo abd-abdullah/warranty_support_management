@@ -806,6 +806,7 @@ export default {
             this.$jsHelper
                 .put("api/v1/customer-services/"+this.form.id, this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Updated");
                     this.getData();

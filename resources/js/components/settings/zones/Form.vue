@@ -120,6 +120,7 @@ export default {
             this.$jsHelper
                 .post("api/v1/zones", this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
                     setTimeout( () => this.$router.push({ name: "zone"}), 1000);
@@ -142,6 +143,7 @@ export default {
             this.$jsHelper
                 .put("api/v1/zones/"+this.id, this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.info("Successfully Updated");
                     setTimeout( () => this.$router.push({ name: "zone"}), 1000);

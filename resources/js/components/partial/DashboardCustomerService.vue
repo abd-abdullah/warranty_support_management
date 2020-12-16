@@ -820,6 +820,7 @@ export default {
             this.$jsHelper
                 .post("api/v1/customer-services", this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Added");
                     this.getData();
@@ -842,6 +843,7 @@ export default {
             this.$jsHelper
                 .post("api/v1/customer-services/change", this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Changed");
                     this.getData();

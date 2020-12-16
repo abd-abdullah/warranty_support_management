@@ -24,7 +24,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::ApiResource('zones', 'ZoneController');
     Route::get('sms-settings/{smsSetting}', 'SmsSettingController@show')->name('sms-settings.show');
     Route::put('sms-settings/{smsSetting}', 'SmsSettingController@update')->name('sms-settings.update');
-    Route::put('sms-send', 'SmsSettingController@sendSms')->name('sms-settings.sms-send');
+    Route::post('sms-send', 'SmsSettingController@sendSms')->name('sms-settings.sms-send');
     Route::ApiResource('customer-services', 'CustomerServiceController');
     Route::post('customer-services/change', 'CustomerServiceController@changeDate')->name('customer-services.change');
     Route::put('customer-services/change/{customerService}', 'CustomerServiceController@changeDateUpdate')->name('customer-services.change-update');

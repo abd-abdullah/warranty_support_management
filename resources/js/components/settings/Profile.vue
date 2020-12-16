@@ -419,6 +419,7 @@ export default {
             this.$jsHelper
                 .put("api/v1/update-profile", this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Updated");
                     setTimeout(

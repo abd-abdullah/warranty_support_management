@@ -34,17 +34,28 @@ class SmsSettingController extends Controller
     }
 
     public function sendSms(Request $request){
-        if(!empty($request->phone) && $request->text != NULL){
-            $sms = new \App\Helpers\SmsAPI;
-            $type = ($request->type == 1)?'text':'unicode';
-            $sendSms = $sms->send($request->phone, $request->text, $type);
-            if (strpos($sendSms, 'SMS SUBMITTED:') === false) {
-                return false;
-            }
-            return true;
-        }
-        else{
+        $request->validate([
+            'phone' => 'required|array',
+            'text' => 'required|string',
+            'type' => 'required',
+            'excel_file' => 'bail|nullable|mimes:xlsx,xls',
+            'extra_numbers' => 'bail|nullable',
+        ]);
+        
+        $data = $request->all();
+        $extra_numbers = array_map('trim', preg_split('@,@', $request->extra_numbers, NULL, PREG_SPLIT_NO_EMPTY));
+        $data['phone'] = array_merge($data['phone'], $extra_numbers);
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->excel_file->getPathName());
+        $worksheet = $spreadsheet->getActiveSheet()->toArray();
+        $worksheetData = array_map(function($value) { return '880'.$value; }, $worksheet[0]);
+        $data['phone'] = array_merge($data['phone'], $worksheetData);
+        
+        $sms = new \App\Helpers\SmsAPI;
+        $type = ($data['type'] == 1)?'text':'unicode';
+        $sendSms = $sms->send($data['phone'], $data['text'], $type);
+        if (strpos($sendSms, 'SMS SUBMITTED:') === false) {
             return false;
         }
+        return true;
     }
 }

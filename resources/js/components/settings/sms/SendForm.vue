@@ -171,7 +171,45 @@
                     </div>
                     <div class="card">
                         <div class="row m-0 mt-3">
-                            <div class="col-sm-12 col-md-6">
+                            <div class="col-12 col-md-7 mb-3">
+                                <div
+                                    class=""
+                                >
+                                    <label
+                                        for="extra_numbers"
+                                        class="fs11 mb-0"
+                                        >Extra Numbers</label
+                                    >
+                                    <textarea
+                                        type="text"
+                                        class="form-control"
+                                        id="extra_numbers"
+                                        rows="2"
+                                        placeholder="8801735565656,8801565565656"
+                                        v-model="form.extra_numbers"
+                                    />
+                                    <span
+                                        class="text-danger"
+                                        v-if="errors.extra_numbers"
+                                        >{{ errors.extra_numbers[0] }}</span
+                                    >
+                                    
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-7 mb-2">
+                                <div class="custom-file">
+                                    <input type="file" @change="onFileChange" ref="excel_file" class="custom-file-input" id="excel_file" aria-describedby="fileHelp">
+                                    <label class="border custom-file-label" for="excel_file">
+                                    {{custom_file_name}}
+                                    </label>
+                                </div>
+                                <span
+                                    class="text-danger"
+                                    v-if="errors.excel_file"
+                                    >{{ errors.excel_file[0] }}</span
+                                >
+                            </div>
+                            <div class="col-sm-12 col-md-7">
                                 <div class="form-group">
                                     <label
                                         class="select2-form-group"
@@ -205,6 +243,11 @@
                                         @keyup="countWord"
                                         v-model="form.text"
                                     />
+                                    <span
+                                        class="text-danger"
+                                        v-if="errors.text"
+                                        >{{ errors.text[0] }}</span
+                                    >
                                     
                                 </div>
                             </div>
@@ -225,13 +268,20 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+import Csrf from "../../../apis/Csrf";
 export default {
     data() {
         return {
             form:{
                 type:1,
                 text:'',
+                excel_file:'',
+                extra_numbers:[],
                 phone:[],
+            },
+            errors :{
+
             },
             filter:{
                 division_id:null,
@@ -259,7 +309,8 @@ export default {
             optionsZone:[],
             optionsMessageType:[{'id':1,'text':'English'}, {'id':2,'text':'Bangali'}],
             check_all:null,
-            wordCount:0
+            wordCount:0,
+            custom_file_name: 'Select Excel File',
         };
     },
     mounted() {
@@ -349,15 +400,7 @@ export default {
                 $('.sms_send').prop('checked', false);
             }
         },
-        sendMessage(e){
-            if(this.form.text == ''){
-                this.$toaster.error("Write Some text to send SMS");
-                return;
-            }
-            if(this.form.type == null){
-                this.$toaster.error("Message language Type");
-                return;
-            }
+        async sendMessage(e){
 
             let phones = []; 
             $(".sms_send:checked").each(function () {
@@ -368,8 +411,22 @@ export default {
             if(this.form.phone.length > 0){
                 this.$buttonLoader(e);
                 this.$Progress.start();
-                  this.$jsHelper.put("api/v1/sms-send", this.form)
-                .then(data => {
+                await Csrf.getCookie();
+                let formData = new FormData();
+                formData.append('text', this.form.text);
+                formData.append('type', this.form.type);
+                formData.append('extra_numbers', this.form.extra_numbers);
+                formData.append('phone[]', this.form.phone);
+                formData.append('excel_file', this.form.excel_file);
+                axios.post( jsUtlt.siteUrl('api/v1/sms-send'),
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                ).then(data => {
+                    this.errors = [];
                     if(data.data === 1){
                     this.$Progress.finish();
                         this.$toaster.info("Successfully Send");
@@ -390,7 +447,13 @@ export default {
                 .catch(error => {
                     this.$Progress.fail();
                     this.$buttonLoader(e);
-                    this.$toaster.error("Something went wrong");
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                        this.$toaster.error("Validation Error!");
+                    }
+                    else{
+                        this.$toaster.error("Something went wrong");
+                    }
                 });
             }
             else{
@@ -404,6 +467,10 @@ export default {
             let date = new Date();
             return new Date(date.setDate(date.getDate() + 7));
         },
+        onFileChange(){
+           this.form.excel_file =  this.$refs.excel_file.files[0];
+           this.custom_file_name = this.$refs.excel_file.files[0]['name'];
+        }
     }
 };
 
