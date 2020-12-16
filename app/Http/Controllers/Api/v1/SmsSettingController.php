@@ -48,9 +48,11 @@ class SmsSettingController extends Controller
         if($request->hasFile('excel_file')){
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->excel_file->getPathName());
             $worksheet = $spreadsheet->getActiveSheet()->toArray();
-            $worksheetData = array_map(function($value) { return '880'.$value; }, $worksheet[0]);
+            $worksheetData = array_map(function($value) { return '0'.$value; }, $worksheet[0]);
             $data['phone'] = array_merge($data['phone'], $worksheetData);
         }
+        
+        dd($data);
         
         $sms = new \App\Helpers\SmsAPI;
         $type = ($data['type'] == 1)?'text':'unicode';

@@ -185,7 +185,7 @@
                                         class="form-control"
                                         id="extra_numbers"
                                         rows="2"
-                                        placeholder="8801735565656,8801565565656"
+                                        placeholder="01735565656,01565565656"
                                         v-model="form.extra_numbers"
                                     />
                                     <span
