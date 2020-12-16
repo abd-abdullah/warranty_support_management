@@ -45,10 +45,12 @@ class SmsSettingController extends Controller
         $data = $request->all();
         $extra_numbers = array_map('trim', preg_split('@,@', $request->extra_numbers, NULL, PREG_SPLIT_NO_EMPTY));
         $data['phone'] = array_merge($data['phone'], $extra_numbers);
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->excel_file->getPathName());
-        $worksheet = $spreadsheet->getActiveSheet()->toArray();
-        $worksheetData = array_map(function($value) { return '880'.$value; }, $worksheet[0]);
-        $data['phone'] = array_merge($data['phone'], $worksheetData);
+        if($request->hasFile('excel_file')){
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->excel_file->getPathName());
+            $worksheet = $spreadsheet->getActiveSheet()->toArray();
+            $worksheetData = array_map(function($value) { return '880'.$value; }, $worksheet[0]);
+            $data['phone'] = array_merge($data['phone'], $worksheetData);
+        }
         
         $sms = new \App\Helpers\SmsAPI;
         $type = ($data['type'] == 1)?'text':'unicode';
