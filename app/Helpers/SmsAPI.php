@@ -45,7 +45,7 @@ class SmsAPI
 
 	public function send($to, $message, $type = 'flash', $scheduledDateTime = NULL){
 		if(env("SEND_SMS",false)){
-			return $this->sendSMSFlash(implode('+', $to), $message, $type, $scheduledDateTime);
+			return dd($this->sendSMSFlash(implode('+', $to), $message, $type, $scheduledDateTime));
 		}
 	}
 }
