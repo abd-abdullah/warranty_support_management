@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomerViewResource extends JsonResource
@@ -16,20 +17,32 @@ class CustomerViewResource extends JsonResource
     {
         return[
             'id' => $this->id,
-            'name' => $this->user->name,
-            'email' => $this->user->email,
-            'phone' => $this->user->phone,
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
             'customer_type' => $this->customer_type->name,
             'customerId' => $this->customerId,
-            'other_contact_numbers' => $this->user->other_contact_numbers,
-            'country' => $this->user->country->name,
-            'division' => $this->user->division->name,
-            'district' => $this->user->district->name,
-            'upazila' => ($this->user->upazila != NULL)?$this->user->upazila->nam:'',
-            'zone' => $this->user->zone->name,
-            'address' => $this->user->address,
-            'purchase' => new SaleViewCollection($this->purchase),
-            'services' => new CustomerServiceViewCollection($this->purchase->pluck('customer_services')->flatten()),
+            'other_contact_numbers' => $this->other_contact_numbers,
+            'country' => $this->country->name,
+            'division' => $this->division->name,
+            'district' => $this->district->name,
+            'upazila' => ($this->upazila != NULL)?$this->upazila->nam:'',
+            'zone' => $this->zone->name,
+            'address' => $this->address,
+            'createdBy' => $this->createdBy->name,
+            'customerId' => $this->customerId,
+            'product_name' => $this->product->name,
+            'product_code' => $this->product->code,
+            'purchase_price' => $this->price,
+            'purchase_capacity' => $this->capacity,
+            'date_of_purchase' => Carbon::parse($this->date_of_purchase)->format('Y-m-d'),
+            'last_date_of_warranty' => Carbon::parse($this->last_date_of_warranty)->format('Y-m-d'),
+            'next_service_date' => Carbon::parse($this->next_service_date)->format('Y-m-d'),
+            'date_of_installation' => Carbon::parse($this->date_of_installation)->format('Y-m-d'),
+            'purchase_from' => $this->purchase_from,
+            'product_id' => $this->product_id,
+            'invoice' => $this->invoice,
+            'services' => new CustomerServiceViewCollection($this->customer_services),
         ];
     }
 }

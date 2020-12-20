@@ -18,7 +18,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::ApiResource('admin-users', 'AdminUserController');
     Route::ApiResource('technicians', 'ServiceMenController');
     Route::ApiResource('customers', 'CustomerController');
-    Route::get('customers/view/{id}', 'CustomerController@SingleView')->name('customers.singe-view');
+    Route::get('sales/view/{id}', 'SaleController@SingleView')->name('sales.singe_view');
     Route::ApiResource('customer-types', 'CustomerTypeController');
     Route::ApiResource('sales', 'SaleController');
     Route::ApiResource('zones', 'ZoneController');
@@ -35,7 +35,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::get('technician/service-reports', 'ServiceMenController@serviceListReport')->name('tecnicians.service-reports');
     Route::get('products-all', 'ProductController@getProduct')->name('products.products-all');
     Route::get('customer-types-all', 'CustomerTypeController@getCustomerType')->name('customer-types.customer-type-all');
-    Route::get('customers-all', 'CustomerController@getCustomer')->name('customer.customer-all');
+    Route::get('sales-all', 'SaleController@getCustomer')->name('sales.sale-all');
     Route::get('countries', 'AddressController@getCountry')->name('countries.index');
     Route::get('divisions/{country_id}', 'AddressController@getDivision')->name('divisions.index');
     Route::get('districts/{division_id}', 'AddressController@getDistrict')->name('districts.index');

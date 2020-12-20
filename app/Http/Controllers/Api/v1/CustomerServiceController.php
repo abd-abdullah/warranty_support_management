@@ -22,8 +22,6 @@ class CustomerServiceController extends Controller
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
         $customerService = CustomerService::query();
-        $customerService->join('customers', 'customers.id', '=', 'customer_services.customer_id');
-        $customerService->join('users', 'users.id', '=', 'customers.user_id');
         $customerService->join('sales', 'sales.id', '=', 'customer_services.sale_id');
         $customerService->join('products', 'products.id', '=', 'sales.product_id');
         $customerService->leftjoin('service_men', 'service_men.id', '=', 'customer_services.done_by');
@@ -32,20 +30,22 @@ class CustomerServiceController extends Controller
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $customerService->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $customerService->orderBy('id', 'DESC');
+            $customerService->orderBy('customer_services.id', 'DESC');
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $customerService->where('users.name', 'like', "%{$request->input('query')}%");
-            $customerService->orWhere('users.phone', 'like', "%{$request->input('query')}%");
-            $customerService->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
+            $customerService->where('sales.name', 'like', "%{$request->input('query')}%");
+            $customerService->orWhere('sales.phone', 'like', "%{$request->input('query')}%");
+            $customerService->orWhere('sales.customerId', 'like', "%{$request->input('query')}%");
         }
 
-        $customerService->with('customer.user')->with('service_man.user');
+        $customerService->with('service_man.user');
         $select = [
             'products.name as product_name',
             'products.code as product_code',
+            'sales.*',
             'customer_services.*',
+            'customer_services.id',
         ];
         $customerService->select($select);
         return new CustomerServiceCollection($customerService->paginate($limit));

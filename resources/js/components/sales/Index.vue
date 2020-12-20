@@ -41,7 +41,7 @@
                                             <th>SL#</th>
                                             <th
                                                 v-on:click="sort($event)"
-                                                data-column="users.name"
+                                                data-column="sales.name"
                                                 class="sorting mw-120"
                                             >
                                                 Customer
@@ -55,42 +55,33 @@
                                             >
                                                 Product Name
                                             </th>
-                                            <th
-                                                v-on:click="sort($event)"
-                                                data-column="purchase_from"
-                                                class="sorting mw-140"
-                                            >
-                                                Purchase From
-                                            </th>
-                                            <th
-                                                v-on:click="sort($event)"
-                                                data-column="price"
-                                                class="sorting mw-100"
-                                            >
-                                                Price
-                                            </th>
+                                           
                                             <th
                                                 v-on:click="sort($event)"
                                                 data-column="date_of_purchase"
-                                                class="sorting mw-155"
+                                                class="sorting mw-100"
                                             >
-                                                Purchase Date
+                                                Purchase
                                             </th>
                                             <th
                                                 v-on:click="sort($event)"
                                                 data-column="last_date_of_warranty"
-                                                class="sorting mw-170"
+                                                class="sorting mw-130"
                                             >
-                                                Last Warranty Date
+                                                Last Warranty
                                             </th>
-                                            <th class="mw-160">
-                                                Next Service Date
+                                            <th 
+                                                v-on:click="sort($event)"
+                                                data-column="next_service_date"
+                                                class="sorting mw-120"
+                                            >
+                                                Next Service
                                             </th>
-                                            <th class="mw-110">
-                                                Created By
+                                            <th class="mw-90">
+                                                Added By
                                             </th>
                                             <th class="text-right">
-                                                Actions
+                                                OPT
                                             </th>
                                         </tr>
                                     </thead>
@@ -102,7 +93,7 @@
                                             <td>
                                                 {{ pagination.from + index }}
                                             </td>
-                                            <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.customer_id}}" target="_blank">{{
+                                            <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.id}}" target="_blank">{{
                                                     sale.name+'\n'+
                                                     sale.customerId+'\n'+
                                                     sale.phone
@@ -135,8 +126,6 @@
                                                 sale.product_name+' >> '+
                                                 sale.product_code
                                                 }}</td>
-                                            <td>{{ sale.purchase_from }}</td>
-                                            <td>{{ sale.price }}</td>
                                             <td>{{ sale.date_of_purchase }}</td>
                                             <td>
                                                 {{ sale.last_date_of_warranty }}
@@ -695,7 +684,6 @@ export default {
                 customer : null,
                 product : null,
                 sale_id : null,
-                customer_id : null,
                 service_time : null,
                 service_for : null,
                 next_service_time : null,
@@ -781,7 +769,6 @@ export default {
             this.form.customer = sale.name+'-'+sale.customerId;
             this.form.product = sale.product_name+'-'+sale.product_code;
             this.form.sale_id = sale.id;
-            this.form.customer_id = sale.customer_id;
             this.form.service_time = null;
             this.form.service_for = null;
             this.form.next_service_time = null;
@@ -798,7 +785,6 @@ export default {
             this.form.customer = sale.name+'-'+sale.customerId;
             this.form.product = sale.product_name+'-'+sale.product_code;
             this.form.sale_id = sale.id;
-            this.form.customer_id = sale.customer_id;
             this.form.next_service_time = null;
             this.form.remarks = null;
             this.form.is_continue = true;

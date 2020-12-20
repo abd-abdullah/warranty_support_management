@@ -117,10 +117,10 @@
                                     <thead>
                                         <tr>
                                             <th>SL#</th>
-                                            <th v-on:click = "sort($event)" data-column="users.name" class="sorting mw-80">Name</th>
-                                            <th v-on:click = "sort($event)" data-column="users.phone" class="sorting mw-80">Mobile</th>
+                                            <th v-on:click = "sort($event)" data-column="name" class="sorting mw-80">Name</th>
+                                            <th v-on:click = "sort($event)" data-column="phone" class="sorting mw-80">Mobile</th>
                                             <th v-on:click = "sort($event)" data-column="customerId" class="sorting mw-120">Customer ID</th>
-                                            <th v-on:click = "sort($event)" data-column="customer_types.name" class="sorting mw-80">Type</th>
+                                            <th class="mw-80">Type</th>
                                             <th class="mw-100">Address</th>
                                             <th>
                                                 <div class="togglebutton">
@@ -277,7 +277,7 @@ export default {
                 type:1,
                 text:'',
                 excel_file:'',
-                extra_numbers:[],
+                extra_numbers:'',
                 phone:[],
             },
             errors :{
@@ -324,7 +324,7 @@ export default {
             let toDate = (this.filter.to_date != null)? this.filter.to_date.toISOString().split('T')[0]:null;
             this.$Progress.start();
             this.$jsHelper.get(
-                    "api/v1/customers?page=" +
+                    "api/v1/sales-dashboard?page=" +
                         this.pagination.current_page +
                         "&per_page=" +
                         this.pagination.per_page +
@@ -433,6 +433,9 @@ export default {
                         this.form.phone = [];
                         this.form.text = '';
                         this.form.type = 1;
+                        this.form.extra_numbers = '';
+                        this.form.excel_file = '';
+                        this.custom_file_name = 'Select Excel File';
                         this.wordCount = 0;
                         this.$buttonLoader(e);
                         $('#checkAll').prop('checked', false);

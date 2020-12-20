@@ -16,6 +16,7 @@
         </div>
     </div>
     <div class="col-6">
+        <button class="btn btn-facebook btn-round btn-sm float-right" @click="onSearch()"><span class="material-icons">search</span></button>
         <div class="float-right">
         <label>
             <span class="bmd-form-group bmd-form-group-sm">
@@ -44,14 +45,18 @@ export default {
             this.pagination.per_page = event.target.value;
             this.$emit('limit');
         },
+        onSearch() {   
+            this.param.query = this.query;  
+            this.$emit('limit');
+        },
     },
-    watch:{
-        query: function(newQ, old) {
-            if(newQ !== old){
-                this.param.query = newQ;    
-                this.$emit('limit');
-            }
-        }
-    }
+    // watch:{
+    //     query: function(newQ, old) {
+    //         if(newQ !== old){
+    //             this.param.query = newQ;    
+    //             this.$emit('limit');
+    //         }
+    //     }
+    // }
 }
 </script>

@@ -26,9 +26,9 @@ class SaleRequest extends FormRequest
         return [
             'customer_type_id' => 'required',
             'name' => 'required|min:3',
-            'email' => 'bail|nullable|email|unique:users,email,'.$this->request->get('old_user_id'),
-            'phone' => 'bail|required|numeric|digits:11|unique:users,phone,'.$this->request->get('old_user_id'),
-            'customerId' => 'bail|required|string|unique:customers,customerId,'.$this->request->get('old_customer_id'),
+            'email' => 'bail|nullable|email',
+            'phone' => 'bail|required|numeric|digits:11',
+            'customerId' => 'bail|required|string|unique:sales,customerId,'.$this->request->get('id'),
             'country_id' => 'required',
             'division_id' => 'required',
             'district_id' => 'required',

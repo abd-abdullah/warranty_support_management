@@ -24,24 +24,24 @@
                                         </tr>	
                                         <tr>
                                             <td>Customer ID</td>
-                                            <td>: {{sale.customer.customerId}}</td>
+                                            <td>: {{sale.customerId}}</td>
                                         </tr>
                                         <tr>
                                             <td>Name of customer</td>
-                                            <td>: {{sale.customer.user.name}}</td>
+                                            <td>: {{sale.name}}</td>
                                         </tr>
                                         <tr>
                                             <td>Address</td>
                                             <td>: {{ 
-                                                    ((sale.customer.user.address != '' && sale.customer.user.address != null)?sale.customer.user.address+', ':'')+
-                                                    ((sale.customer.user.upazila != null)?sale.customer.user.upazila.name+', ':'')+
-                                                    ((sale.customer.user.district.name != '')?sale.customer.user.district.name+', ':'')+
-                                                    ((sale.customer.user.division.name != '')?sale.customer.user.division.name:'')
+                                                    ((sale.address != '' && sale.address != null)?sale.address+', ':'')+
+                                                    ((sale.upazila != null)?sale.upazila.name+', ':'')+
+                                                    ((sale.district.name != '')?sale.district.name+', ':'')+
+                                                    ((sale.division.name != '')?sale.division.name:'')
                                                 }}</td>
                                         </tr>
                                         <tr>
                                             <td>Cell No</td>
-                                            <td>: {{sale.customer.user.phone}}</td>
+                                            <td>: {{sale.phone}}</td>
                                         </tr>
                                         <tr>
                                             <td><h3 class="font-weight-normal mt-4" style="text-decoration: underline">Product Information :</h3></td>

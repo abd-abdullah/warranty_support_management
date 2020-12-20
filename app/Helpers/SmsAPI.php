@@ -17,6 +17,7 @@ class SmsAPI
 	}
 
 	private function sendSMSFlash($to, $message, $type, $scheduledDateTime = NULL) {
+
 		$scheduledDateTime = ($scheduledDateTime == NULL)?Carbon::now()->toDateTimeString():$scheduledDateTime;
 		if(!$this->APIToken){
 			return false;
@@ -45,7 +46,13 @@ class SmsAPI
 
 	public function send($to, $message, $type = 'flash', $scheduledDateTime = NULL){
 		if(env("SEND_SMS",false)){
-			return $this->sendSMSFlash(implode('+', $to), $message, $type, $scheduledDateTime);
+			$to = array_chunk($to, 500);
+			$scheduledDateTime = Carbon::now();
+			foreach($to as $index => $numbers){
+				$scheduledDateTime = ($index == 0)?$scheduledDateTime:$scheduledDateTime->addSecond(60);
+				$return = $this->sendSMSFlash(implode('+', $numbers), $message, $type, $scheduledDateTime->toDateTimeString());
+			}
+			return $return;
 		}
 	}
 }

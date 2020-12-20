@@ -23,62 +23,28 @@
                                         <tr><td>Phone :</td><td>{{customer.phone}}</td></tr>
                                         <tr><td>Other contact numbers :</td><td>{{customer.other_contact_numbers}}</td></tr>
                                         <tr><td>Email :</td><td>{{customer.email}}</td></tr>
-                                        <tr><td>Address :</td><td>{{
-                                                        (customer.upazila != ""
-                                                            ? customer.upazila +
-                                                              ", "
-                                                            : "") +
-                                                        (customer.district != ""
-                                                            ? customer.district +
-                                                              ", "
-                                                            : "") +
-                                                        (customer.division != ""
-                                                            ? customer.division +
-                                                              ", "
-                                                            : "") +
-                                                        (customer.country != ""
-                                                            ? customer.country
-                                                            : "")}}</td></tr>
-                                                <tr>
-                                                    <td>Zone :</td><td>{{customer.zone}}</td>
-                                                </tr>
+                                        <tr><td>Address :</td><td>{{ 
+                                                    ((customer.address != '' && customer.address != null)?customer.address+', ':'')+
+                                                    ((customer.upazila != null)?customer.upazila+', ':'')+
+                                                    ((customer.district != '')?customer.district+', ':'')+
+                                                    ((customer.division != '')?customer.division:'')
+                                                }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Zone :</td><td>{{customer.zone}}</td>
+                                            </tr>
+                                            <tr><td>Invoice No:</td><td>{{customer.invoice}}</td></tr>
+                                            <tr><td>Product Name:</td><td>{{customer.product_name}}</td></tr>
+                                            <tr><td>Product Code</td><td>{{customer.product_code}}</td></tr>
+                                            <tr><td>Price</td><td>{{customer.purchase_price}}</td></tr>
+                                            <tr><td>Purchase From</td><td>{{customer.purchase_from}}</td></tr>
+                                            <tr><td>Purchase Date</td><td>{{customer.date_of_purchase}}</td></tr>
+                                            <tr><td>Installation Date</td><td>{{customer.date_of_installation}}</td></tr>
+                                            <tr><td>Last Date of Warranty</td><td>{{customer.last_date_of_warranty}}</td></tr>
+                                                
                                     </table>
                                 </div>
                             </div>
-                            <div class="row mt-4">
-                                <div class="col-12 mb-2">
-                                    <h4 class="border-bottom m-0 mb-0 ml-4">
-                                        <i class="view-header-icon material-icons">settings_input_composite</i>
-                                        <span class="text-gray text-uppercase">Purchase Information</span>
-                                    </h4>
-                                </div>
-                                <div class="col-12 ml-2 pl-4">
-                                    <table v-if="customer != null" class="font-weight-normal table table-borderless table-condensed table-sm">
-                                        <tr>
-                                            <th class="border-top-0">SL#</th>
-                                            <th class="border-top-0">Product Name</th>
-                                            <th class="border-top-0">Product Code</th>
-                                            <th class="border-top-0">Price</th>
-                                            <th class="border-top-0">Purchase from</th>
-                                            <th class="border-top-0">Purchase Date</th>
-                                            <th class="border-top-0">Installation Date</th>
-                                            <th class="border-top-0">Last Date of Warranty</th>
-                                        </tr>
-                                        <tr  v-for="(purchase, index) in customer.purchase.data"
-                                            :key="purchase.id">
-                                            <td>{{(index+1)}}</td>
-                                            <td>{{purchase.product_name}}</td>
-                                            <td>{{purchase.product_code}}</td>
-                                            <td>{{purchase.price}}</td>
-                                            <td>{{purchase.purchase_from}}</td>
-                                            <td>{{purchase.date_of_purchase}}</td>
-                                            <td>{{purchase.date_of_installation}}</td>
-                                            <td>{{purchase.last_date_of_warranty}}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                           
                             <div class="row mt-4">
                                 <div class="col-12 mb-2">
                                     <h4 class="border-bottom m-0 mb-0 ml-4">
@@ -136,7 +102,7 @@ export default {
         getData() {
             this.$Progress.start();
             this.$jsHelper.get(
-                    "api/v1/customers/view/"+this.id)
+                    "api/v1/sales/view/"+this.id)
                 .then(response => {
                     this.$Progress.finish();
                     this.customer = response.data.data;

@@ -39,13 +39,10 @@
                                         </legend>
                                         <div class="row">
                                             <div class="col-12">
-                                                <button class="btn btn-sm btn-tumblr float-right mt-n4 p-1" @click.prevent="resetSelectedCustomer">Reset</button>
-                                            </div>
-                                            <div class="col-12">
                                                 <div class="form-group">
                                                     <label
                                                         class="select2-form-group text-primary"
-                                                        >Existing customer</label
+                                                        >Search Existing customer</label
                                                     >
                                                     <Select2
                                                         :options="
@@ -72,7 +69,7 @@
                                                         name="customer_type_id"
                                                         id="customer_type"
                                                         placeholder="Select Customer Type"
-                                                        :disabled="form.old_customer_id != null"
+                                                        
                                                     />
                                                     <span
                                                         class="text-danger"
@@ -102,7 +99,6 @@
                                                         class="form-control"
                                                         id="name"
                                                         v-model="form.name"
-                                                        :readonly="form.old_customer_id != null"
                                                     />
                                                     <span
                                                         class="text-danger"
@@ -129,7 +125,6 @@
                                                         type="text"
                                                         class="form-control"
                                                         id="customerId"
-                                                        :readonly="form.old_customer_id != null"
                                                         v-model="
                                                             form.customerId
                                                         "
@@ -162,9 +157,6 @@
                                                         type="email"
                                                         class="form-control"
                                                         id="email"
-                                                        :readonly="
-                                                            (isEdit === true || form.old_customer_id != null)
-                                                        "
                                                         v-model="form.email"
                                                     />
                                                     <span
@@ -190,10 +182,9 @@
                                                         >Mobile<strong class="text-danger"> *</strong></label
                                                     >
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         class="form-control"
                                                         id="phone"
-                                                        :readonly="form.old_customer_id != null"
                                                         v-model="form.phone"
                                                     />
                                                     <span
@@ -225,7 +216,6 @@
                                                         v-model="
                                                             form.other_contact_numbers
                                                         "
-                                                        :readonly="form.old_customer_id != null"
                                                     />
                                                     <span
                                                         class="text-danger"
@@ -254,7 +244,6 @@
                                                         "
                                                         name="country_id"
                                                         id="country"
-                                                        :readonly="form.old_customer_id != null"
                                                         @change="
                                                             getDropdown(
                                                                 'api/v1/divisions/' +
@@ -289,7 +278,6 @@
                                                         v-model="
                                                             form.division_id
                                                         "
-                                                        :disabled="form.old_customer_id != null"
                                                         name="division_id"
                                                         id="division"
                                                         @change="
@@ -326,7 +314,6 @@
                                                         v-model="
                                                             form.district_id
                                                         "
-                                                        :disabled="form.old_customer_id != null"
                                                         name="district_id"
                                                         id="district"
                                                         @change="
@@ -363,7 +350,6 @@
                                                         v-model="
                                                             form.upazila_id
                                                         "
-                                                        :disabled="form.old_customer_id != null"
                                                         name="upazila_id"
                                                         id="upazila"
                                                         placeholder="Select Upazila"
@@ -391,7 +377,6 @@
                                                         v-model="form.zone_id"
                                                         name="zone_id"
                                                         placeholder="Select Zone"
-                                                        :disabled="form.old_customer_id != null"
                                                     />
                                                     <span
                                                         class="text-danger"
@@ -424,7 +409,6 @@
                                                         v-model="
                                                             form.address
                                                         "
-                                                        :readonly="form.old_customer_id != null"
                                                     />
                                                     <span
                                                         class="text-danger"
@@ -833,6 +817,7 @@ export default {
                     : false,
             id: this.$route.params.id,
             form: {
+                id: null,
                 customer_type_id: null,
                 name: null,
                 customerId: null,
@@ -877,8 +862,19 @@ export default {
             this.$jsHelper
                 .get("api/v1/sales/" + this.id)
                 .then(response => {
+                    this.form.id = response.data.data.id;
                     this.form.old_product_id = response.data.data.product_id;
-                    this.form.old_customer_id = response.data.data.customer_id;
+                    this.form.name = response.data.data.name;
+                    this.form.customerId = response.data.data.customerId;
+                    this.form.customer_type_id = response.data.data.customer_type_id;
+                    this.form.email = response.data.data.email;
+                    this.form.phone = response.data.data.phone;
+                    this.form.other_contact_numbers = response.data.data.other_contact_numbers;
+                    this.form.division_id = response.data.data.division_id;
+                    this.form.district_id = response.data.data.district_id;
+                    this.form.upazila_id = response.data.data.upazila_id;
+                    this.form.zone_id = response.data.data.zone_id;
+                    this.form.address = response.data.data.address;
                     this.form.purchase_capacity = response.data.data.purchase_capacity;
                     this.form.purchase_price = response.data.data.purchase_price;
                     this.form.purchase_from = response.data.data.purchase_from;
@@ -887,9 +883,9 @@ export default {
                     this.form.date_of_installation = new Date(response.data.data.date_of_installation);
                     this.form.last_date_of_warranty = new Date(response.data.data.last_date_of_warranty);
                     this.form.next_service_date = new Date(response.data.data.next_service_date);
-                    this.getDropdownCustomer('api/v1/zones-all', 'optionsZone');
-                    this.getDropdownCustomer('api/v1/customer-types-all', 'optionsCustomerType');
-                    this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
+                    this.getDropdown('api/v1/zones-all', 'optionsZone');
+                    this.getDropdown('api/v1/customer-types-all', 'optionsCustomerType');
+                    this.getDropdownCustomer('api/v1/sales-all', 'optionsCustomer');
                     this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
                     this.setCustomarData();
                     this.setProductData();
@@ -903,7 +899,7 @@ export default {
         else{
             this.getDropdown('api/v1/zones-all', 'optionsZone');
             this.getDropdown('api/v1/customer-types-all', 'optionsCustomerType');
-            this.getDropdownCustomer('api/v1/customers-all', 'optionsCustomer');
+            this.getDropdownCustomer('api/v1/sales-all', 'optionsCustomer');
             this.getDropdownProduct('api/v1/products-all', 'optionsProduct');
             this.getDropdown('api/v1/countries', 'optionsCountry');
             this.getDropdown('api/v1/divisions/'+this.form.country_id, 'optionsDivision');
@@ -976,7 +972,7 @@ export default {
         getDropdownCustomer(url, option){
             this.$Progress.start();
             this.$jsHelper.get(url).then(response => {
-                this[option] = response.data.data.map(function(val){
+                this[option] = response.data.map(function(val){
                     return {id:val.id, text:val.name+'-'+val.customerId+' ('+val.phone+')'}
                 });
                 this.$Progress.finish();
@@ -1005,15 +1001,12 @@ export default {
 
         setCustomarData(){
             this.$Progress.start();
-            this.$jsHelper.get('api/v1/customers/'+this.form.old_customer_id).then(response => {
-                this.form.old_user_id = response.data.data.user_id;
+            this.$jsHelper.get('api/v1/sales/'+this.form.old_customer_id).then(response => {
                 this.form.name = response.data.data.name;
                 this.form.customer_type_id = response.data.data.customer_type_id;
-                this.form.customerId = response.data.data.customerId;
                 this.form.email = response.data.data.email;
                 this.form.phone = response.data.data.phone;
-                this.form.other_contact_numbers =
-                    response.data.data.other_contact_numbers;
+                this.form.other_contact_numbers = response.data.data.other_contact_numbers;
                 this.form.division_id = response.data.data.division_id;
                 this.form.district_id = response.data.data.district_id;
                 this.form.upazila_id = response.data.data.upazila_id;
@@ -1035,24 +1028,6 @@ export default {
             }).catch(error => {
                 this.$Progress.fail();
             });
-        },
-
-        resetSelectedCustomer(){
-            this.form.old_user_id = null;
-            this.form.old_customer_id = null; 
-            this.form.customer_type_id = null;
-            this.form.name = null;
-            this.form.customerId = null;
-            this.form.email = null;
-            this.form.phone = null;
-            this.form.other_contact_numbers = null;
-            this.form.country_id = null;
-            this.form.division_id = null;
-            this.form.district_id = null;
-            this.form.upazila_id = null;
-            this.form.zone_id = null;
-            this.form.address = null;
-            this.selectOption(); 
         },
 
         resetSelectedProduct(){

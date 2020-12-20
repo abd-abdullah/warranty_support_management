@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaleRequest;
+use App\Http\Resources\CustomerViewResource;
 use App\Http\Resources\SaleCollection;
 use App\Http\Resources\SaleResource;
 use Exception;
-use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -26,30 +25,27 @@ class SaleController extends Controller
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
         $sales = Sale::query();
-        $sales->join('customers', 'customers.id', '=', 'sales.customer_id');
-        $sales->join('users', 'users.id', '=', 'customers.user_id');
         $sales->join('products', 'products.id', '=', 'sales.product_id');
          
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
             $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
         } else {
-            $sales->orderByRaw("ABS(CONVERT(SUBSTRING_INDEX(customers.customerId,'C',-1),SIGNED)) desc");
+            $sales->orderByRaw("ABS(CONVERT(SUBSTRING_INDEX(customerId,'C',-1),SIGNED)) desc");
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $sales->where('users.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('users.phone', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
+            $sales->where('sales.name', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('phone', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('customerId', 'like', "%{$request->input('query')}%");
             $sales->orWhere('invoice', 'like', "%{$request->input('query')}%");
         }
 
-        $sales->with('customer');
         $select = [
             'products.name as product_name',
             'products.code as product_code',
             'sales.*',
         ];
-        $sales->groupBy('sales.id');
+
         $sales->select($select);
         return new SaleCollection($sales->paginate($limit));
     }
@@ -64,8 +60,6 @@ class SaleController extends Controller
         $limit = (($request->per_page != NULL) ? $request->per_page : 10);
         $limit = (($limit == -1) ? 9999999 : $limit);
         $sales = Sale::query();
-        $sales->join('customers', 'customers.id', '=', 'sales.customer_id');
-        $sales->join('users', 'users.id', '=', 'customers.user_id');
         $sales->join('products', 'products.id', '=', 'sales.product_id');
          
         if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
@@ -75,25 +69,25 @@ class SaleController extends Controller
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $sales->where('users.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('users.phone', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('customers.customerId', 'like', "%{$request->input('query')}%");
+            $sales->where('sales.name', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('phone', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('customerId', 'like', "%{$request->input('query')}%");
             $sales->orWhere('invoice', 'like', "%{$request->input('query')}%");
         }
         
         if($request->input('division_id') && $request->input('division_id') != "null"){
-            $sales->where('users.division_id', $request->division_id);
+            $sales->where('division_id', $request->division_id);
         }
         if($request->input('district_id') && $request->input('district_id') != "null"){
-            $sales->where('users.district_id', $request->district_id);
+            $sales->where('district_id', $request->district_id);
         }
         
         if($request->input('upazila_id') && $request->input('upazila_id') != "null"){
-            $sales->where('users.upazila_id', $request->upazila_id);
+            $sales->where('upazila_id', $request->upazila_id);
         }
        
         if($request->input('zone_id') && $request->input('zone_id') != "null"){
-            $sales->where('users.zone_id', $request->zone_id);
+            $sales->where('zone_id', $request->zone_id);
         }
 
         if($request->input('from_date') && $request->from_date != 'null'){
@@ -104,14 +98,12 @@ class SaleController extends Controller
             $sales->whereDate('sales.next_service_date', '<=', Carbon::parse($request->to_date));
         }
 
-        $sales->with('customer');
         $select = [
             'products.name as product_name',
             'products.code as product_code',
             'sales.*',
         ];
         
-        $sales->groupBy('sales.id');
         $sales->select($select);
         return new SaleCollection($sales->paginate($limit));
     }
@@ -125,21 +117,9 @@ class SaleController extends Controller
     public function store(SaleRequest $request)
     {
         $product_id = $request->old_product_id;
-        $customer_id = $request->old_customer_id;
         
         try{
             \DB::beginTransaction();
-            if($customer_id == NULL || $customer_id == ''){
-                $userData = $request->only( 'name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id', 'zone_id','address');
-                $userData['user_type'] = 'customer';
-                $userData['created_by'] = auth()->id();
-                $userData['status'] = 0;
-                $userData['email_verified_at'] = now();
-                $userData['password'] = bcrypt($request->email);
-                $user = User::create($userData);
-                $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId, 'customer_type_id' => $request->customer_type_id]);
-                $customer_id = $customer->id;
-            }
             if($product_id == NULL || $product_id == ''){
                 $productData = [
                     'name' => $request->product_name,
@@ -151,7 +131,18 @@ class SaleController extends Controller
             }
 
             $purchaseData = [
-                'customer_id' => $customer_id,
+                'customer_type_id' => $request->customer_type_id,
+                'name' => $request->name,
+                'customerId' => $request->customerId,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'other_contact_numbers' => $request->other_contact_numbers,
+                'country_id' => $request->country_id,
+                'division_id' => $request->division_id,
+                'district_id' => $request->district_id,
+                'upazila_id' => $request->upazila_id,
+                'zone_id' => $request->zone_id,
+                'address' => $request->address,
                 'product_id' => $product_id,
                 'capacity' => $request->purchase_capacity,
                 'price' => $request->purchase_price,
@@ -163,6 +154,7 @@ class SaleController extends Controller
                 'invoice' => $request->invoice,
                 'created_by' => auth()->id()
             ];
+
             Sale::create($purchaseData);
             
             \DB::commit();
@@ -187,6 +179,17 @@ class SaleController extends Controller
     }
 
     /**
+     * get customer list for fropdown
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCustomer()
+    {
+        $customers = Sale::select(['id', 'name', 'phone', 'customerId'])->get();
+        return $customers;
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Sale  $sale
@@ -194,7 +197,7 @@ class SaleController extends Controller
      */
     public function showWarranty($id)
     {
-        return Sale::whereId($id)->with(['customer.user.country', 'customer.user.district', 'customer.user.division', 'customer.user.upazila', 'product'])->first();
+        return Sale::whereId($id)->with(['country', 'district', 'division', 'upazila', 'product'])->first();
     }
 
     /**
@@ -207,20 +210,9 @@ class SaleController extends Controller
     public function update(SaleRequest $request, Sale $sale)
     {
         $product_id = $request->old_product_id;
-        $customer_id = $request->old_customer_id;
 
         try{
             \DB::beginTransaction();
-            if($customer_id == NULL || $customer_id == ''){
-                $userData = $request->only('name','customerId','email','password','phone','other_contact_numbers','country_id','division_id','district_id','upazila_id', 'zone_id','address');
-                $userData['user_type'] = 'customer';
-                $userData['created_by'] = auth()->id();
-                $userData['email_verified_at'] = now();
-                $userData['password'] = bcrypt($request->email);
-                $user = User::create($userData);
-                $customer = Customer::create(['user_id' => $user->id, 'customerId' => $request->customerId, 'customer_type_id' => $request->customer_type_id]);
-                $customer_id = $customer->id;
-            }
             if($product_id == NULL || $product_id == ''){
                 $productData = [
                     'name' => $request->product_name,
@@ -232,7 +224,18 @@ class SaleController extends Controller
             }
 
             $purchaseData = [
-                'customer_id' => $customer_id,
+                'customer_type_id' => $request->customer_type_id,
+                'name' => $request->name,
+                'customerId' => $request->customerId,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'other_contact_numbers' => $request->other_contact_numbers,
+                'country_id' => $request->country_id,
+                'division_id' => $request->division_id,
+                'district_id' => $request->district_id,
+                'upazila_id' => $request->upazila_id,
+                'zone_id' => $request->zone_id,
+                'address' => $request->address,
                 'product_id' => $product_id,
                 'capacity' => $request->purchase_capacity,
                 'price' => $request->purchase_price,
@@ -265,5 +268,17 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
         $sale->delete();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function SingleView($id)
+    {
+        $sale = Sale::whereId($id)->with('product')->with('customer_services')->first();
+        return new CustomerViewResource($sale);
     }
 }

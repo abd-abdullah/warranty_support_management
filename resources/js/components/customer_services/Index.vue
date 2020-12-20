@@ -31,7 +31,7 @@
                                             <th>SL#</th>
                                             <th
                                                 v-on:click="sort($event)"
-                                                data-column="users.name"
+                                                data-column="name"
                                                 class="sorting mw-120"
                                             >
                                                 Customer
@@ -72,7 +72,7 @@
                                             <td>
                                                 {{ pagination.from + index }}
                                             </td>
-                                            <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':service_history.customer_id}}" target="_blank">{{ 
+                                            <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':service_history.sale_id}}" target="_blank">{{ 
                                                     service_history.name+'\n'+
                                                     service_history.customerId+'\n'+
                                                     service_history.phone 
@@ -685,7 +685,6 @@ export default {
                 customer : null,
                 product : null,
                 sale_id : null,
-                customer_id : null,
                 service_time : null,
                 service_for : null,
                 next_service_time : null,
@@ -774,7 +773,6 @@ export default {
             this.form.customer = service.name+'-'+service.customerId;
             this.form.product = service.product_name+'-'+service.product_code;
             this.form.service_id = service.id;
-            this.form.customer_id = service.customer_id;
             this.form.service_time = new Date(service.service_time);
             this.form.service_for = service.service_for;
             this.form.next_service_time = new Date(service.next_service_time);
@@ -793,8 +791,7 @@ export default {
             this.form.id = service.id;
             this.form.customer = service.name+'-'+service.customerId;
             this.form.product = service.product_name+'-'+service.product_code;
-            this.form.service_id = service.id;
-            this.form.customer_id = service.customer_id;
+            this.form.sale_id = service.sale_id;
             this.form.next_service_time = new Date(service.next_service_time);;
             this.form.remarks = service.remarks;
             this.form.is_continue = (service.is_discontinue === 0)?1:0;
@@ -829,6 +826,7 @@ export default {
             this.$jsHelper
                 .put("api/v1/customer-services/change/"+this.form.id, this.form)
                 .then(data => {
+                    this.$buttonLoader(e);
                     this.$Progress.finish();
                     this.$toaster.success("Successfully Changed");
                     this.getData();

@@ -68,7 +68,7 @@
                                 <th>SL#</th>
                                 <th
                                     v-on:click="sort($event)"
-                                    data-column="users.name"
+                                    data-column="name"
                                     class="sorting mw-120"
                                 >
                                     Customer
@@ -76,7 +76,7 @@
                                 
                                 <th
                                     v-on:click="sort($event)"
-                                    data-column="users.phone"
+                                    data-column="phone"
                                     class="sorting"
                                 >
                                     Phone
@@ -86,7 +86,7 @@
                                 <th>Invoice</th>
                                 <th 
                                     v-on:click="sort($event)"
-                                    data-column="users.zone_id"
+                                    data-column="zone_id"
                                     class="sorting mw-80"
                                     >Zone</th>
                                 <th
@@ -112,7 +112,7 @@
                                 <td>
                                     {{ pagination.from + index }}
                                 </td>
-                                <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.customer_id}}" target="_blank">{{
+                                <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.id}}" target="_blank">{{
                                     sale.name+'\n'+
                                     sale.customerId+'\n'+
                                     sale.phone
@@ -712,7 +712,6 @@ export default {
                 customer : null,
                 product : null,
                 sale_id : null,
-                customer_id : null,
                 service_time : null,
                 service_for : null,
                 next_service_time : null,
@@ -791,7 +790,6 @@ export default {
             this.form.customer = sale.name+'-'+sale.customerId;
             this.form.product = sale.product_name+'-'+sale.product_code;
             this.form.sale_id = sale.id;
-            this.form.customer_id = sale.customer_id;
             this.form.service_time = null;
             this.form.service_for = null;
             this.form.next_service_time = null;
@@ -808,7 +806,6 @@ export default {
             this.form.customer = sale.name+'-'+sale.customerId;
             this.form.product = sale.product_name+'-'+sale.product_code;
             this.form.sale_id = sale.id;
-            this.form.customer_id = sale.customer_id;
             this.form.next_service_time = null;
             this.form.remarks = null;
             this.form.is_continue = true;
