@@ -64,16 +64,17 @@
                     </div>
                 </div>
                 <div class="col-12"  v-if="technicians.length > 0">
-                    <button style="z-index:99" class="btn btn-sm position-absolute" @click="print"><span class="material-icons">print</span></button>
+                    <button style="z-index:99" class="btn btn-sm btn-warning position-absolute" @click="print"><span class="material-icons">print</span></button>
                 </div>
                 <div class="col-12" id="print" v-if="technicians.length > 0">
-                    <div class="card mt-0 p-5">
-                        <div class="card-header card-header-rose card-header-icon">
-                            <h4 class="border-bottom d-inline card-title text-center text-monospace">Technicians Service Report from {{formatDate(filter.from_date)}} to {{formatDate(filter.to_date)}}</h4>
+                    <div class="card mt-0 p-5 border-0">
+                        <div class="card-header border-0 card-header-rose card-header-icon">
+                            <img class="w-100" :src="'images/warranty-header.png'">
+                            <h4 class="card-title mt-3 text-center text-monospace">Technicians Service Report from {{formatDate(filter.from_date)}} to {{formatDate(filter.to_date)}}</h4>
                         </div>
                         <div class="card-body">
                            <div class="table-responsive">
-                                <table class="border table table-bordered table-condensed table-shopping table-sm">
+                                <table class="border table table-bordered table-condensed table-shopping table-sm" style="font-size:20px">
                                     <thead>
                                         <tr>
                                             <th class="font-weight-bold">SL#</th>
@@ -92,7 +93,7 @@
                                             <td>{{ technician.name }}</td>
                                             <td>{{ technician.email }}</td>
                                             <td>{{ technician.phone }}</td>
-                                            <td>{{technician.customer_services_count}}</td>
+                                            <td class="text-center">{{technician.customer_services_count}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

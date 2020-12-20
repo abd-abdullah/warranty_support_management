@@ -381,3 +381,7 @@ button:disabled {
     right: 0 !important;
     left: auto !important;
 }
+
+.vm{
+    vertical-align: middle;
+}

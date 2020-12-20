@@ -35,10 +35,12 @@ class SaleController extends Controller
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $sales->where('sales.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('phone', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('customerId', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('invoice', 'like', "%{$request->input('query')}%");
+            $sales->where(function($query) use ($request) {
+                $query->where('sales.name', 'like', "%{$request->input('query')}%");
+                $query->orWhere('phone', 'like', "%{$request->input('query')}%");
+                $query->orWhere('customerId', 'like', "%{$request->input('query')}%");
+                $query->orWhere('invoice', 'like', "%{$request->input('query')}%");
+            });
         }
 
         $select = [
@@ -70,10 +72,12 @@ class SaleController extends Controller
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $sales->where('sales.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('phone', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('customerId', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('invoice', 'like', "%{$request->input('query')}%");
+            $sales->where(function($query) use ($request) {
+                $query->where('sales.name', 'like', "%{$request->input('query')}%");
+                $query->orWhere('phone', 'like', "%{$request->input('query')}%");
+                $query->orWhere('customerId', 'like', "%{$request->input('query')}%");
+                $query->orWhere('invoice', 'like', "%{$request->input('query')}%");
+            });
         }
         
         if($request->input('division_id') && $request->input('division_id') != "null"){
@@ -98,12 +102,22 @@ class SaleController extends Controller
         if($request->input('to_date') && $request->to_date != 'null'){
             $sales->whereDate('sales.next_service_date', '<=', Carbon::parse($request->to_date));
         }
+       
+        if($request->input('is_service_taking') && $request->is_service_taking == 1){
+            $sales->join('customer_services', 'customer_services.sale_id', '=', 'sales.id');
+        }
+       
+        if($request->input('is_service_taking') && $request->is_service_taking == 2){
+            $sales->join('customer_services', 'customer_services.sale_id', '=', 'sales.id', 'left')->where('customer_services.id', null);
+        }
 
         $select = [
             'products.name as product_name',
             'products.code as product_code',
             'sales.*',
         ];
+
+        $sales->groupBy('sales.id');
         
         $sales->select($select);
         return new SaleCollection($sales->paginate($limit));
@@ -309,10 +323,12 @@ class SaleController extends Controller
         }
 
         if ($request->input('query') && $request->input('query') != "") {
-            $sales->where('sales.name', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('phone', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('customerId', 'like', "%{$request->input('query')}%");
-            $sales->orWhere('zones.name', 'like', "%{$request->input('query')}%");
+            $sales->where(function($query) use ($request) {
+                $query->where('sales.name', 'like', "%{$request->input('query')}%");
+                $query->orWhere('phone', 'like', "%{$request->input('query')}%");
+                $query->orWhere('customerId', 'like', "%{$request->input('query')}%");
+                $query->orWhere('zones.name', 'like', "%{$request->input('query')}%");
+            });
         }
 
         $select = [

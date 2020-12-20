@@ -13,7 +13,7 @@
                                     <h4 class="card-title">Advanced Customer Purchase Search</h4>
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-sm float-right" @click="print"><span class="material-icons">print</span></button>
+                                    <button class="btn btn-sm btn-warning float-right" @click="print"><span class="material-icons">print</span></button>
                                 </div>
                             </div>
                         </div>
@@ -103,6 +103,19 @@
                                     </template>
                                 </v-date-picker>
                             </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label
+                                        class="select2-form-group"
+                                        >Service</label
+                                    >
+                                    <Select2
+                                        :options="optionsService"
+                                        v-model="filter.is_service_taking"
+                                        placeholder="Select Service"
+                                    />
+                                </div>
+                            </div>
                             <div class="col-md-3 col-sm-6 pl-0 pr-0">
                                 <button @click="getData" class="btn btn-sm pl-md-2 pl-lg-3 pr-md-2 pr-lg-3 btn-primary mt-2">Filter<span class="spinner"></span></button>
                                 <button @click="resetFilter" class="btn btn-sm pl-md-2 pl-lg-3 pr-md-2 pr-lg-3 btn-danger mt-2">Reset<span class="spinner"></span></button>
@@ -115,7 +128,7 @@
                                 @limit="getData()"
                             ></search>
                             
-                            <div class="table-responsive" id="print">
+                            <div class="table-responsive">
                                 <table class="table table-sortable">
                                     <thead>
                                         <tr>
@@ -165,8 +178,7 @@
                                             </td>
                                             <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.id}}" target="_blank">{{
                                                 sale.name+'\n'+
-                                                sale.customerId+'\n'+
-                                                sale.phone
+                                                sale.customerId
                                             }}</router-link></td>
                                             <td>{{sale.phone}}</td>
                                             <td>{{sale.invoice}}</td>
@@ -215,6 +227,65 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-none col-12">
+                    <div id="print">
+                        <img class="w-100" :src="'images/warranty-header.png'">
+                        <h4 class="m-4 text-center">
+                            <span class="font-weight-bold text-uppercase">Customer List</span>
+                        </h4>
+                        <table class="font-weight-normal table table-bordered table-sm" style="font-size: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>SL#</th>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>zone</th>
+                                    <th>Product Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(sale, index) in sales"
+                                    :key="sale.id"
+                                >
+                                    <td>{{ 1+index }}</td>
+                                    <td class="ws-pre">{{
+                                        sale.name+'\n'+
+                                        sale.customerId
+                                    }}</td>
+                                    <td>{{sale.phone}}</td>
+                                    <td>{{
+                                            (sale.address != "" &&
+                                            sale.address != null
+                                                ? sale.address + ", "
+                                                : "") +
+                                                (sale.upazila != ""
+                                                    ? sale.upazila +
+                                                        ", "
+                                                    : "") +
+                                                (sale.district != ""
+                                                    ? sale.district +
+                                                        ", "
+                                                    : "") +
+                                                (sale.division != ""
+                                                    ? sale.division +
+                                                        ", "
+                                                    : "") +
+                                                (sale.country != ""
+                                                    ? sale.country
+                                                    : "")
+                                        }}</td>
+                                    <td>{{sale.zone}}</td>
+                                    <td>{{ 
+                                            sale.product_name+' >> '+
+                                            sale.product_code
+                                            }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -234,7 +305,8 @@ export default {
                 upazila_id:null,
                 zone_id:null,
                 from_date: new Date(),
-                to_date: this.toDate()
+                to_date: this.toDate(),
+                is_service_taking : 0,
             },
             param: {
                 query: "",
@@ -252,6 +324,7 @@ export default {
             optionsDistrict: [],
             optionsUpazila: [],
             optionsZone:[],
+            optionsService: [{'id':1, 'text':'Taking Service'},{'id':2, 'text':'Not Taking Service'}],
             optionsMessageType:[{'id':1,'text':'English'}, {'id':2,'text':'Bangali'}],
             check_all:null,
             wordCount:0
@@ -276,13 +349,23 @@ export default {
                         "&query=" +
                         this.param.query +
                         "&sort_by=" +
-                        this.param.sort.column +
+                        this.param.sort.column+
                         "&sort_order=" +
-                        this.param.sort.sort_order +
+                        this.param.sort.sort_order+
+                        "&division_id=" +
+                        this.filter.division_id+
+                        "&district_id=" +
+                        this.filter.district_id+
+                        "&upazila_id=" +
+                        this.filter.upazila_id+
+                        "&zone_id=" +
+                        this.filter.zone_id+
                         "&from_date=" +
                         fromDate +
                         "&to_date=" +
-                        toDate
+                        toDate+
+                        "&is_service_taking=" +
+                        this.filter.is_service_taking
                 )
                 .then(response => {
                     this.$Progress.finish();
@@ -301,6 +384,7 @@ export default {
             this.filter.from_date = null;
             this.filter.zone_id = null;
             this.filter.to_date = null;
+            this.filter.is_service_taking = 0;
             this.getData();
         },
         sort(event){

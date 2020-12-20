@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
 use App\Models\CustomerService;
 use App\Models\Product;
 use App\Models\Sale;
@@ -14,16 +13,15 @@ class DashboardController extends Controller
 {
     public function __invoke(){
         $month = date('m');
+        $year = date('Y');
         $data['month'] = date('F Y');
         $data['product'] = Product::count();
-        $data['customer'] = Customer::count();
         $data['purchase'] = Sale::count();
         $data['service'] = CustomerService::count();
 
-        $data['product_monthly'] = Product::whereMonth('created_at', $month)->count();
-        $data['customer_monthly'] = Customer::whereMonth('created_at', $month)->count();
-        $data['purchase_monthly'] = Sale::whereMonth('date_of_purchase', $month)->count();
-        $data['service_monthly'] = CustomerService::whereMonth('service_time', $month)->count();
+        $data['product_monthly'] = Product::whereMonth('created_at', $month)->whereYear('created_at', $year)->count();
+        $data['purchase_monthly'] = Sale::whereMonth('date_of_purchase', $month)->whereYear('date_of_purchase', $year)->count();
+        $data['service_monthly'] = CustomerService::whereMonth('service_time', $month)->whereYear('service_time', $year)->count();
 
         //bar chart data   
         $sales = Sale::whereDate( 'date_of_purchase', '>=', Carbon::now()->subDays(29) )
@@ -60,15 +58,16 @@ class DashboardController extends Controller
         //end bar
 
         //Line chart data
-        $saleMonthly = Sale::wheredate( 'date_of_purchase', '>=', Carbon::now()->subYear()->firstOfMonth() )
+        $saleMonthly = Sale::wheredate( 'date_of_purchase', '>=', Carbon::now()->subMonth(11)->firstOfMonth() )
         ->groupBy( 'date' )
         ->orderBy( 'date' )
         ->get( [
             DB::raw( 'DATE_FORMAT( date_of_purchase, "%b") as date' ),
             DB::raw( 'COUNT( * ) as "count"' )
         ])->pluck( 'count', 'date' );
+        
 
-        $serviceMonthly = CustomerService::whereDate( 'service_time', '>=', Carbon::now()->subYear()->firstOfMonth() )
+        $serviceMonthly = CustomerService::whereDate( 'service_time', '>=', Carbon::now()->subMonth(11)->firstOfMonth() )
         ->groupBy( 'date' )
         ->orderBy( 'date' )
         ->get( [

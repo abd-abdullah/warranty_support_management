@@ -100,6 +100,19 @@
                                     </template>
                                 </v-date-picker>
                             </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label
+                                        class="select2-form-group"
+                                        >Service</label
+                                    >
+                                    <Select2
+                                        :options="optionsService"
+                                        v-model="filter.is_service_taking"
+                                        placeholder="Select Service"
+                                    />
+                                </div>
+                            </div>
                             <div class="col-md-3 col-sm-6 pl-0 pr-0">
                                 <button @click="getData" class="btn btn-sm pl-md-2 pl-lg-3 pr-md-2 pr-lg-3 btn-primary mt-2">Filter<span class="spinner"></span></button>
                                 <button @click="resetFilter" class="btn btn-sm pl-md-2 pl-lg-3 pr-md-2 pr-lg-3 btn-danger mt-2">Reset<span class="spinner"></span></button>
@@ -289,7 +302,8 @@ export default {
                 upazila_id:null,
                 zone_id:null,
                 from_date: new Date(),
-                to_date: this.toDate()
+                to_date: this.toDate(),
+                is_service_taking: 0,
             },
             param: {
                 query: "",
@@ -306,6 +320,7 @@ export default {
             optionsDivision: [],
             optionsDistrict: [],
             optionsUpazila: [],
+            optionsService: [{'id':1, 'text':'Taking Service'},{'id':2, 'text':'Not Taking Service'}],
             optionsZone:[],
             optionsMessageType:[{'id':1,'text':'English'}, {'id':2,'text':'Bangali'}],
             check_all:null,
@@ -345,7 +360,9 @@ export default {
                         "&from_date=" +
                         fromDate +
                         "&to_date=" +
-                        toDate
+                        toDate+
+                        "&is_service_taking=" +
+                        this.filter.is_service_taking
 
                 )
                 .then(response => {
@@ -364,6 +381,7 @@ export default {
             this.filter.upazila_id = null;
             this.filter.from_date = null;
             this.filter.to_date = null;
+            this.filter.is_service_taking = 0;
             this.getData();
         },
         sort(event){

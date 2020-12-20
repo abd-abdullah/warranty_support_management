@@ -2,7 +2,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <button style="z-index:99" class="btn btn-sm ml-5 mt-5 position-absolute" @click="print"><span class="material-icons">print</span></button>
+                <button style="z-index:99" class="btn btn-sm btn-warning ml-5 mt-5 position-absolute" @click="print"><span class="material-icons">print</span></button>
             </div>
             <div class="row" id="print" style="font-family:'Times New Roman', Times, serif;">
                 <div class="col-12">
