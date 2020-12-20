@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaleRequest;
+use App\Http\Resources\CustomerCollection;
 use App\Http\Resources\CustomerViewResource;
 use App\Http\Resources\SaleCollection;
 use App\Http\Resources\SaleResource;
@@ -280,5 +281,57 @@ class SaleController extends Controller
     {
         $sale = Sale::whereId($id)->with('product')->with('customer_services')->first();
         return new CustomerViewResource($sale);
+    }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function customer(Request $request)
+    {
+        $limit = (($request->per_page != NULL) ? $request->per_page : 10);
+        $limit = (($limit == -1) ? 9999999 : $limit);
+        $sales = Sale::query();
+        $sales->join('products', 'products.id', '=', 'sales.product_id');
+        $sales->join('customer_types', 'customer_types.id', '=', 'sales.customer_type_id', 'left');
+        $sales->join('countries', 'countries.id', '=', 'sales.country_id', 'left');
+        $sales->join('divisions', 'divisions.id', '=', 'sales.division_id', 'left');
+        $sales->join('districts', 'districts.id', '=', 'sales.district_id', 'left');
+        $sales->join('upazilas', 'upazilas.id', '=', 'sales.upazila_id', 'left');
+        $sales->join('zones', 'zones.id', '=', 'sales.zone_id', 'left');
+         
+        if ($request->input('sort_by') && $request->input('sort_by') != "" && $request->input('sort_order') && $request->input('sort_order') != "") {
+            $sales->orderBy($request->input('sort_by'), $request->input('sort_order'));
+        } else {
+            $sales->orderByRaw("ABS(CONVERT(SUBSTRING_INDEX(customerId,'C',-1),SIGNED)) desc");
+        }
+
+        if ($request->input('query') && $request->input('query') != "") {
+            $sales->where('sales.name', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('phone', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('customerId', 'like', "%{$request->input('query')}%");
+            $sales->orWhere('zones.name', 'like', "%{$request->input('query')}%");
+        }
+
+        $select = [
+            'products.name as product_name',
+            'products.code as product_code',
+            'customer_types.name as customer_type',
+            'countries.name as country',
+            'divisions.name as division',
+            'districts.name as district',
+            'upazilas.name as upazila',
+            'zones.name as zone',
+            'sales.id',
+            'sales.customerId',
+            'sales.name',
+            'sales.phone',
+            'sales.address',
+        ];
+        
+        $sales->select($select);
+        return new CustomerCollection($sales->paginate($limit));
     }
 }

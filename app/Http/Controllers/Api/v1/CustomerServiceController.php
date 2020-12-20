@@ -62,12 +62,12 @@ class CustomerServiceController extends Controller
         $request->validate([
             'service_time' => 'required|date|before_or_equal:today',
             'next_service_time' => 'bail|nullable|date|after:service_time',
-            'service_for' => 'required|string|min:10',
+            'service_for' => 'required|string|min:2',
             'service_charge' => 'required|numeric|min:0',
             'total_paid' => 'required|numeric|min:0',
             'done_by' => 'required|numeric',
             'cost' => 'nullable|numeric|min:0',
-            'remarks' => 'nullable|string|min:10',
+            'remarks' => 'nullable|string|min:2',
         ]);
         $data = $request->all();
         $data['created_by'] = auth()->id();
@@ -114,12 +114,12 @@ class CustomerServiceController extends Controller
         $request->validate([
             'service_time' => 'required|date|before_or_equal:today',
             'next_service_time' => 'bail|nullable|date|after:service_time',
-            'service_for' => 'required|string|min:10',
+            'service_for' => 'required|string|min:2',
             'service_charge' => 'required|numeric|min:0',
             'total_paid' => 'required|numeric|min:0',
             'done_by' => 'required|numeric',
             'cost' => 'nullable|numeric|min:0',
-            'remarks' => 'nullable|string|min:10',
+            'remarks' => 'nullable|string|min:2',
         ]);
         $data = $request->all();
         $data['is_dicontinue'] = ($request->is_continue === true)?0:1;
@@ -162,7 +162,7 @@ class CustomerServiceController extends Controller
     {
         $request->validate([
             'next_service_time' => 'bail|nullable|date|after:today',
-            'remarks' => 'required|string|min:10',
+            'remarks' => 'required|string|min:2',
         ]);
         $data = $request->only(['customer_id', 'sale_id', 'remarks']);
         $data['created_by'] = auth()->id();
@@ -193,7 +193,7 @@ class CustomerServiceController extends Controller
     {
         $request->validate([
             'next_service_time' => 'bail|nullable|date|after:today',
-            'remarks' => 'required|string|min:10',
+            'remarks' => 'required|string|min:2',
         ]);
         $data = $request->only(['customer_id', 'sale_id', 'remarks']);
         $data['is_dicontinue'] = ($request->is_continue === true)?0:1;

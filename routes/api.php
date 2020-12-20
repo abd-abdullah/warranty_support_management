@@ -17,9 +17,9 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1', 'middleware' => 'auth:s
     Route::ApiResource('products', 'ProductController');
     Route::ApiResource('admin-users', 'AdminUserController');
     Route::ApiResource('technicians', 'ServiceMenController');
-    Route::ApiResource('customers', 'CustomerController');
     Route::get('sales/view/{id}', 'SaleController@SingleView')->name('sales.singe_view');
     Route::ApiResource('customer-types', 'CustomerTypeController');
+    Route::get('customers', 'SaleController@customer');
     Route::ApiResource('sales', 'SaleController');
     Route::ApiResource('zones', 'ZoneController');
     Route::get('sms-settings/{smsSetting}', 'SmsSettingController@show')->name('sms-settings.show');

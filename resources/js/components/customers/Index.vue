@@ -13,7 +13,7 @@
                                     <h4 class="card-title">Customer List</h4>
                                 </div>
                                 <div class="col-6 text-right pr-md-0">
-                                    <router-link to="/customers/form" class="btn btn-sm btn-primary mt-2">Add
+                                    <router-link to="/sales/form" class="btn btn-sm btn-primary mt-2">Add
                                         <div class="ripple-container"></div>
                                     </router-link>
                                 </div> 
@@ -31,15 +31,13 @@
                                     <thead>
                                         <tr>
                                             <th>SL#</th>
-                                            <th v-on:click = "sort($event)" data-column="users.name" class="sorting mw-80">Name</th>
-                                            <th v-on:click = "sort($event)" data-column="users.email" class="sorting mw-80">Contact</th>
+                                            <th v-on:click = "sort($event)" data-column="sales.name" class="sorting mw-80">Name</th>
+                                            <th v-on:click = "sort($event)" data-column="sales.phone" class="sorting mw-80">Contact</th>
                                             <th v-on:click = "sort($event)" data-column="customerId" class="sorting mw-120">Customer ID</th>
                                             <th v-on:click = "sort($event)" data-column="customer_types.name" class="sorting mw-80">Type</th>
                                             <th class="mw-100">Address</th>
-                                            <th class="mw-80">Zone</th>
-                                            <th class="text-right mw-80">
-                                                Actions
-                                            </th>
+                                            <th v-on:click = "sort($event)" data-column="zones.name" class="sorting mw-100">Zone</th>
+                                            <th class="mw-200">Product</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -49,7 +47,7 @@
                                         >
                                             <td>{{ pagination.from + index }}</td>
                                             <td><router-link :to="{ name: 'customer_view', params:{'id':customer.id}}" target="_blank">{{ customer.name }}</router-link></td>
-                                            <td class="ws-pre">{{ customer.phone+'\n'+customer.email }}</td>
+                                            <td class="ws-pre">{{ customer.phone }}</td>
                                             <td>{{ customer.customerId }}</td>
                                             <td>{{ customer.customer_type }}</td>
                                             <td>{{ 
@@ -60,32 +58,10 @@
                                                     ((customer.country != '')?customer.country:'')
                                                 }}</td>
                                             <td>{{customer.zone}}</td>
-                                            <td class="td-actions w76 text-right">
-                                                <router-link
-                                                    :to="{ name: 'customer_form', params:{'id':customer.id}}"
-                                                    type="button"
-                                                    rel="tooltip"
-                                                    class="btn btn-success btn-round"
-                                                    data-original-title
-                                                    title
-                                                >
-                                                    <i class="material-icons"
-                                                        >edit</i
-                                                    >
-                                                </router-link>
-                                                <button
-                                                    @click.prevent="remove(customer)"
-                                                    type="button"
-                                                    rel="tooltip"
-                                                    class="btn btn-danger btn-round"
-                                                    data-original-title
-                                                    title
-                                                >
-                                                    <i class="material-icons"
-                                                        >close</i
-                                                    >
-                                                </button>
-                                            </td>
+                                            <td>{{ 
+                                                customer.product_name+' >> '+
+                                                customer.product_code
+                                                }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -164,7 +140,7 @@ export default {
         remove(customer){
             this.$swal("Are you sure to delete this customer?").then((result) => {
                 if(result.isConfirmed === true){
-                    this.$jsHelper.delete('api/v1/customers/'+customer.id).then(response =>{
+                    this.$jsHelper.delete('api/v1/sales/'+customer.id).then(response =>{
                         this.$Progress.finish();
                         this.$toaster.warning("Deleted successfully");
                         this.getData();
