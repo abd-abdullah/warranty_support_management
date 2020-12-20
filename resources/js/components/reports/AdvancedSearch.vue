@@ -122,7 +122,7 @@
                                             <th>SL#</th>
                                             <th
                                                 v-on:click="sort($event)"
-                                                data-column="users.name"
+                                                data-column="sales.name"
                                                 class="sorting mw-120"
                                             >
                                                 Customer
@@ -130,7 +130,7 @@
 
                                             <th
                                                 v-on:click="sort($event)"
-                                                data-column="users.phone"
+                                                data-column="sales.phone"
                                                 class="sorting"
                                             >
                                                 Phone
@@ -140,7 +140,7 @@
                                             <th class="mw-180">Address</th>
                                             <th 
                                                 v-on:click="sort($event)"
-                                                data-column="users.zone_id"
+                                                data-column="sales.zone_id"
                                                 class="sorting mw-80"
                                                 >Zone</th>
                                             <th
