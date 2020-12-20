@@ -250,10 +250,7 @@
                                     :key="sale.id"
                                 >
                                     <td>{{ 1+index }}</td>
-                                    <td class="ws-pre">{{
-                                        sale.name+'\n'+
-                                        sale.customerId
-                                    }}</td>
+                                    <td class="ws-pre">{{sale.name}}<br><strong>{{sale.customerId}}</strong></td>
                                     <td>{{sale.phone}}</td>
                                     <td>{{
                                             (sale.address != "" &&
