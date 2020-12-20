@@ -163,7 +163,7 @@
                                             <td>
                                                 {{ pagination.from + index }}
                                             </td>
-                                            <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.customer_id}}" target="_blank">{{
+                                            <td class="ws-pre"><router-link :to="{ name: 'customer_view', params:{'id':sale.id}}" target="_blank">{{
                                                 sale.name+'\n'+
                                                 sale.customerId+'\n'+
                                                 sale.phone
@@ -336,57 +336,6 @@ export default {
             else{
                 $('.sms_send').prop('checked', false);
             }
-        },
-        sendMessage(e){
-            if(this.form.text == ''){
-                this.$toaster.error("Write Some text to send SMS");
-                return;
-            }
-            if(this.form.type == null){
-                this.$toaster.error("Message language Type");
-                return;
-            }
-
-            let phones = []; 
-            $(".sms_send:checked").each(function () {
-                phones.push($(this).val());
-            });
-
-            this.form.phone = phones;
-            if(this.form.phone.length > 0){
-                this.$buttonLoader(e);
-                this.$Progress.start();
-                  this.$jsHelper.put("api/v1/sms-send", this.form)
-                .then(data => {
-                    if(data.data === 1){
-                    this.$Progress.finish();
-                        this.$toaster.info("Successfully Send");
-                        this.form.phone = [];
-                        this.form.text = '';
-                        this.form.type = 1;
-                        this.wordCount = 0;
-                        this.$buttonLoader(e);
-                        $('#checkAll').prop('checked', false);
-                        $('.sms_send').prop('checked', false);
-                    }
-                    else{
-                        this.$Progress.fail();
-                        this.$buttonLoader(e);
-                        this.$toaster.error("Something went wrong");
-                    }
-                })
-                .catch(error => {
-                    this.$Progress.fail();
-                    this.$buttonLoader(e);
-                    this.$toaster.error("Something went wrong");
-                });
-            }
-            else{
-                this.$toaster.error("Please select at least one customer to send SMS.");
-            }
-        },
-        countWord(){
-            this.wordCount = $("#text").val().length;
         },
         toDate(){
             let date = new Date();
