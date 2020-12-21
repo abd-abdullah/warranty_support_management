@@ -264,7 +264,7 @@
                                                                 class="mb-0 fs11"
                                                                 >Service Date<strong class="text-danger"> *</strong></label
                                                             >
-                                                            <v-date-picker v-model="form.service_time" :popover ="{ visibility: 'click'}">
+                                                            <v-date-picker v-model="form.service_time" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                                 <template v-slot="{ inputValue, inputEvents }">
                                                                     <input
                                                                     class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -293,7 +293,7 @@
                                                                 class="mb-0 fs11"
                                                                 >Next Service Date</label
                                                             >
-                                                            <v-date-picker v-model="form.next_service_time" :popover ="{ visibility: 'click'}">
+                                                            <v-date-picker v-model="form.next_service_time" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                                 <template v-slot="{ inputValue, inputEvents }">
                                                                     <input
                                                                     class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -584,7 +584,7 @@
                                                 class="mb-0 fs11"
                                                 >Next Service Date</label
                                             >
-                                            <v-date-picker v-model="form.next_service_time" :popover ="{ visibility: 'click'}">
+                                            <v-date-picker v-model="form.next_service_time" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                 <template v-slot="{ inputValue, inputEvents }">
                                                     <input
                                                     class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -668,6 +668,7 @@
 export default {
     data() {
         return {
+            timezone:"UTC",
             param: {
                 query: "",
                 sort: {

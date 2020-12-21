@@ -665,7 +665,7 @@
                                                         class="mb-0 fs11"
                                                         >Purchase Date<strong class="text-danger"> *</strong></label
                                                     >
-                                                    <v-date-picker v-model="form.date_of_purchase" :popover ="{ visibility: 'click'}">
+                                                    <v-date-picker v-model="form.date_of_purchase" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                         <template v-slot="{ inputValue, inputEvents }">
                                                             <input
                                                             class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -694,7 +694,7 @@
                                                         class="mb-0 fs11"
                                                         >Installation Date<strong class="text-danger"> *</strong></label
                                                     >
-                                                    <v-date-picker v-model="form.date_of_installation" :popover ="{ visibility: 'click'}">
+                                                    <v-date-picker v-model="form.date_of_installation" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                         <template v-slot="{ inputValue, inputEvents }">
                                                             <input
                                                             class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -725,7 +725,7 @@
                                                         >Last Date of
                                                         Warranty<strong class="text-danger"> *</strong></label
                                                     >
-                                                    <v-date-picker v-model="form.last_date_of_warranty" :popover ="{ visibility: 'click'}">
+                                                    <v-date-picker v-model="form.last_date_of_warranty" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                         <template v-slot="{ inputValue, inputEvents }">
                                                             <input
                                                             class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -755,7 +755,7 @@
                                                         class="fs11 mb-0"
                                                         >Next Service Date</label
                                                     >
-                                                    <v-date-picker v-model="form.next_service_date" :popover ="{ visibility: 'click'}">
+                                                    <v-date-picker v-model="form.next_service_date" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                         <template v-slot="{ inputValue, inputEvents }">
                                                             <input
                                                             class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -809,7 +809,7 @@
 export default {
     data() {
         return {
-            timezone:'asia/Dhaka',
+            timezone:'UTC',
             isEdit:
                 typeof this.$route.params.id != "undefined" &&
                 this.$route.params.id != null

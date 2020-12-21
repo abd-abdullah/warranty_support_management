@@ -17,7 +17,7 @@
                                     <div class="row">
                                         <label class="col-form-label">From <span class="d-sm-none d-md-inline">Date</span></label>
                                         <div class="col-sm-8 pr-0">
-                                            <v-date-picker v-model="filter.from_date" :popover ="{ visibility: 'click'}">
+                                            <v-date-picker v-model="filter.from_date" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                 <template v-slot="{ inputValue, inputEvents }">
                                                     <input
                                                     class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -35,7 +35,7 @@
                                     <div class="row">
                                         <label class="col-form-label">To <span class="d-sm-none d-md-inline">Date</span></label>
                                         <div class="col-sm-8 pr-0">
-                                             <v-date-picker v-model="filter.to_date" :popover ="{ visibility: 'click'}">
+                                             <v-date-picker v-model="filter.to_date" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                 <template v-slot="{ inputValue, inputEvents }">
                                                     <input
                                                     class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -289,7 +289,7 @@
                                                                 class="fs11 mb-0"
                                                                 >Service Date<strong class="text-danger"> *</strong></label
                                                             >
-                                                            <v-date-picker v-model="form.service_time" :popover ="{ visibility: 'click'}">
+                                                            <v-date-picker v-model="form.service_time" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                                 <template v-slot="{ inputValue, inputEvents }">
                                                                     <input
                                                                     class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -317,7 +317,7 @@
                                                                 class="fs11 mb-0"
                                                                 >Next Service Date</label
                                                             >
-                                                            <v-date-picker v-model="form.next_service_time" :popover ="{ visibility: 'click'}">
+                                                            <v-date-picker v-model="form.next_service_time" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                                 <template v-slot="{ inputValue, inputEvents }">
                                                                     <input
                                                                     class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -610,7 +610,7 @@
                                                 class="fs11 mb-0"
                                                 >Next Service Date</label
                                             >
-                                            <v-date-picker v-model="form.next_service_time" :popover ="{ visibility: 'click'}">
+                                            <v-date-picker v-model="form.next_service_time" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                                 <template v-slot="{ inputValue, inputEvents }">
                                                     <input
                                                     class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -692,6 +692,7 @@
 export default {
     data() {
         return {
+            timezone:"UTC",
             param: {
                 query: "",
                 sort: {

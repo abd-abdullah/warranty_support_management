@@ -78,7 +78,7 @@
                             </div>  
                             <div class="col-md-3 col-sm-6 pt-2">
                                 <label class="select2-form-group">From Date</label>
-                                <v-date-picker v-model="filter.from_date" :popover ="{ visibility: 'click'}">
+                                <v-date-picker v-model="filter.from_date" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                     <template v-slot="{ inputValue, inputEvents }">
                                         <input
                                         class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -90,7 +90,7 @@
                             </div>
                             <div class="col-md-3 col-sm-6 pt-2">
                                 <label class="select2-form-group">To Date</label>
-                                <v-date-picker v-model="filter.to_date" :popover ="{ visibility: 'click'}">
+                                <v-date-picker v-model="filter.to_date" :timezone="timezone" :popover ="{ visibility: 'click'}">
                                     <template v-slot="{ inputValue, inputEvents }">
                                         <input
                                         class="bg-white border border-bottom-0 form-control px-2 py-1 rounded"
@@ -286,6 +286,8 @@ import Csrf from "../../../apis/Csrf";
 export default {
     data() {
         return {
+            
+            timezone:"UTC",
             form:{
                 type:1,
                 text:'',
